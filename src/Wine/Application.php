@@ -59,10 +59,10 @@ class Application
 		$this->register('config', $config = new Collection([
 			'path' => [
 				'root' => $rootPath,
-				'app' => $rootPath.'/App',
-				'config' => $rootPath.'/App/Config',
-				'views' => $rootPath.'/App/Views',
-				'routes' => $rootPath.'/App/Routes'
+				'app' => $rootPath.'/app',
+				'config' => $rootPath.'/config',
+				'views' => $rootPath.'/views',
+				'routes' => $rootPath.'/routes'
 			]
 		]));
 	}

@@ -29,14 +29,15 @@ class Request extends Server
 		// let's set the global variables
 		parent::__construct($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
 
-		// now let's set our URL
+		// now let's set the URL
 		URL::setUrl($this->server->get('REQUEST_URI'));
 	}
 
 
 	/**
-	* ..
+	* Get the GET or POST variable data
 	*
+	* @return mixed
 	*/
 	public function input($name, $default = '')
 	{
@@ -45,8 +46,9 @@ class Request extends Server
 
 
 	/**
-	* ..
+	* Get cookie data
 	*
+	* @return mixed
 	*/
 	public function cookie($name, $default = '')
 	{
@@ -55,8 +57,9 @@ class Request extends Server
 
 
 	/**
-	* ..
+	* get the request method (GET/POST)
 	*
+	* @return string
 	*/
 	public function method()
 	{
@@ -65,8 +68,9 @@ class Request extends Server
 
 
 	/**
-	* ..
+	* Check whether this request is a type of method
 	*
+	* @return bool
 	*/
 	public function isMethod($method = '')
 	{
@@ -80,8 +84,9 @@ class Request extends Server
 
 
 	/**
-	* ..
+	* Check whether this request is AJAX
 	*
+	* @return bool
 	*/
 	public function isAjax()
 	{
@@ -90,8 +95,9 @@ class Request extends Server
 
 
 	/**
-	* ..
+	* Check whether this request was made from the console (CLI)
 	*
+	* @return bool;
 	*/
 	public function isConsole()
 	{
@@ -100,8 +106,9 @@ class Request extends Server
 
 
 	/**
-	* Get the user's agent
+	* Get the user's agent from the server headers
 	*
+	* @return string
 	*/
 	public function userAgent()
 	{
@@ -113,7 +120,7 @@ class Request extends Server
 	* Get valid IP address of user (if found)
 	*
 	* @source https://gist.github.com/cballou/2201933
-	*
+	* @return string
 	*/
 	public function ipAddress()
 	{
@@ -165,7 +172,7 @@ class Request extends Server
 
 
 	/**
-	* ..
+	* Return current instance of url.
 	*
 	*/
 	public function url()

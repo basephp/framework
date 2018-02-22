@@ -42,7 +42,7 @@ class Server
 
 
 	/**
-	* ...
+	* Set up the server variables
 	*
 	*/
 	public function __construct($server = [], $get = [], $post = [], $cookie = [], $files = [])
