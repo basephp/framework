@@ -12,46 +12,46 @@ use Wine\Support\Collection;
 
 
 /**
- * The Application Class
- *
- */
+* The Application Class
+*
+*/
 class Application
 {
 	/**
-     * The Version
-     *
-     */
+	* The Version
+	*
+	*/
 	const VERSION = '1.0.0-beta';
 
 
 	/**
-     * The current application instance
-     *
-     * @var static
-     */
-    protected static $instance;
+	* The current application instance
+	*
+	* @var static
+	*/
+	protected static $instance;
 
 
 	/**
-     * The application services instances
-     *
-     * @var array
-     */
+	* The application services instances
+	*
+	* @var array
+	*/
     protected $instances = [];
 
 
 	/**
-     * The application middleware instances
-     *
-     * @var array
-     */
-    protected $middleware = [];
+	* The application middleware instances
+	*
+	* @var array
+	*/
+	protected $middleware = [];
 
 
 	/**
-     * Instantiate the Application
-     *
-     */
+	* Instantiate the Application
+	*
+	*/
 	public function __construct( $rootPath = '' )
 	{
 		$rootPath = rtrim($rootPath, '\/');
@@ -69,20 +69,20 @@ class Application
 
 
 	/**
-     * Get the version of the application.
-     *
-     * @return string
-     */
-    public function version()
-    {
-        return static::VERSION;
-    }
+	* Get the version of the application.
+	*
+	* @return string
+	*/
+	public function version()
+	{
+		return static::VERSION;
+	}
 
 
 	/**
-     * Begin our application
-     *
-     */
+	* Begin our application
+	*
+	*/
 	public function initialize()
 	{
 		$this->setDotEnv();
@@ -111,11 +111,11 @@ class Application
 
 
 	/**
-     * Run the application
-     *
-     */
-    protected function run()
-    {
+	* Run the application
+	*
+	*/
+	protected function run()
+	{
 		// match the URL path to a specific route
 		$this->router->match( $this->request->url()->getPath() );
 		$this->router->run( $this );
@@ -126,167 +126,167 @@ class Application
 		$currentUsage = memory_get_usage();
 
 		echo '<br>[ Execution: <b>'.(float) number_format(microtime(true) - APP_START, 4).'</b> Seconds | Memory Used: <b>'.format_bytes($currentUsage,3).'</b> ]';
-    }
+	}
 
 
 	/**
-     * Set the DotEnv settings (variables from ".env")
-     *
-     */
-    protected function setDotEnv()
-    {
+	* Set the DotEnv settings (variables from ".env")
+	*
+	*/
+	protected function setDotEnv()
+	{
 		try
 		{
-            (new Dotenv($this->rootPath, '.env'))->load();
-        }
+			(new Dotenv($this->rootPath, '.env'))->load();
+		}
 		catch (InvalidPathException $e)
 		{
 
-        }
-    }
+		}
+	}
 
 
 	/**
-     * Set the application paths and load up configuration files
-     *
-     */
-    protected function setConfigurations()
-    {
+	* Set the application paths and load up configuration files
+	*
+	*/
+	protected function setConfigurations()
+	{
 		if ($files = $this->getConfigFiles('path.config'))
 		{
 			foreach ($files as $key => $filename)
 			{
-	            $this->config->set(basename($filename, '.php'), require $this->config->get('path.config').'/'.($filename));
-	        }
+				$this->config->set(basename($filename, '.php'), require $this->config->get('path.config').'/'.($filename));
+			}
 		}
-    }
+	}
 
 
 	/**
-     * Load the application routes
-     *
-     */
-    protected function loadRoutes()
-    {
+	* Load the application routes
+	*
+	*/
+	protected function loadRoutes()
+	{
 		if ($files = $this->getConfigFiles('path.routes'))
 		{
 			foreach ($files as $key => $filename)
 			{
 				require $this->config->get('path.routes').'/'.($filename);
-	        }
+			}
 		}
-    }
+	}
 
 
 	/**
-     * get all the configuration files located in the app/config
-     *
-	 * @return array
-     */
-    protected function getConfigFiles($path)
-    {
+	* get all the configuration files located in the app/config
+	*
+	* @return array
+	*/
+	protected function getConfigFiles($path)
+	{
 		return Filesystem::getFiles($this->config->get($path), 'php');
 	}
 
 
 	/**
-     * Set the app settines for internal php configurations
-     *
-     */
-    protected function setAppSettings()
-    {
+	* Set the app settines for internal php configurations
+	*
+	*/
+	protected function setAppSettings()
+	{
 		// set the application time zone
 		date_default_timezone_set($this->config->get('app.timezone','UTC'));
 
 		// set the application character encoding
 		mb_internal_encoding($this->config->get('app.encoding','UTF-8'));
-    }
+	}
 
 
 
 	/**
-     * Register an instance to share within this application
-     *
-     * @param  string  $name
-     * @param  mixed   $instance
-     * @return mixed
-     */
-    public function register($name, $instance)
-    {
-        return $this->instances[$name] = $instance;
-    }
+	* Register an instance to share within this application
+	*
+	* @param  string  $name
+	* @param  mixed   $instance
+	* @return mixed
+	*/
+	public function register($name, $instance)
+	{
+		return $this->instances[$name] = $instance;
+	}
 
 
 	/**
-     * Register new middleware into the application
-     *
-     * @param  string  $name
-     * @param  mixed   $instance
-     * @return mixed
-     */
-    public function addMiddleware($name, $instance)
-    {
-        return $this->middleware[$name] = $instance;
-    }
+	* Register new middleware into the application
+	*
+	* @param  string  $name
+	* @param  mixed   $instance
+	* @return mixed
+	*/
+	public function addMiddleware($name, $instance)
+	{
+		return $this->middleware[$name] = $instance;
+	}
 
 
 	/**
-     * get middleware from the application
-     *
-     * @param  string  $name
-     * @param  mixed   $instance
-     * @return mixed
-     */
-    public function getMiddlewares()
-    {
-        return $this->middleware;
-    }
+	* get middleware from the application
+	*
+	* @param  string  $name
+	* @param  mixed   $instance
+	* @return mixed
+	*/
+	public function getMiddlewares()
+	{
+		return $this->middleware;
+	}
 
 
 	/**
-     * get middleware from the application
-     *
-     * @param  string  $name
-     * @param  mixed   $instance
-     * @return mixed
-     */
-    public function getMiddleware($name)
-    {
-        return ($this->middleware[$name]) ?? null;
-    }
+	* get middleware from the application
+	*
+	* @param  string  $name
+	* @param  mixed   $instance
+	* @return mixed
+	*/
+	public function getMiddleware($name)
+	{
+		return ($this->middleware[$name]) ?? null;
+	}
 
 
 	/**
-     * Get the current instance
-     *
-     * @return static
-     */
-    public static function getInstance()
-    {
-        return static::$instance;
-    }
+	* Get the current instance
+	*
+	* @return static
+	*/
+	public static function getInstance()
+	{
+		return static::$instance;
+	}
 
 
 	/**
-     * Set the application instance
-     *
-     * @return static
-     */
-    public static function setInstance($app)
-    {
-        return static::$instance = $app;
-    }
+	* Set the application instance
+	*
+	* @return static
+	*/
+	public static function setInstance($app)
+	{
+		return static::$instance = $app;
+	}
 
 
 	/**
-     * Get an instance
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        return $this->instances[$key] ?? null;
-    }
+	* Get an instance
+	*
+	* @param  string  $key
+	* @return mixed
+	*/
+	public function __get($key)
+	{
+		return $this->instances[$key] ?? null;
+	}
 
 }
