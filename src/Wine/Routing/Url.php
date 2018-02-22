@@ -21,21 +21,21 @@ class Url
 	* ...
 	*
 	*/
-    protected $url;
+	protected $url;
 
 
 	/**
 	* ...
 	*
 	*/
-    protected $path;
+	protected $path;
 
 
 	/**
 	* ...
 	*
 	*/
-    protected $query;
+	protected $query;
 
 
 	/**
@@ -45,16 +45,16 @@ class Url
 	*/
 	public function setUrl($url = null)
 	{
-        if ($url)
+		if ($url)
 		{
-            $this->url = $url;
+			$this->url = $url;
 
 			$parts = parse_url($url);
 
-            if ($parts)
-            {
-			    $this->setParts($parts);
-            }
+			if ($parts)
+			{
+				$this->setParts($parts);
+			}
 		}
 	}
 
@@ -108,8 +108,8 @@ class Url
 
 		$path = preg_replace_callback(
 			'/(?:[^' . self::CHAR_ALLOWED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches) {
-			    return rawurlencode($matches[0]);
-		    }, $path
+				return rawurlencode($matches[0]);
+			}, $path
 		);
 
 		return $path;

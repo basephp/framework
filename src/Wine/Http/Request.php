@@ -5,7 +5,16 @@ namespace Wine\Http;
 use \Wine\Support\Facades\URL;
 
 /**
-* ...
+* The Request class
+*
+*
+* Current Collections:
+*
+* ->server
+* ->get
+* ->post
+* ->cookies
+* ->files
 *
 */
 class Request extends Server
@@ -17,8 +26,10 @@ class Request extends Server
 	*/
 	public function __construct()
 	{
+		// let's set the global variables
 		parent::__construct($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
 
+		// now let's set our URL
 		URL::setUrl($this->server->get('REQUEST_URI'));
 	}
 
@@ -39,7 +50,7 @@ class Request extends Server
 	*/
 	public function cookie($name, $default = '')
 	{
-		return ($this->fetch(['COOKIE'],$name)) ?? $default;
+		return $this->cookie->get($name, $default);
 	}
 
 
@@ -144,8 +155,6 @@ class Request extends Server
 					return $this->get->get($name, null);
 				case 'POST' :
 					return $this->post->get($name, null);
-				case 'COOKIE' :
-					return $this->cookie->get($name, null);
 				default :
 					return null;
 			}
