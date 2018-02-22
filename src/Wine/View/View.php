@@ -4,74 +4,74 @@ namespace Wine\View;
 
 
 /**
- * This is the View class
- *
- */
+* This is the View class
+*
+*/
 class View
 {
 
-    /**
-	 * Data on single view
-	 *
-	 * @var array
-	 */
+	/**
+	* Data on single view
+	*
+	* @var array
+	*/
 	protected $data = [];
 
 
 	/**
-	 * Data on shared views
-	 *
-	 * @var array
-	 */
+	* Data on shared views
+	*
+	* @var array
+	*/
 	protected $sharedData = [];
 
 
-    /**
-	 * Share the data with all views?
-	 *
-	 * @var bool
-	 */
+	/**
+	* Share the data with all views?
+	*
+	* @var bool
+	*/
 	protected $shared = true;
 
 
-    /**
-	 * Path where view files are stored
-	 *
-	 * @var string
-	 */
+	/**
+	* Path where view files are stored
+	*
+	* @var string
+	*/
 	protected $viewPath = '';
 
 
-    /**
-     * Instantiate the view class
-     *
-     */
+	/**
+	* Instantiate the view class
+	*
+	*/
 	public function __construct()
 	{
-        $this->viewPath = app()->config->get('path.views');
-    }
+		$this->viewPath = app()->config->get('path.views');
+	}
 
 
-    /**
-	 * Build the view files and create its content for output
-	 *
-	 * @param string  $view
-	 * @return string $output
-	 */
+	/**
+	* Build the view files and create its content for output
+	*
+	* @param string  $view
+	* @return string $output
+	*/
 	public function render(string $view)
 	{
-        $output = $this->load($this->viewPath . '/' . str_replace('.php','',$view) . '.php');
+		$output = $this->load($this->viewPath . '/' . str_replace('.php','',$view) . '.php');
 
-        return $output;
-    }
+		return $output;
+	}
 
 
-    /**
-	 * Sets the view data (one global array)
-	 *
-	 * @param array $data
-	 * @return $this
-	 */
+	/**
+	* Sets the view data (one global array)
+	*
+	* @param array $data
+	* @return $this
+	*/
 	public function setData(array $data = [], $shared = true)
 	{
 		$this->data = $data;
@@ -85,57 +85,57 @@ class View
 	}
 
 
-    /**
-	 * Load the view file
-	 *
-	 * @param string $path
-	 * @return string
-	 */
+	/**
+	* Load the view file
+	*
+	* @param string $path
+	* @return string
+	*/
 	public function load(string $__path)
 	{
 		$obLevel = ob_get_level();
 
 		ob_start();
 
-        extract( (($this->shared === true) ? $this->sharedData : $this->data) , EXTR_SKIP);
+		extract( (($this->shared === true) ? $this->sharedData : $this->data) , EXTR_SKIP);
 
 		try {
-            include($__path);
-        }
+			include($__path);
+		}
 		catch (Exception $e) {
-            $this->handleViewException($e, $obLevel);
-        }
+			$this->handleViewException($e, $obLevel);
+		}
 
-        return ltrim(ob_get_clean());
-    }
+		return ltrim(ob_get_clean());
+	}
 
 
 	/**
-     * Handle a view exception.
-     *
-     * @param  \Exception  $e
-     * @param  int  $obLevel
-     * @return void
-     *
-     * @throws \Exception
-     */
-    protected function handleViewException(Exception $e, $obLevel)
-    {
-        while (ob_get_level() > $obLevel) {
-            ob_end_clean();
-        }
+	* Handle a view exception.
+	*
+	* @param  \Exception  $e
+	* @param  int  $obLevel
+	* @return void
+	*
+	* @throws \Exception
+	*/
+	protected function handleViewException(Exception $e, $obLevel)
+	{
+		while (ob_get_level() > $obLevel) {
+			ob_end_clean();
+		}
 
-        throw $e;
-    }
+		throw $e;
+	}
 
 
-    /**
-	 * Return current instance of self.
-	 *
-	 */
-    public function self()
-    {
-        return $this;
-    }
+	/**
+	* Return current instance of self.
+	*
+	*/
+	public function self()
+	{
+		return $this;
+	}
 
 }

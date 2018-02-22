@@ -37,7 +37,7 @@ class Application
 	*
 	* @var array
 	*/
-    protected $instances = [];
+	protected $instances = [];
 
 
 	/**
