@@ -332,7 +332,7 @@ class Router
 
 		$middleware = (isset($params[0]) && is_array($params[0])) ? $this->attachMiddleware($params[0]) : [];
 		$middleware = array_merge($this->useMiddleware, $middleware);
-=
+
 		$action     = array_pop($params);
 
 		$patterns   = $this->getPatternParameters($path);
