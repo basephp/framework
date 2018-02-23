@@ -56,7 +56,6 @@ class Controller
 	*/
 	public function callMethod($method, $parameters)
 	{
-		// $content = $controller->{$this->matchedRoute['action']['method']}(...$this->matchedRoute['parameters']);
 		return call_user_func_array([$this, $method], $parameters);
 	}
 

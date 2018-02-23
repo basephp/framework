@@ -8,6 +8,7 @@
     },
     "autoload": {
         "files": [
+			"src/Wine/Support/Helpers/core.php",
             "src/Wine/Support/Helpers/common.php"
         ],
         "psr-4": {

@@ -6,79 +6,91 @@ use \Wine\Application;
 use \Wine\Http\Request;
 use \Wine\Http\Middleware;
 
+
+/**
+* The router class
+*
+*
+*/
 class Router
 {
-    /**
-     * The current group
-     *
-     * @var string
-     */
+	/**
+	* The current group
+	*
+	* @var string
+	*/
 	protected $useGroup = null;
 
-    /**
-     * The current middleware
-     *
-     * @var string
-     */
-	protected $useMiddleware = [];
 
 	/**
-     * The namespaces we will need to look up later
-     *
-     * @var array
-     */
+	* The current middleware
+	*
+	* @var string
+	*/
+	protected $useMiddleware = [];
+
+
+	/**
+	* The namespaces we will need to look up later
+	*
+	* @var array
+	*/
 	protected $namespaces = [];
 
-    /**
-     * The router patterns
-     *
-     * @var array
-     */
+
+	/**
+	* The router patterns
+	*
+	* @var array
+	*/
 	protected $patterns = [];
 
-    /**
-     * The registered middlewares
-     *
-     * @var array
-     */
+
+	/**
+	* The registered middlewares
+	*
+	* @var array
+	*/
 	protected $middleware = [];
 
-    /**
-     * The registered middlewares
-     *
-     * @var array
-     */
+
+	/**
+	* The registered middlewares
+	*
+	* @var array
+	*/
 	protected $autoload = [];
 
-    /**
-     * The registered routes
-     *
-     * @var array
-     */
+
+	/**
+	* The registered routes
+	*
+	* @var array
+	*/
 	protected $routes = [];
 
 
 	/**
-     * The matched route
-     *
-     * @var array
-     */
+	* The matched route
+	*
+	* @var array
+	*/
 	protected $matchedRoute = [];
 
 
 	/**
-     * .....
-     *
-	 *
-     */
-    public function attachMiddleware(array $middlewares = [])
-    {
+	* .....
+	*
+	*
+	*/
+	public function attachMiddleware(array $middlewares = [])
+	{
 		$newMiddlewares = [];
 
 		foreach($middlewares as $middleware)
 		{
 			$mDetails = explode(':',$middleware);
-			$newMiddlewares[$mDetails[0]] = (isset($mDetails[1]) ? (explode(',',$mDetails[1])) : []);
+			$newMiddlewares[$mDetails[0]] = explode(',',(($mDetails[1]) ?? ''));
 		}
 
 		return $newMiddlewares;
@@ -86,15 +98,13 @@ class Router
 
 
 	/**
-     * Run a speciifc route and its actions
-     *
-	 * - Middleware (on request)
-	 * - Middleware (on response)
-	 *
-     * @return string
-     */
-    public function run(Application $app)
-    {
+	* Run the matched route and its actions
+	*
+	*
+	* @return string
+	*/
+	public function run(Application $app)
+	{
 		$this->loadMiddlewares($app);
 
 		ob_start();
@@ -120,17 +130,17 @@ class Router
 
 			$app->response->send();
 		}
-    }
+	}
 
 
 	/**
-     * Run the closure function
-     *
-	 *
-     * @return string
-     */
-    protected function callClosure()
-    {
+	* Run the closure function
+	*
+	*
+	* @return string
+	*/
+	protected function callClosure()
+	{
 		$content = $this->matchedRoute['action']['closure'](...$this->matchedRoute['parameters']);
 
 		return $content;
@@ -138,13 +148,13 @@ class Router
 
 
 	/**
-     * Run the controller class
-     *
-	 *
-     * @return string
-     */
-    protected function callController(Application $app)
-    {
+	* Run the controller class
+	*
+	*
+	* @return string
+	*/
+	protected function callController(Application $app)
+	{
 		$controllerNamespace = ($this->namespace['controllers']) ?? '\\App\\Controllers';
 		$controllerName      = $controllerNamespace.'\\'.$this->matchedRoute['action']['controller'];
 
@@ -159,13 +169,13 @@ class Router
 
 
 	/**
-     * Load Middlewares
-     *
-	 *
-     * @return bool
-     */
-    protected function loadMiddlewares(Application $app)
-    {
+	* Load Middlewares
+	*
+	*
+	* @return bool
+	*/
+	protected function loadMiddlewares(Application $app)
+	{
 		$middlewares = $this->getMiddleware();
 		$selectedMiddleware = $this->getMatchedRoute()['middleware'];
 
@@ -179,13 +189,13 @@ class Router
 
 
 	/**
-     * Call middleware "before" request
-     *
-	 *
-     * @return bool
-     */
-    protected function callRequestMiddleware(Application $app)
-    {
+	* Call middleware "before" request
+	*
+	*
+	* @return bool
+	*/
+	protected function callRequestMiddleware(Application $app)
+	{
 		$middlewares = $app->getMiddlewares();
 		$current     = $this->getMatchedRoute()['middleware'];
 
@@ -203,13 +213,13 @@ class Router
 
 
 	/**
-     * Call middleware "after" response
-     *
-	 *
-     * @return void
-     */
-    protected function callResponseMiddleware(Application $app)
-    {
+	* Call middleware "after" response
+	*
+	*
+	* @return void
+	*/
+	protected function callResponseMiddleware(Application $app)
+	{
 		$middlewares = $app->getMiddlewares();
 		$current     = $this->getMatchedRoute()['middleware'];
 
@@ -225,27 +235,27 @@ class Router
 
 
 	/**
-     * Clean the path
-     *
-     * @return string
-     */
-    protected function cleanPath($path)
-    {
+	* Clean the path
+	*
+	* @return string
+	*/
+	protected function cleanPath($path)
+	{
 		$path = str_replace('//','/',$path);
 
 		if ($path[0]!='/') $path = '/'.$path;
 
 		return $path;
-    }
+	}
 
 
 	/**
-     * set the action of the route Closure|Controller@Method
-     *
-     * @return array
-     */
-    protected function setAction($action)
-    {
+	* set the action of the route Closure|Controller@Method
+	*
+	* @return array
+	*/
+	protected function setAction($action)
+	{
 		if (is_callable($action))
 		{
 			return [
@@ -259,21 +269,21 @@ class Router
 			'controller' => $action[0],
 			'method' => ($action[1]) ?? 'index'
 		];
-    }
+	}
 
 
 	/**
-     * Get the pattern parameters found in paths.
-     *
-     * @return array
-     */
-    protected function getPatternParameters($path)
-    {
+	* Get the pattern parameters found in paths.
+	*
+	* @return array
+	*/
+	protected function getPatternParameters($path)
+	{
 		$params = [];
 
 		if ($path!='')
 		{
-        	preg_match_all('/\{(.*?)\}/', $path, $matches);
+			preg_match_all('/\{(.*?)\}/', $path, $matches);
 
 			if (isset($matches[1]))
 			{
@@ -284,17 +294,17 @@ class Router
 			}
 		}
 
-        return $params;
-    }
+		return $params;
+	}
 
 
 	/**
-     * Replace the pattern names with REGEX patterns if found.
-     *
-     * @return array
-     */
-    protected function setPathPatterns($path)
-    {
+	* Replace the pattern names with REGEX patterns if found.
+	*
+	* @return array
+	*/
+	protected function setPathPatterns($path)
+	{
 		if (!empty($this->patterns))
 		{
 			foreach($this->patterns as $name=>$pattern)
@@ -308,23 +318,22 @@ class Router
 		}
 
 		return $path;
-    }
+	}
 
 
 	/**
-     * Register a new route with the router.
-     *
-     *
-     */
+	* Register a new route with the router.
+	*
+	*
+	*/
 	public function add($path, ...$params)
 	{
 		$prefix     = is_null($this->useGroup) ? '' : $this->useGroup . '/';
 
-        $middleware = (isset($params[0]) && is_array($params[0])) ? $this->attachMiddleware($params[0]) : [];
-        $middleware = array_merge($this->useMiddleware, $middleware);
-		// $middleware = array_unique($middleware);
-
-        $action     = array_pop($params);
+		$middleware = (isset($params[0]) && is_array($params[0])) ? $this->attachMiddleware($params[0]) : [];
+		$middleware = array_merge($this->useMiddleware, $middleware);
+=
+		$action     = array_pop($params);
 
 		$patterns   = $this->getPatternParameters($path);
 		$path       = $this->setPathPatterns($path);
@@ -334,20 +343,20 @@ class Router
 
 		$this->routes[$officialPath] = [
 			'parameters' => $patterns,
-            'middleware' => $middleware,
-            'action' => $this->setAction($action)
-        ];
+			'middleware' => $middleware,
+			'action' => $this->setAction($action)
+		];
 	}
 
 
-    /**
-     * create the group
-     *
-     */
+	/**
+	* create the group
+	*
+	*/
 	public function group(...$params)
 	{
 		$oldGroup = $this->useGroup;
-        $oldMiddleware = $this->useMiddleware;
+		$oldMiddleware = $this->useMiddleware;
 
 		// path is always first
 		$path = (isset($params[0]) && !is_array($params[0]) && !is_callable($params[0])) ? $params[0] : '';
@@ -357,17 +366,17 @@ class Router
 		}
 
 		// middleware is always the first or second (never the third)
-        $this->useMiddleware  = (isset($params[0]) && is_array($params[0])) ? $params[0] : [];
+		$this->useMiddleware  = (isset($params[0]) && is_array($params[0])) ? $params[0] : [];
 		$this->useMiddleware  = (isset($params[1]) && is_array($params[1])) ? $params[1] : $this->useMiddleware;
 		$this->useMiddleware  = $this->attachMiddleware($this->useMiddleware);
 
-        if (!empty($this->useMiddleware) && !empty($oldMiddleware)) {
-            $this->useMiddleware = array_merge($oldMiddleware, $this->useMiddleware);
-        }
+		if (!empty($this->useMiddleware) && !empty($oldMiddleware)) {
+			$this->useMiddleware = array_merge($oldMiddleware, $this->useMiddleware);
+		}
 
-        if (empty($this->useMiddleware) && !empty($oldMiddleware)) {
-            $this->useMiddleware = $oldMiddleware;
-        }
+		if (empty($this->useMiddleware) && !empty($oldMiddleware)) {
+			$this->useMiddleware = $oldMiddleware;
+		}
 
 		// callback is always last (even though it can be the only)
 		$callback = array_pop($params);
@@ -376,82 +385,82 @@ class Router
 			$callback($this);
 		}
 
-        $this->useMiddleware = $oldMiddleware;
+		$this->useMiddleware = $oldMiddleware;
 		$this->useGroup = $oldGroup;
 	}
 
 
-    /**
-     * Register a new middleware on the route
-     *
-     *
-     */
+	/**
+	* Register a new middleware on the route
+	*
+	*
+	*/
 	public function register(array $elements)
 	{
 		if (isset($elements['patterns'])) {
-            $this->registerPatterns($elements['patterns']);
-        }
+			$this->registerPatterns($elements['patterns']);
+		}
 
-        if (isset($elements['middleware'])) {
-            $this->registerMiddleware($elements['middleware']);
-        }
+		if (isset($elements['middleware'])) {
+			$this->registerMiddleware($elements['middleware']);
+		}
 
-        if (isset($elements['autoload'])) {
-            $this->registerAutoload($elements['autoload']);
-        }
+		if (isset($elements['autoload'])) {
+			$this->registerAutoload($elements['autoload']);
+		}
 
 		if (isset($elements['controllers'])) {
-            $this->namespace['controllers'] = $elements['controllers'];
-        }
+			$this->namespace['controllers'] = $elements['controllers'];
+		}
 	}
 
 
-    /**
-     * Register a new middleware on the route
-     *
-     *
-     */
+	/**
+	* Register a new middleware on the route
+	*
+	*
+	*/
 	protected function registerSettings($config = '', array $values)
 	{
-        foreach($values as $name=>$value)
-        {
-            if (is_string($value) && $value != '')
-    		{
-    			$this->$config[$name] = $value;
-    		}
-        }
+		foreach($values as $name=>$value)
+		{
+			if (is_string($value) && $value != '')
+			{
+				$this->$config[$name] = $value;
+			}
+		}
 
-        $this->$config = array_unique($this->$config);
+		$this->$config = array_unique($this->$config);
 	}
 
 
-    /**
-     * Register a new middleware on the route
-     *
-     *
-     */
+	/**
+	* Register a new middleware on the route
+	*
+	*
+	*/
 	public function registerMiddleware(array $middleware)
 	{
-        $this->registerSettings('middleware', $middleware);
+		$this->registerSettings('middleware', $middleware);
 	}
 
 
-    /**
-     * Register a new pattern for the routes
-     *
-     *
-     */
+	/**
+	* Register a new pattern for the routes
+	*
+	*
+	*/
 	public function registerPatterns(array $patterns)
 	{
 		$this->registerSettings('patterns', $patterns);
 	}
 
 
-    /**
-     * Register a new pattern for the routes
-     *
-     *
-     */
+	/**
+	* Register a new pattern for the routes
+	*
+	*
+	*/
 	public function registerAutoload(array $autoload)
 	{
 		$this->registerSettings('autoload', $autoload);
@@ -459,11 +468,11 @@ class Router
 
 
 	/**
-     * Match the path to a route
-     *
-     */
-    public function match($path = '')
-    {
+	* Match the path to a route
+	*
+	*/
+	public function match($path = '')
+	{
 		if ($path == '') return false;
 
 		foreach ($this->routes as $routePath => $routeAction)
@@ -487,47 +496,47 @@ class Router
 				break;
 			}
 		}
-    }
+	}
 
 
-    /**
-     * Get the patterns
-     *
-     *
-     */
+	/**
+	* Get the patterns
+	*
+	*
+	*/
 	public function getPatterns()
 	{
 		return $this->patterns;
 	}
 
 
-    /**
-     * Get the middlewares
-     *
-     *
-     */
+	/**
+	* Get the middlewares
+	*
+	*
+	*/
 	public function getMiddleware()
 	{
 		return $this->middleware;
 	}
 
 
-    /**
-     * Get the middlewares
-     *
-     *
-     */
+	/**
+	* Get the middlewares
+	*
+	*
+	*/
 	public function getAutoload()
 	{
 		return $this->autoload;
 	}
 
 
-    /**
-     * Get the routes
-     *
-     *
-     */
+	/**
+	* Get the routes
+	*
+	*
+	*/
 	public function getRoutes()
 	{
 		return $this->routes;
@@ -535,10 +544,10 @@ class Router
 
 
 	/**
-     * ...
-     *
-     *
-     */
+	* ...
+	*
+	*
+	*/
 	public function getMatchedRoute()
 	{
 		return $this->matchedRoute;
@@ -546,10 +555,10 @@ class Router
 
 
 	/**
-     * ...
-     *
-     *
-     */
+	* ...
+	*
+	*
+	*/
 	public function self()
 	{
 		return $this;
