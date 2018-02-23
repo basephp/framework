@@ -482,16 +482,41 @@ class Router
 
 				$routeAction['parameters'] = [];
 
+				$tempParameters = [];
+				$p = 0;
 				foreach($matches as $index=>$match)
 				{
+					$p++;
 					$routeParamIndex = ($routeParameters[$index]) ?? $index;
-					$routeAction['parameters'][] = $match;
+					$tempParameters[$p] = $match;
+				}
+
+				$methodParams = explode('/',$routeAction['action']['method']);
+
+				$routeAction['action']['method'] = $methodParams[0];
+
+				unset($methodParams[0]);
+
+				if (!empty($methodParams))
+				{
+					foreach($methodParams as $param)
+					{
+						$p = ($tempParameters[str_replace('$','',$param)]) ?? '';
+						if ($p === '') continue;
+
+						$routeAction['parameters'][] = $p;
+					}
+				}
+				else
+				{
+					$routeAction['parameters'] = $tempParameters;
 				}
 
 				$this->matchedRoute = $routeAction;
 
 				break;
 			}
+
 		}
 	}
 
