@@ -31,19 +31,16 @@ class Router
 
 
 	/**
-	* The namespaces we will need to look up later
-	*
-	* @var array
-	*/
-	protected $namespaces = [];
-
-
-	/**
 	* The router patterns
 	*
 	* @var array
 	*/
-	protected $patterns = [];
+	protected $patterns = [
+		'any' => '.*',
+		'num' => '[0-9]+',
+		'alphanum' => '[a-zA-Z0-9]+',
+		'alpha' => '[a-zA-Z]+'
+	];
 
 
 	/**
