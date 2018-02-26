@@ -137,4 +137,15 @@ class Collection
 	}
 
 
+    /**
+	* If the collection is seen as a string, send it as json
+	*
+	* @return string JSON formatted
+	*/
+	public function __toString()
+	{
+		return json_encode($this->items,1);
+	}
+
+
 }
