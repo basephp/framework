@@ -62,6 +62,7 @@ class Application
             	'app' => $rootPath.'/app',
             	'config' => $rootPath.'/config',
             	'views' => $rootPath.'/views',
+                'storage' => $rootPath.'/storage',
             	'routes' => $rootPath.'/routes'
             ]
         ]));
@@ -87,11 +88,11 @@ class Application
     {
         $this->setDotEnv();
 
+        self::setInstance($this);
+
         $this->setConfigurations();
 
         $this->setAppSettings();
-
-        static::setInstance($this);
 
         $this->register('router',Route::self());
 

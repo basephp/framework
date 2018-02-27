@@ -48,7 +48,7 @@ class View
 	*/
 	public function __construct()
 	{
-		$this->viewPath = app()->config->get('path.views');
+		$this->viewPath = config('path.views');
 	}
 
 
