@@ -67,7 +67,7 @@ class Files Implements ProviderInterface
     */
     public function setLocation(string $location)
     {
-        $this->location = $location;
+        $this->location = $location.((substr($location,-1)=='/') ? '' : '/');
     }
 
 }

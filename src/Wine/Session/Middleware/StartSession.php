@@ -26,7 +26,7 @@ class StartSession extends Middleware
         if ($provider = config('session.provider'))
         {
             $this->session = new Session($provider, [
-                'maxlifetime' => config('session.expiration'),
+                'expiration' => config('session.expiration'),
                 'save_path' => config('session.save_path')
             ]);
 

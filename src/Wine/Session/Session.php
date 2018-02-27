@@ -26,7 +26,7 @@ class Session
      *
      * @var int
      */
-    protected $maxlifetime = 3600;
+    protected $expiration = 3600;
 
 
     /*
@@ -112,7 +112,7 @@ class Session
      */
     public function gc()
     {
-        return $this->provider->gc($this->maxlifetime);
+        return $this->provider->gc($this->expiration);
     }
 
 
@@ -122,7 +122,7 @@ class Session
      */
     public function setOptions($options = [])
     {
-        $this->maxlifetime = ($options['maxlifetime']) ?? 3600;
+        $this->expiration = ($options['expiration']) ?? 3600;
 
         $this->savePath = ($options['save_path']) ?? '';
     }
@@ -144,7 +144,7 @@ class Session
      */
     public function setProviderSaveLocation()
     {
-        $this->provider->setLocation($this->savePath.'/');
+        $this->provider->setLocation($this->savePath);
     }
 
 
