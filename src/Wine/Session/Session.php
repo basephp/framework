@@ -76,6 +76,16 @@ class Session
 
 
     /*
+     * Set current user session id
+     *
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
+    /*
      * Get the current session data
      *
      */
@@ -89,10 +99,24 @@ class Session
      * Start the Session!
      *
      */
-    public function start()
+    public function start($id, $data = [])
     {
-        $this->sessionData = new Collection();
-        $this->id = md5(uniqid().time());
+        // set an existing ID or generate a new one
+        $this->setId(($id) ?? $this->generateId());
+
+        $providerData = $this->provider->get($this->getId());
+
+        $this->sessionData = new Collection((($providerData) ? $providerData : []));
+    }
+
+
+    /*
+     * Generate a new session id
+     *
+     */
+    public function generateId()
+    {
+        return md5(uniqid().time());
     }
 
 

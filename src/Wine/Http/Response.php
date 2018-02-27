@@ -54,6 +54,27 @@ class Response
 	}
 
 
+    /**
+    * Set the cookie for our response
+    *
+    */
+    public function setCookie($options)
+    {
+        /*$expire = ($options['expire']) ?? 0;
+
+        if ( ! is_numeric($expire))
+		{
+			$expire = time() - 86500;
+		}
+		else
+		{
+			$expire = ($expire > 0) ? time() + $expire : 0;
+		}
+
+        setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);*/
+    }
+
+
 	/**
 	* Sets a header for the response
 	*
@@ -113,16 +134,30 @@ class Response
 	*/
 	public function send()
 	{
+        // ob_start();
+
 		if ($this->output != '')
 		{
 			$this->setContentType('text/html');
 		}
 
-		$this->sendHeaders();
+        $this->sendHeaders();
 
 		if ($this->output != '') echo $this->output;
 
 		echo $this->body;
+
+        // $size = ob_get_length();
+
+        // Set the content length of the response.
+        // header("Content-Length: $size");
+
+        // Close the connection.
+        // header("Connection: close");
+
+        // ob_end_flush();
+        // ob_flush();
+        // flush();
 	}
 
 

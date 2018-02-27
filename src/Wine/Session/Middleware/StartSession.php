@@ -19,6 +19,12 @@ class StartSession extends Middleware
 
 
     /**
+     * session id
+     */
+    public $sessionId = null;
+
+
+    /**
      * handle our request
      */
     public function request()
@@ -30,7 +36,11 @@ class StartSession extends Middleware
                 'save_path' => config('session.save_path')
             ]);
 
-            $this->session->start();
+            // get the session id (if exist)
+            $this->sessionId = $this->request->cookie(config('session.cookie')) ?? null;
+
+            // start the session with the sessionId
+            $this->session->start($this->sessionId);
 
             // set the session up on the request
             $this->request->session = $this->session->get();

@@ -57,7 +57,7 @@ class Request extends Server
 	*
 	* @return mixed
 	*/
-	public function cookie($name, $default = '')
+	public function cookie($name, $default = null)
 	{
 		return $this->cookie->get($name, $default);
 	}
