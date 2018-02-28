@@ -60,7 +60,9 @@ class Response
     */
     public function setCookie($options)
     {
-        /*$expire = ($options['expire']) ?? 0;
+        $expire = ($options['expire']) ?? 0;
+        $value  = ($options['value']) ?? '';
+        $name   = ($options['name']) ?? 'unnamed';
 
         if ( ! is_numeric($expire))
 		{
@@ -71,7 +73,12 @@ class Response
 			$expire = ($expire > 0) ? time() + $expire : 0;
 		}
 
-        setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);*/
+        $secure = false;
+        $httponly = false;
+        $path = '/';
+        $domain = '';
+
+        setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
     }
 
 

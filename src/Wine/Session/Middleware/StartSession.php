@@ -43,6 +43,7 @@ class StartSession extends Middleware
             $this->session->start($this->sessionId);
 
             // set the session up on the request
+            // gets the session \Collection() of data
             $this->request->session = $this->session->get();
         }
     }
