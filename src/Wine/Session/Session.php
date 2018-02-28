@@ -22,11 +22,11 @@ class Session
 
 
     /*
-     * Set the maxlifetime of session
+     * Set the max lifetime of session
      *
      * @var int
      */
-    protected $expiration = 3600;
+    protected $expiration = 0;
 
 
     /*
@@ -55,6 +55,8 @@ class Session
     /*
      * Bootup session class and set the provider
      *
+     * @param string $provider
+     * @param array  $options
      */
     public function __construct($provider, array $options = [])
     {
@@ -68,6 +70,7 @@ class Session
     /*
      * Get current user session id
      *
+     * @return mixed $id
      */
     public function getId()
     {
@@ -104,8 +107,10 @@ class Session
         // set an existing ID or generate a new one
         $this->setId(($id) ?? $this->generateId());
 
+        // get the data from the provider
         $providerData = $this->provider->get($this->getId());
 
+        // set the session data so we can retreive it
         $this->sessionData = new Collection((($providerData) ? $providerData : []));
     }
 
