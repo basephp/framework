@@ -11,19 +11,19 @@ use \Wine\Support\Collection;
 class Headers
 {
 
-	/**
-	* The headers
-	*/
-	protected $headers = [];
+    /**
+    * The headers
+    */
+    protected $headers = [];
 
 
-	/**
-	* ...
-	*
-	*/
-	public function __construct()
-	{
+    /**
+    * ...
+    *
+    */
+    public function __construct()
+    {
 
-	}
+    }
 
 }
