@@ -113,6 +113,17 @@ class Response
 
 
     /**
+    * get the putput
+    *
+    * @return string $output
+    */
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+
+    /**
     * Set the response body (replacing any existing body)
     *
     * @param  mixed $body
@@ -153,18 +164,6 @@ class Response
         if ($this->output != '') echo $this->output;
 
         echo $this->body;
-
-        // $size = ob_get_length();
-
-        // Set the content length of the response.
-        // header("Content-Length: $size");
-
-        // Close the connection.
-        // header("Connection: close");
-
-        // ob_end_flush();
-        // ob_flush();
-        // flush();
     }
 
 

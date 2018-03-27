@@ -123,10 +123,20 @@ class Application
 
         // echo '<pre>'.print_r($this->router->getMiddleware(),1).'</pre>';
 
-        $systemMemory = memory_get_usage(true);
-        $currentUsage = memory_get_usage();
+        if ($body = $this->response->getBody())
+        {
+            $systemMemory = memory_get_usage(true);
+            $currentUsage = memory_get_usage();
 
-        echo '<br>[ Execution: <b>'.(float) number_format(microtime(true) - APP_START, 4).'</b> Seconds | Memory Used: <b>'.format_bytes($currentUsage,3).'</b> ]';
+            $time = (float) number_format(microtime(true) - APP_START, 4);
+            $memory = format_bytes($currentUsage,3);
+
+            $body = str_replace('{APP_TIME}', $time, $body);
+            $body = str_replace('{APP_MEMORY}', $memory, $body);
+
+            $this->response->setBody($body);
+            $this->response->send();
+        }
     }
 
 

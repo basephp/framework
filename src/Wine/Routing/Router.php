@@ -125,10 +125,10 @@ class Router
 
 			$this->callResponseMiddleware($app);
 
-			$app->response->send();
+            // let's run this within the application class instead
+			// $app->response->send();
 		}
 	}
-
 
 	/**
 	* Run the closure function
