@@ -548,18 +548,6 @@ class Arr
     }
 
     /**
-     * Sort the array using the given callback or "dot" notation.
-     *
-     * @param  array  $array
-     * @param  callable|string|null  $callback
-     * @return array
-     */
-    public static function sort($array, $callback = null)
-    {
-        return Collection::make($array)->sortBy($callback)->all();
-    }
-
-    /**
      * Recursively sort an array by keys and values.
      *
      * @param  array  $array
