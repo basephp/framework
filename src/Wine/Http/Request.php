@@ -161,20 +161,26 @@ class Request extends Server
     */
     public function fetch(array $methods = ['GET','POST'], $name = '')
     {
+        if (!is_array($methods)) $methods = [$methods];
+
         foreach($methods as $method)
         {
             switch($method)
             {
                 case 'GET' :
-                    return $this->get->get($name, null);
-                case 'POST' :
-                    return $this->post->get($name, null);
+                    if ($data = $this->get->get($name, null))
+                    {
+                        return $data;
+                    }
+                case 'POST':
+                    if ($data = $this->post->get($name, null))
+                    {
+                        return $data;
+                    }
                 default :
                     return null;
             }
         }
-
-        return null;
     }
 
 
