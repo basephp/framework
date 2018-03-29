@@ -9,8 +9,12 @@ Request
 
 The ``Request`` class is used to collect all the incoming requests from the browser and url segments. This class is available through-out the application, and is loaded automatically in Controllers and Middleware.
 
+.. note:: The following variables are parsed ``$_SERVER``, ``$_GET``, ``$_POST``, ``$_COOKIE``, ``$_FILES``
+
 Methods
 ~~~~~~~~~~~
+
+
 
 Input: ``$_GET`` and ``$_POST``
 
@@ -32,17 +36,13 @@ Get: ``$_POST``
     $request->post($name, $default)
 
 
-***************
-Class Reference
-***************
+Method Reference
+------------
 
-.. php:class:: Base\\Http\\Request
+input()    ``$_GET`` and ``$_POST``
+get()      ``$_GET``
+post()     ``$_POST``
 
-	.. php:method:: input()
-
-		Checks ``$_GET`` and ``$_POST`` inputs for a value::
-
-			echo $request->input($name, $default);
 
 
 Response
