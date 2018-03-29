@@ -32,6 +32,19 @@ Get: ``$_POST``
     $request->post($name, $default)
 
 
+***************
+Class Reference
+***************
+
+.. php:class:: Base\\Http\\Request
+
+	.. php:method:: input()
+
+		Checks ``$_GET`` and ``$_POST`` inputs for a value::
+
+			echo $request->input($name, $default);
+
+
 Response
 -------------------------------
 
