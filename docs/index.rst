@@ -15,13 +15,13 @@ Method Reference
 ------------
 
 
-``input($name, $default)``
+- ``input($name, $default)``
 ^^^^^^^^^^^^
 
 Input method is used for ``$_GET`` and ``$_POST`` variables.
 
 
-``get($name, $default)``
+* ``get($name, $default)``
 ^^^^^^^^^^^^
 
 Get method is used for ``$_GET`` variable.
