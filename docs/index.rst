@@ -14,8 +14,6 @@ The ``Request`` class is used to collect all the incoming requests from the brow
 Method Reference
 ------------
 
-These methods are available:
-
 +------------------------+----------------------------------+
 | Method                 | Description                      |
 +========================+==================================+
@@ -29,12 +27,6 @@ These methods are available:
 +------------------------+----------------------------------+
 | method()               | ``$_SERVER['REQUEST_METHOD']``   |
 +------------------------+----------------------------------+
-| isMethod()             | Check whether the request is a specific method. |
-+------------------------+----------------------------------+
-| isAjax()               | Check whether the request is coming from ``xmlhttprequest`` |
-+------------------------+----------------------------------+
-| isConsole()            | Check whether the request is ``cli`` |
-+------------------------+-----------------------+----------+
 
 
 Response
