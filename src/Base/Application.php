@@ -106,7 +106,7 @@ class Application
         // now it's time to load our routes
         $this->loadRoutes();
 
-        // execute the application
+        // run our application
         $this->run();
     }
 
@@ -117,8 +117,21 @@ class Application
     */
     protected function run()
     {
-        // match the URL path to a specific route
-        $this->router->match( $this->request->url()->getPath() );
+        if ($this->request->isConsole())
+        {
+            // keep the script running even when console goes away.
+            ignore_user_abort(true);
+
+            // match the URL path to a specific route
+            $this->router->match( $this->request->getConsolePath() );
+        }
+        else
+        {
+            // match the URL path to a specific route
+            $this->router->match( $this->request->url()->getPath() );
+        }
+
+        // do all the magic...
         $this->router->run( $this );
 
         if ($body = $this->response->getBody())

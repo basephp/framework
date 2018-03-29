@@ -37,7 +37,7 @@ class Request extends Server
         parent::__construct($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
 
         // now let's set the URL
-        URL::setUrl($this->server->get('REQUEST_URI'));
+        URL::setUrl($this->server->get('REQUEST_URI','/'));
     }
 
 
@@ -172,11 +172,13 @@ class Request extends Server
                     {
                         return $data;
                     }
+                break;
                 case 'POST':
                     if ($data = $this->post->get($name, null))
                     {
                         return $data;
                     }
+                break;
                 default :
                     return null;
             }
@@ -191,6 +193,23 @@ class Request extends Server
     public function url()
     {
         return URL::self();
+    }
+
+
+    /**
+    * getConsolePath
+    *
+    */
+    public function getConsolePath()
+    {
+        $arg = $this->server->get('argv', []);
+        if ($arg[0] == 'index.php') unset($arg[0]);
+
+        $path = implode('/',$arg);
+
+        if ($path[0]!='/') $path = '/'.$path;
+
+        return $path;
     }
 
 

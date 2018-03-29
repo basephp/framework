@@ -174,7 +174,7 @@ class Router
 	protected function loadMiddlewares(Application $app)
 	{
 		$middlewares = $this->getMiddleware();
-		$selectedMiddleware = $this->getMatchedRoute()['middleware'];
+		$selectedMiddleware = $this->getMatchedRoute()['middleware'] ?? [];
 
 		foreach($selectedMiddleware as $name=>$middleware)
 		{
@@ -194,7 +194,7 @@ class Router
 	protected function callRequestMiddleware(Application $app)
 	{
 		$middlewares = $app->getMiddlewares();
-		$current     = $this->getMatchedRoute()['middleware'];
+		$current     = $this->getMatchedRoute()['middleware'] ?? [];
 
 		foreach($middlewares as $name=>$middleware)
 		{
@@ -218,7 +218,7 @@ class Router
 	protected function callResponseMiddleware(Application $app)
 	{
 		$middlewares = $app->getMiddlewares();
-		$current     = $this->getMatchedRoute()['middleware'];
+		$current     = $this->getMatchedRoute()['middleware'] ?? [];
 
 		foreach($middlewares as $name=>$middleware)
 		{
