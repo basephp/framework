@@ -4,10 +4,19 @@ BasePHP
 A modern minimalist PHP framework.
 
 
-Http
+Http Request/Response
 -------------------------------
-- `Requests <http://basephp.readthedocs.io/en/latest/httpd/request.html>`__
-- `Response <http://basephp.readthedocs.io/en/latest/httpd/response.html>`__
+
+Request
+~~~~~~~~~~~
+
+The request class is used to collect all the incoming requests from the browser and url. This class is available through-out the application, and is loaded automatically in Controllers and Middleware.
+
+
+Response
+~~~~~~~~~~~
+
+
 
 Routing
 -------------------------------
