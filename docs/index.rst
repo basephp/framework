@@ -35,6 +35,15 @@ Method Reference
 +------------------------------+
 
 
+=====  =====
+Method  Description
+=====  =====
+**input($name, $default)**  ``$_GET``, ``$_POST``
+**get($name, $default)**  ``$_GET``
+**post($name, $default)**  ``$_POST``
+=====  =====
+
+
 Response
 -------------------------------
 
