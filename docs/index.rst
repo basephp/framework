@@ -14,6 +14,13 @@ The ``Request`` class is used to collect all the incoming requests from the brow
 Method Reference
 ------------
 
+
+``input($name, $default)``
+^^^^^^^^^^^^
+
+Input method is used for ``$_GET`` and ``$_POST`` variables.
+
+
 +------------------------------+
 | Method                       |
 +==============================+
