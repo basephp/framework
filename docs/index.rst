@@ -16,17 +16,24 @@ Method Reference
 
 These methods are available:
 
-+------------------------+------------+----------+----------+
-| Method | Description |
-+========================+============+==========+==========+
-| input()      | ``$_GET`` and ``$_POST`` |
-| get()        | ``$_GET`` |
-| post()       | ``$_POST`` |
-| cookie()     | ``$_COOKIE`` |
-| method()     | ``$_SERVER['REQUEST_METHOD']`` |
-| isMethod()   | Check whether the request is a specific method. |
-| isAjax()     | Check whether the request is coming from ``xmlhttprequest`` |
-| isConsole()  | Check whether the request is ``cli`` |
++------------------------+----------------------------------+
+| Method                 | Description                      |
++========================+==================================+
+| input()                | ``$_GET`` and ``$_POST``         |
++------------------------+----------------------------------+
+| get()                  | ``$_GET``                        |
++------------------------+----------------------------------+
+| post()                 | ``$_POST``                       |
++------------------------+----------------------------------+
+| cookie()               | ``$_COOKIE``                     |
++------------------------+----------------------------------+
+| method()               | ``$_SERVER['REQUEST_METHOD']``   |
++------------------------+----------------------------------+
+| isMethod()             | Check whether the request is a specific method. |
++------------------------+----------------------------------+
+| isAjax()               | Check whether the request is coming from ``xmlhttprequest`` |
++------------------------+----------------------------------+
+| isConsole()            | Check whether the request is ``cli`` |
 +------------------------+-----------------------+----------+
 
 
