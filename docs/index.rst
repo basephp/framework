@@ -17,31 +17,22 @@ Method Reference
 +------------------------------+
 | Method                       |
 +==============================+
-| *input($name, $default)*     |
+| **input($name, $default)**   |
 +------------------------------+
-| *get($name, $default)*       |
+| **get($name, $default)**     |
 +------------------------------+
-| post()                       |
+| **get($name, $default)**     |
 +------------------------------+
-| cookie()                     |
+| **get($name, $default)**     |
 +------------------------------+
-| method()                     |
+| **method()**                 |
 +------------------------------+
-| isMethod()                   |
+| **isMethod($name)**          |
 +------------------------------+
-| isAjax()                     |
+| **isAjax()**                 |
 +------------------------------+
-| isConsole()                  |
+| **isConsole()**              |
 +------------------------------+
-
-
-=====  =====
-Method  Description
-=====  =====
-**input($name, $default)**  ``$_GET``, ``$_POST``
-**get($name, $default)**  ``$_GET``
-**post($name, $default)**  ``$_POST``
-=====  =====
 
 
 Response
