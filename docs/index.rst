@@ -15,44 +15,52 @@ Method Reference
 ------------
 
 
-- ``input($name, $default)``
-^^^^^^^^^^^^
+* ``input($name, $default)``
 
 Input method is used for ``$_GET`` and ``$_POST`` variables.
 
+^^^^^^^^^^^^
+
 
 * ``get($name, $default)``
-^^^^^^^^^^^^
 
 Get method is used for ``$_GET`` variable.
 
-
-``post($name, $default)``
 ^^^^^^^^^^^^
+
+
+* ``post($name, $default)``
 
 Post method is used for ``$_POST`` variable.
 
-``method()``
 ^^^^^^^^^^^^
+
+
+* ``method()``
 
 Returns the method type from ``$_SERVER['REQUEST_METHOD']``
 
-
-``isMethod($methodName)``
 ^^^^^^^^^^^^
+
+
+* ``isMethod($methodName)``
 
 Returns the ``boolean`` (true/false) if the request method equals.
 
-``isAjax()``
 ^^^^^^^^^^^^
+
+
+* ``isAjax()``
 
 Returns the ``boolean`` (true/false) if the request is ``xmlhttprequest``
 
-
-``isConsole()``
 ^^^^^^^^^^^^
 
+
+* ``isConsole()``
+
 Returns the ``boolean`` (true/false) if the request is ``cli``
+
 
 
 
