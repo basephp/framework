@@ -11,8 +11,7 @@ The ``Request`` class is used to collect all the incoming requests from the brow
 
 ^^^^^^^^^^^^
 
-.. code:: php
-    input($name, $default)
+**input($name, $default)**
 
 ^^^^^^^^^^^^
 
