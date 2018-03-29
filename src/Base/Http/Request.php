@@ -42,13 +42,35 @@ class Request extends Server
 
 
     /**
-    * Get the GET or POST variable data
+    * Get the GET or POST or console ARGV variable data
     *
     * @return mixed
     */
     public function input($name, $default = '')
     {
-        return ($this->fetch(['GET','POST'],$name)) ?? $default;
+        return ($this->fetch(['GET','POST','ARGV'],$name)) ?? $default;
+    }
+
+
+    /**
+    * get only GET variable
+    *
+    * @return mixed
+    */
+    public function get($name, $default = '')
+    {
+        return ($this->fetch(['GET'],$name)) ?? $default;
+    }
+
+
+    /**
+    * get only POST variable
+    *
+    * @return mixed
+    */
+    public function post($name, $default = '')
+    {
+        return ($this->fetch(['POST'],$name)) ?? $default;
     }
 
 
@@ -179,6 +201,23 @@ class Request extends Server
                         return $data;
                     }
                 break;
+                case 'ARGV':
+                    if ($args = $this->server->get('argv', []))
+                    {
+                        $options = [];
+
+                        for ($i = 1; $i < count($args); $i ++ )
+                		{
+                            if (!isset($args[$i])) continue;
+
+                            $param = explode('=',$args[$i]);
+
+                            $options[filter_var($param[0], FILTER_SANITIZE_STRING)] = filter_var(($param[1] ?? null), FILTER_SANITIZE_STRING);
+                        }
+
+                        return $options[$name] ?? null;
+                    }
+                break;
                 default :
                     return null;
             }
@@ -203,11 +242,13 @@ class Request extends Server
     public function getConsolePath()
     {
         $arg = $this->server->get('argv', []);
-        if ($arg[0] == 'index.php') unset($arg[0]);
 
-        $path = implode('/',$arg);
+        $path = '/';
 
-        if ($path[0]!='/') $path = '/'.$path;
+        if ($arg[1])
+        {
+            if ($arg[1][0]!='/') $path = '/'.$arg[1];
+        }
 
         return $path;
     }
