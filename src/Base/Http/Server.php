@@ -51,7 +51,7 @@ class Server
         $this->get = new Collection($get);
         $this->post = new Collection($post);
         $this->cookie = new Collection($cookie);
-        $this->files = new Collection($cookie);
+        $this->files = new Collection($files);
     }
 
 }
