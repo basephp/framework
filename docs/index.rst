@@ -11,6 +11,7 @@ The ``Request`` class is used to collect all the incoming requests from the brow
 
 ^^^^^^^^^^^^
 
+**input()**
 
 ``input($name, $default)``
 
@@ -19,7 +20,9 @@ Input method is used for ``$_GET`` and ``$_POST`` variables.
 ^^^^^^^^^^^^
 
 
-``get($name, $default)``
+.. code-block:: php
+
+    get($name, $default)
 
 Get method is used for ``$_GET`` variable.
 
