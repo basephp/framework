@@ -11,7 +11,8 @@ The ``Request`` class is used to collect all the incoming requests from the brow
 
 ^^^^^^^^^^^^
 
-**input($name, $default)**
+::
+    input($name, $default)
 
 ^^^^^^^^^^^^
 
