@@ -14,6 +14,8 @@ The ``Request`` class is used to collect all the incoming requests from the brow
 Method Reference
 ------------
 
+These methods are available:
+
 +------------------------+------------+----------+----------+
 | Method | Description |
 +========================+============+==========+==========+
