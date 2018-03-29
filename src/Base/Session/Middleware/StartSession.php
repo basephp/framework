@@ -68,8 +68,23 @@ class StartSession extends Middleware
 
             // run the garbage collection
             // but will only run on specific amount of users
-            $this->session->gc();
+            if ($this->gcLottery())
+            {
+                $this->session->gc();
+            }
         }
+    }
+
+
+    /**
+     * Determine if the user runs the Garbage Collector
+     *
+     * @param  array  $config
+     * @return bool
+     */
+    protected function gcLottery()
+    {
+        return random_int(1, config('session.gc_lottery',[1=>1000])[1]) <= config('session.gc_lottery',[0=>2])[0];
     }
 
 }

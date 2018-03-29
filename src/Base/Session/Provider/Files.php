@@ -57,7 +57,19 @@ class Files Implements ProviderInterface
     */
     public function gc(int $maxlifetime)
     {
+		$ts = time() - $maxlifetime;
 
+        $files = Filesystem::getFiles($this->location);
+
+        foreach($files as $file)
+        {
+            $mtime = filemtime($this->location.'/'.$file);
+
+            if ($mtime < $ts)
+            {
+                unlink($this->location.'/'.$file);
+            }
+        }
     }
 
 

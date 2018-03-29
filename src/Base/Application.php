@@ -121,8 +121,6 @@ class Application
         $this->router->match( $this->request->url()->getPath() );
         $this->router->run( $this );
 
-        // echo '<pre>'.print_r($this->router->getMiddleware(),1).'</pre>';
-
         if ($body = $this->response->getBody())
         {
             $systemMemory = memory_get_usage(true);
