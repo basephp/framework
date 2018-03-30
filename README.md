@@ -12,11 +12,22 @@ You can configure your routing within `routes/web.php` by default.
 
 ### add()
 
-**Basic Usage:**
+You can add new routes by using the `add()` method.
 
 ```php
-Route::add('/','Welcome');
+// basic routing
+// The App\Controllers\Page::index() is invoked.
+Route::add('/','Page');
+
+// Setting a specific method on controller
+Route::add('/','Page::myMethod');
+
+// Running no method, closure function
+Route::add('/',function(){
+    // do something
+});
 ```
+
 
 ### group()
 
@@ -57,7 +68,7 @@ For example, if you want to retrieve the `$_GET` query variable:
 $name = $this->request->input('name','My Default Name');
 ```
 
-See [Request]
+See [REQUEST]
 
 
 Request
