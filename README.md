@@ -78,6 +78,10 @@ $request->isConsole()
 Response
 ---------------
 
+`\Base\Http\Response`
+
+The `Response` class is instantiated by default.
+
 ### setCookie()
 
 ```php
@@ -93,7 +97,9 @@ $response->setContentType($mime, $charset)
 Filesystem
 ---------------
 
-The Filesystem class is static accessible by using `\Base\Facades\Filesystem`.
+`\Base\Facades\Filesystem`
+
+The Filesystem class is static and can be accessed anywhere.
 
 ### exists()
 
