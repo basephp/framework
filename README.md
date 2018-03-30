@@ -28,3 +28,27 @@ $request->post($name, $default)
 ```php
 $request->cookie($name, $default)
 ```
+
+### method()
+
+```php
+$request->method($name)
+```
+
+### isMethod()
+
+```php
+$request->isMethod()
+```
+
+### isAjax()
+
+```php
+$request->isAjax()
+```
+
+### isConsole()
+
+```php
+$request->isConsole()
+```
