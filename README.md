@@ -10,7 +10,7 @@ Routing
 
 You can configure your routing within `routes/web.php` by default.
 
-### add()
+### Add
 
 You can add new routes by using the `add()` method.
 
@@ -28,13 +28,31 @@ Route::add('/',function(){
 });
 ```
 
-
-### group()
+### Groups
 
 You can group specific routes together, which will be useful when using Middleware.
 
 ```php
 Route::group('/admin',function(){
+	Route::add('/edit/{id}','Page');
+});
+```
+
+### Middleware
+
+Middleware can be used to inject logic before controllers execute,
+and before responses are sent to the browser.
+
+Adding middleware is easy. You can append as many as you wish, and they run in order.
+
+
+```php
+
+// using middleware on add()
+Route::add('/edit/{id}',['session'],'Page');
+
+// using middleware on group of routes
+Route::group('/admin',['session'],function(){
 	Route::add('/edit/{id}','Page');
 });
 ```
@@ -68,7 +86,7 @@ For example, if you want to retrieve the `$_GET` query variable:
 $name = $this->request->input('name','My Default Name');
 ```
 
-See [REQUEST]
+See [basephp-request]
 
 
 Request
