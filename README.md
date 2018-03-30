@@ -5,6 +5,10 @@ BasePHP is a small framework for minimalist.
 Request
 ---------------
 
+namespace: `\Base\Http\Request`
+
+The `Request` class is instantiated by default.
+
 ### input()
 
 Input uses `$_GET` and `$_POST` variables. When running in command line,
@@ -43,22 +47,28 @@ $request->cookie($name, $default)
 Returns the global variable `$_SERVER['REQUEST_METHOD']`
 
 ```php
-$request->method($name)
+$request->method()
 ```
 
 ### isMethod()
 
+Checks whether the request method is `GET` or `POST`.
+
 ```php
-$request->isMethod()
+$request->isMethod($name)
 ```
 
 ### isAjax()
+
+Checks whether the request is coming from `xmlhttprequest`
 
 ```php
 $request->isAjax()
 ```
 
 ### isConsole()
+
+Checks whether the request is coming from command line `cli`
 
 ```php
 $request->isConsole()
