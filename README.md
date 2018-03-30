@@ -18,12 +18,6 @@ You can configure your routing within `routes/web.php` by default.
 Route::add('/','Welcome');
 ```
 
-**Segment Example:**
-
-```php
-Route::add('/edit/{any}','Page::index/$1');
-```
-
 ### group()
 
 You can group specific routes together, which will be useful when using Middleware.
@@ -62,6 +56,8 @@ For example, if you want to retrieve the `$_GET` query variable:
 ```php
 $name = $this->request->input('name','My Default Name');
 ```
+
+See [Request]
 
 
 Request
@@ -136,11 +132,15 @@ Checks whether the request is coming from command line `cli`
 $request->isConsole()
 ```
 
+### ipAddress()
+
 Returns the user's valid IP Address.
 
 ```php
 $request->ipAddress()
 ```
+
+### userAgent()
 
 Returns the user's user agent from `$_SERVER['HTTP_USER_AGENT']`
 
