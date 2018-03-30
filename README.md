@@ -2,17 +2,18 @@
 
 BasePHP is a small framework for minimalist.
 
+
 Request
 ---------------
 
-namespace: `\Base\Http\Request`
+`\Base\Http\Request`
 
 The `Request` class is instantiated by default.
 
 ### input()
 
 Input uses `$_GET` and `$_POST` variables. When running in command line,
-it will look within the `$_SERVER['argv']` array.
+it will look within the `$_SERVER['argv']`.
 
 ```php
 $request->input($name, $default)
