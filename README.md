@@ -6,14 +6,15 @@ BasePHP is a small framework for minimalist.
 Controllers
 ---------------
 
+`App\Controllers`
+
+Controllers are the base of your application. Controllers are instantiated when
+the proper router is matched.
+
 **Example Controller**
 
 ```php
-namespace App\Controllers;
-
-use \Base\Routing\Controller;
-
-class MyController extends Controller
+class MyController extends \Base\Routing\Controller
 {
 	public function index()
 	{
@@ -23,6 +24,12 @@ class MyController extends Controller
 ```
 
 You can access `Request` and `Response` classes automatically within controllers that extend `\Base\Routing\Controller` using `$this->request` and `$this->response`.
+
+For example, if you want to retrieve the `$_GET` query variable:
+
+```php
+$name = $this->request->input('name','My Default Name');
+```
 
 
 Request
