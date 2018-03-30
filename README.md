@@ -3,6 +3,28 @@
 BasePHP is a small framework for minimalist.
 
 
+Controllers
+---------------
+
+**Example Controller**
+
+```php
+namespace App\Controllers;
+
+use \Base\Routing\Controller;
+
+class MyController extends Controller
+{
+	public function index()
+	{
+        // do something
+	}
+}
+```
+
+You can access `Request` and `Response` classes automatically within controllers that extend `\Base\Routing\Controller` using `$this->request` and `$this->response`.
+
+
 Request
 ---------------
 
@@ -13,7 +35,7 @@ The `Request` class is instantiated by default.
 ### input()
 
 Input uses `$_GET` and `$_POST` variables. When running in command line,
-it will look within the `$_SERVER['argv']`.
+it will look within the `$_SERVER['argv']`
 
 ```php
 $request->input($name, $default)
@@ -74,6 +96,19 @@ Checks whether the request is coming from command line `cli`
 ```php
 $request->isConsole()
 ```
+
+Returns the user's valid IP Address.
+
+```php
+$request->ipAddress()
+```
+
+Returns the user's user agent from `$_SERVER['HTTP_USER_AGENT']`
+
+```php
+$request->userAgent()
+```
+
 
 Response
 ---------------
