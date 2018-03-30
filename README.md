@@ -20,10 +20,10 @@ You can add new routes by using the `add()` method.
 Route::add('/','Page');
 
 // Setting a specific method on controller
-Route::add('/','Page::myMethod');
+Route::add('/home','Page::myMethod');
 
-// Running no method, closure function
-Route::add('/',function(){
+// Running no controller and instead using closure function
+Route::add('/my-path',function(){
     // do something
 });
 ```
@@ -45,9 +45,9 @@ and before responses are sent to the browser.
 
 Adding middleware is easy. You can append as many as you wish, and they run in order.
 
+In these examples, we will add the `Session` middleware.
 
 ```php
-
 // using middleware on add()
 Route::add('/edit/{id}',['session'],'Page');
 
@@ -86,7 +86,7 @@ For example, if you want to retrieve the `$_GET` query variable:
 $name = $this->request->input('name','My Default Name');
 ```
 
-See [basephp-request]
+See #basephp-request
 
 
 Request
