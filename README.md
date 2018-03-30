@@ -52,3 +52,69 @@ $request->isAjax()
 ```php
 $request->isConsole()
 ```
+
+Response
+---------------
+
+### setCookie()
+
+```php
+$response->setCookie($options)
+```
+
+### setContentType()
+
+```php
+$response->setContentType($mime, $charset)
+```
+
+Filesystem
+---------------
+
+### exists()
+
+```php
+Filesystem::exists($name)
+```
+
+### delete()
+
+```php
+Filesystem::delete($path)
+```
+
+### get()
+
+```php
+Filesystem::get($path)
+```
+
+### put()
+
+```php
+Filesystem::put($path)
+```
+
+### copy()
+
+```php
+Filesystem::copy($path)
+```
+
+### move()
+
+```php
+Filesystem::move($path)
+```
+
+### name()
+
+```php
+Filesystem::name($path)
+```
+
+### getFiles()
+
+```php
+Filesystem::getFiles($path, $extension)
+```
