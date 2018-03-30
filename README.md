@@ -3,6 +3,38 @@
 BasePHP is a small framework for minimalist.
 
 
+Routing
+---------------
+
+`Base\Routing\Router`
+
+You can configure your routing within `routes/web.php` by default.
+
+### add()
+
+**Basic Usage:**
+
+```php
+Route::add('/','Welcome');
+```
+
+**Segment Example:**
+
+```php
+Route::add('/edit/{any}','Page::index/$1');
+```
+
+### group()
+
+You can group specific routes together, which will be useful when using Middleware.
+
+```php
+Route::group('/admin',function(){
+	Route::add('/edit/{id}','Page');
+});
+```
+
+
 Controllers
 ---------------
 
