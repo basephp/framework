@@ -71,6 +71,8 @@ $response->setContentType($mime, $charset)
 Filesystem
 ---------------
 
+The Filesystem class is static accessible by using `\Base\Facades\Filesystem`.
+
 ### exists()
 
 ```php
@@ -117,4 +119,46 @@ Filesystem::name($path)
 
 ```php
 Filesystem::getFiles($path, $extension)
+```
+
+### size()
+
+```php
+Filesystem::size($file)
+```
+
+### isDirectory()
+
+```php
+Filesystem::isDirectory($path)
+```
+
+### isReadable()
+
+```php
+Filesystem::isReadable($path)
+```
+
+### isWritable()
+
+```php
+Filesystem::isWritable($path)
+```
+
+### isFile()
+
+```php
+Filesystem::isFile($path)
+```
+
+### glob()
+
+```php
+Filesystem::glob($path)
+```
+
+### lastModified()
+
+```php
+Filesystem::lastModified($path)
 ```
