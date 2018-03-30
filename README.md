@@ -5,31 +5,34 @@ BasePHP is a small framework for minimalist.
 Request
 ---------------
 
-### input()
+### input
+
+Input uses `$_GET` and `$_POST` variables. When running in command line,
+it will look within `$_SERVER['argv']` array.
 
 ```php
 $request->input($name, $default)
 ```
 
-### get()
+### get
 
 ```php
 $request->get($name, $default)
 ```
 
-### post()
+### post
 
 ```php
 $request->post($name, $default)
 ```
 
-### cookie()
+### cookie
 
 ```php
 $request->cookie($name, $default)
 ```
 
-### method()
+### method
 
 ```php
 $request->method($name)
