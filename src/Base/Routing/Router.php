@@ -153,7 +153,7 @@ class Router
 	protected function callController(Application $app)
 	{
 		$controllerNamespace = ($this->namespace['controllers']) ?? '\\App\\Controllers';
-		$controllerName      = $controllerNamespace.'\\'.$this->matchedRoute['action']['controller'];
+		$controllerName      = $controllerNamespace.'\\'.($this->matchedRoute['action']['controller']);
 
 		$controller = new $controllerName();
 		$controller->setRequest($app->request);
@@ -516,8 +516,18 @@ class Router
 
 				break;
 			}
-
 		}
+
+        if (empty($this->matchedRoute))
+        {
+            $this->matchedRoute = [
+                'parameters' => [],
+                'action' => [
+                    'method' => 'index',
+                    'controller' => 'Error'
+                ]
+            ];
+        }
 	}
 
 
