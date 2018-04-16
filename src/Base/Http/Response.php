@@ -248,13 +248,13 @@ class Response
     */
     public function send()
     {
-        // ob_start();
-
         if ($this->output != '')
         {
             $this->setContentType('text/html');
         }
 
+        $this->setHeader('Content-Length', strlen($this->body));
+        
         $this->sendHeaders();
 
         if ($this->output != '') echo $this->output;
@@ -284,6 +284,27 @@ class Response
 
         return $this;
     }
+
+
+    /**
+    * Set the status code
+    *
+    */
+    public function setStatusCode(int $code, string $reason = '')
+	{
+		$this->statusCode = $code;
+
+		if ( ! empty($reason))
+		{
+			$this->reason = $reason;
+		}
+		else
+		{
+			$this->reason = ($statusCodes[$code]) ?? '';
+		}
+
+		return $this;
+	}
 
 
     /**
@@ -317,10 +338,6 @@ class Response
     {
         if (headers_sent()) return false;
 
-        // this will need work (just a quick fix for now...)
-        // header(sprintf('HTTP/1.1 %s OK', 200, ''), true, 200);
-        // header("HTTP/1.1 404 Not Found");
-
         // HTTP Status
 		header(sprintf('HTTP/1.1 %s %s', $this->statusCode, $this->reason), true, $this->statusCode);
 
@@ -329,27 +346,6 @@ class Response
             header($name.': '.$values);
         }
     }
-
-
-    /**
-    * Set the status code
-    *
-    */
-    public function setStatusCode(int $code, string $reason = '')
-	{
-		$this->statusCode = $code;
-
-		if ( ! empty($reason))
-		{
-			$this->reason = $reason;
-		}
-		else
-		{
-			$this->reason = ($statusCodes[$code]) ?? '';
-		}
-
-		return $this;
-	}
 
 
     /**
