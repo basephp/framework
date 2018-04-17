@@ -5,45 +5,48 @@ namespace Base\Http;
 use \Base\Support\Collection;
 
 /**
-* The server class
+* \Base\Http\Server
+*
+* This class is called as a parent of the Http\Request
+* @see \Base\Http\Request
 *
 */
 class Server
 {
 
     /**
-    * Parameter $_SERVER
+    * Server Variable $_SERVER
     */
     protected $server;
 
 
     /**
-    * Parameter $_GET
+    * Server Variable $_GET
     */
     protected $get;
 
 
     /**
-    * Parameter $_POST
+    * Server Variable $_POST
     */
     protected $post;
 
 
     /**
-    * Parameter $_COOKIE
+    * Server Variable $_COOKIE
     */
     protected $cookie;
 
 
     /**
-    * Parameter $_FILES
+    * Server Variable $_FILES
     */
     protected $files;
 
 
     /**
-    * Set up the server variables
-    *
+    * Set up the server variables (and place them into their collections)
+    * @see \Base\Http\Request
     */
     public function __construct($server = [], $get = [], $post = [], $cookie = [], $files = [])
     {

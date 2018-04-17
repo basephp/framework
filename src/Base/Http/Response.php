@@ -5,7 +5,24 @@ namespace Base\Http;
 use \Base\Support\Facades\View;
 
 /**
-* The Response Class
+* \Base\Http\Response
+*
+*
+* Public Methods:
+* ------------------------------------------
+*   $response->getContentType()
+*   $response->getBody()
+*   $response->getOutput()
+*   $response->getHeaders()
+*   $response->getStatusCode()
+*   $response->getStatusReason()
+*
+*   $response->setContentType(mime, charset)
+*   $response->setStatusCode(number, reason)
+*   $response->setBody(content)
+*   $response->setOutput(content)
+*   $response->setHeader(name, value)
+*   $response->setCookie(options)
 *
 */
 class Response
@@ -140,17 +157,6 @@ class Response
 
 
     /**
-    * Get the content type for this response
-    *
-    * @return string
-    */
-    public function getContentType()
-    {
-        return $this->contentType;
-    }
-
-
-    /**
     * Set the cookie for our response
     *
     */
@@ -175,6 +181,8 @@ class Response
         $domain = '';
 
         setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+
+        return $this;
     }
 
 
@@ -209,17 +217,6 @@ class Response
 
 
     /**
-    * get the putput
-    *
-    * @return string $output
-    */
-    public function getOutput()
-    {
-        return $this->output;
-    }
-
-
-    /**
     * Set the response body (replacing any existing body)
     *
     * @param  mixed $body
@@ -239,27 +236,6 @@ class Response
         }
 
         return $this;
-    }
-
-
-    /**
-    * Send the body to the browser
-    *
-    */
-    public function send()
-    {
-        if ($this->output != '')
-        {
-            $this->setContentType('text/html');
-        }
-
-        $this->setHeader('Content-Length', strlen($this->body));
-        
-        $this->sendHeaders();
-
-        if ($this->output != '') echo $this->output;
-
-        echo $this->body;
     }
 
 
@@ -308,6 +284,39 @@ class Response
 
 
     /**
+    * Get the http status code
+    *
+    * @return int
+    */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
+    }
+
+
+    /**
+    * Get http status code reason
+    *
+    * @return int
+    */
+    public function getStatusReason()
+    {
+        return $this->reason;
+    }
+
+
+    /**
+    * Get the content type for this response
+    *
+    * @return string
+    */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+
+
+    /**
     * Get the response headers that have been set
     *
     *
@@ -331,6 +340,17 @@ class Response
 
 
     /**
+    * get the putput
+    *
+    * @return string $output
+    */
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+
+    /**
     * Send the headers
     *
     */
@@ -345,6 +365,27 @@ class Response
         {
             header($name.': '.$values);
         }
+    }
+
+
+    /**
+    * Send the body to the browser
+    *
+    */
+    public function send()
+    {
+        if ($this->output != '')
+        {
+            $this->setContentType('text/html');
+        }
+
+        $this->setHeader('Content-Length', strlen($this->body));
+
+        $this->sendHeaders();
+
+        if ($this->output != '') echo $this->output;
+
+        echo $this->body;
     }
 
 

@@ -5,16 +5,29 @@ namespace Base\Http;
 use \Base\Support\Facades\URL;
 
 /**
-* The Request class
+* \Base\Http\Request
 *
+* Server Collections:
+* @see \Base\Http\Server
+* ------------------------------------------
+*   $server
+*   $get
+*   $post
+*   $cookies
+*   $files
 *
-* Current Collections:
-*
-* ->server
-* ->get
-* ->post
-* ->cookies
-* ->files
+* Public Methods:
+* ------------------------------------------
+*   $request->input(name, default)
+*   $request->get(name, default)
+*   $request->post(name, default)
+*   $request->cookie(name, default)
+*   $request->method()
+*   $request->isMethod(method)
+*   $request->isAjax()
+*   $request->isConsole()
+*   $request->userAgent()
+*   $request->ipAddress()
 *
 */
 class Request extends Server
