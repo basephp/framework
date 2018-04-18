@@ -159,11 +159,10 @@ class Application
     {
         try
         {
-            (new Dotenv($this->rootPath, '.env'))->load();
+            (new Dotenv($this->config->get('path.root'), '/.env'))->load();
         }
         catch (InvalidPathException $e)
         {
-
         }
     }
 
