@@ -379,7 +379,7 @@ class Response
             $this->setContentType('text/html');
         }
 
-        $this->setHeader('Content-Length', strlen($this->body));
+        $this->setHeader('Content-Length', strlen($this->output.$this->body));
 
         $this->sendHeaders();
 
