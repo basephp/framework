@@ -86,24 +86,20 @@ class Application
     */
     public function initialize()
     {
-        $this->setDotEnv();
-
         self::setInstance($this);
 
+        $this->setDotEnv();
         $this->setConfigurations();
-
         $this->setAppSettings();
 
         $this->register('router',Route::self());
-
         $this->register('request',Request::self());
-
         $this->register('response',Response::self());
 
         // load-in our router configurations
         $this->router->register( $this->config->get('router', []) );
 
-        // now it's time to load our routes
+        // now it's time to load our saved routes
         $this->loadRoutes();
 
         // run our application
@@ -163,6 +159,7 @@ class Application
         }
         catch (InvalidPathException $e)
         {
+
         }
     }
 
