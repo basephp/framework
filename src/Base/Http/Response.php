@@ -297,7 +297,7 @@ class Response
     /**
     * Get http status code reason
     *
-    * @return int
+    * @return string
     */
     public function getStatusReason()
     {
