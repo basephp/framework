@@ -97,3 +97,75 @@ if (! function_exists('valid_ip'))
 
 
 //--------------------------------------------------------------------
+
+
+if (! function_exists('utf8ize'))
+{
+	/**
+	* Converts an array/object/string into UTF-8
+	*
+	* @param  mixed  $mixed
+    * @return  mixed  $mixed
+	*/
+    function utf8ize($mixed)
+    {
+        if (is_object($mixed))
+        {
+            foreach($mixed as $key => $value)
+            {
+                $mixed->$key = utf8ize($value);
+            }
+        }
+        else if (is_array($mixed))
+        {
+            foreach($mixed as $key => $value)
+            {
+                $mixed[$key] = utf8ize($value);
+            }
+        }
+        else if (is_string($mixed))
+        {
+            return utf8_encode($mixed);
+        }
+
+        return $mixed;
+    }
+}
+
+
+//--------------------------------------------------------------------
+
+
+if (! function_exists('safe_json_encode'))
+{
+    /**
+    *
+    *
+    */
+    function safe_json_encode($value, $options = 0, $depth = 512, $error = false)
+    {
+        $encoded = json_encode($value, $options, $depth);
+
+        switch (json_last_error())
+        {
+            case JSON_ERROR_NONE:
+                return $encoded;
+            case JSON_ERROR_DEPTH:
+                return 'Maximum stack depth exceeded';
+            case JSON_ERROR_STATE_MISMATCH:
+                return 'Underflow or the modes mismatch';
+            case JSON_ERROR_CTRL_CHAR:
+                return 'Unexpected control character found';
+            case JSON_ERROR_SYNTAX:
+                return 'Syntax error, malformed JSON';
+            case JSON_ERROR_UTF8:
+                if ($error == true) return 'Failed to convert to UTF-8';
+                return safe_json_encode(utf8ize($value), $options, $depth, true);
+            default:
+                return 'Unknown error';
+        }
+    }
+}
+
+
+//--------------------------------------------------------------------

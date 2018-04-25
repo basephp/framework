@@ -224,16 +224,7 @@ class Response
     */
     public function setBody($body)
     {
-        if (is_array($body))
-        {
-            $this->setContentType('application/json');
-
-            $this->body = json_encode($body, 1);
-        }
-        else
-        {
-            $this->body = $body;
-        }
+        $this->body = $body;
 
         return $this;
     }
@@ -374,6 +365,13 @@ class Response
     */
     public function send()
     {
+        if (is_array($this->body))
+        {
+            $this->setContentType('application/json');
+
+            $this->body = safe_json_encode($this->body,1);
+        }
+
         if ($this->output != '')
         {
             $this->setContentType('text/html');
