@@ -1,5 +1,5 @@
 {
-    "name": "basephp/base",
+    "name": "basephp/framework",
     "description": "BasePHP",
     "license": "MIT",
     "require": {
