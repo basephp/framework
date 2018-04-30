@@ -174,7 +174,21 @@ class Router
 	protected function loadMiddlewares(Application $app)
 	{
 		$middlewares = $this->getMiddleware();
-		$selectedMiddleware = $this->getMatchedRoute()['middleware'] ?? [];
+
+        $autoloadedMiddleware = config('router.autoload');
+
+        $selectedMiddleware = [];
+        if (!empty($autoloadedMiddleware))
+        {
+            foreach($autoloadedMiddleware as $name)
+            {
+                if (!isset($middlewares[$name])) continue;
+
+                $selectedMiddleware[$name] = $middlewares[$name];
+            }
+        }
+
+        $selectedMiddleware = array_merge(($this->getMatchedRoute()['middleware'] ?? []), $selectedMiddleware);
 
 		foreach($selectedMiddleware as $name=>$middleware)
 		{
