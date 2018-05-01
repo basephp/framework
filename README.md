@@ -1,3 +1,3 @@
 # BasePHP
 
-BasePHP is a small PHP framework for minimalist.
+BasePHP is a PHP framework for minimalist.
