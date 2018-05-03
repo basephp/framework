@@ -93,7 +93,9 @@ class Application
         $this->setAppSettings();
 
         $this->register('router',Route::self());
+
         $this->register('request',Request::self());
+
         $this->register('response',Response::self());
 
         // load-in our router configurations
@@ -101,6 +103,7 @@ class Application
 
         // now it's time to load our saved routes
         $this->loadRoutes();
+        $this->registerServiceProviders();
 
         // run our application
         $this->run();
@@ -191,6 +194,28 @@ class Application
             foreach ($files as $key => $filename)
             {
                 require $this->config->get('path.routes').'/'.($filename);
+            }
+        }
+    }
+
+
+    /**
+    * loadServices
+    *
+    */
+    protected function registerServiceProviders()
+    {
+        foreach($this->config as $configName)
+        {
+            if (isset($configName['providers']) && is_array($configName['providers']))
+            {
+                foreach($configName['providers'] as $providerName=>$provider)
+                {
+                    // do not allow "core" service providers to be overridden
+                    if (in_array($providerName,['router','request','response'])) continue;
+
+                    $this->register($providerName, (new $provider($this)));
+                }
             }
         }
     }
