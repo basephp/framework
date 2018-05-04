@@ -103,6 +103,8 @@ class Application
 
         // now it's time to load our saved routes
         $this->loadRoutes();
+
+        // register and load our service providers
         $this->registerServiceProviders();
 
         // run our application
@@ -200,7 +202,7 @@ class Application
 
 
     /**
-    * loadServices
+    * Register and Load Service Providers.
     *
     */
     protected function registerServiceProviders()
@@ -214,7 +216,12 @@ class Application
                     // do not allow "core" service providers to be overridden
                     if (in_array($providerName,['router','request','response'])) continue;
 
-                    $this->register($providerName, (new $provider($this)));
+                    // register this service provider, and Instantiate it.
+                    $service = new $provider($this);
+                    $service->boot();
+
+                    // register the service provider so we can call it later
+                    $this->register($providerName, $service);
                 }
             }
         }
