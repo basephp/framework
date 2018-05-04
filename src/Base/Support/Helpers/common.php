@@ -1,5 +1,8 @@
 <?php
 
+use \Base\Support\Arr;
+use \Base\Support\Collection;
+
 if (! function_exists('format_bytes'))
 {
 	/**
