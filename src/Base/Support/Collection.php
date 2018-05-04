@@ -204,6 +204,19 @@ class Collection implements ArrayAccess, IteratorAggregate
 
 
     /**
+     * Get the values of a given key.
+     *
+     * @param  string|array  $value
+     * @param  string|null  $key
+     * @return static
+     */
+    public function pluck($value, $key = null)
+    {
+        return new static(Arr::pluck($this->items, $value, $key));
+    }
+
+
+    /**
      * Get an iterator for the items.
      *
      * @return \ArrayIterator

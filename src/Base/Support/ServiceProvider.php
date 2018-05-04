@@ -25,7 +25,7 @@ class ServiceProvider
 
     public function boot()
     {
-        // we will boot the child class if exist.
+        // we will boot the child method if exist.
     }
 
 }
