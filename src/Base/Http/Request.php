@@ -52,7 +52,7 @@ class Request extends Server
 
         // now let's set the URL
         $this->url = new Url();
-        $this->url->setHost($this->server->get('HTTP_HOST',''));
+        $this->url->setHost($this->server->get('HTTP_HOST',config('app.domain','')));
         $this->url->setSecure($this->server->get('HTTPS',false));
         $this->url->setUri($this->server->get('REQUEST_URI','/'));
     }

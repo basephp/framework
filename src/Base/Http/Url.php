@@ -9,225 +9,221 @@ namespace Base\Http;
 class Url
 {
 
-	/**
-	* Allowed characters used in paths and query strings
-	*
-	* @const string
-	*/
-	const CHAR_ALLOWED = 'a-zA-Z0-9_\-\.';
-
-
-	/**
-	* ...
-	*
-	*/
-	protected $rootUrl;
+    /**
+    * Allowed characters used in paths and query strings
+    *
+    * @const string
+    */
+    const CHAR_ALLOWED = 'a-zA-Z0-9_\-\.';
 
 
     /**
-	* ...
-	*
-	*/
-	protected $host;
-
-
-	/**
-	* ...
-	*
-	*/
-	protected $path;
-
-
-	/**
-	* ...
-	*
-	*/
-	protected $query;
+    * Root URL
+    *
+    */
+    protected $rootUrl;
 
 
     /**
-	* ...
-	*
-	*/
-	protected $secure = 'http';
+    * Current Host
+    *
+    */
+    protected $host;
 
 
     /**
-	* ...
-	*
-	*
-	*/
-	public function setHost($host)
-	{
-		$this->host = $host;
-	}
+    * URL Path
+    *
+    */
+    protected $path;
 
 
     /**
-	* ...
-	*
-	*
-	*/
-	public function setSecure($https = false)
-	{
-		$this->secure = (($https) ? 'https' : 'http');
-	}
+    * URL Query String
+    *
+    */
+    protected $query;
 
 
-	/**
-	* ...
-	*
-	*
-	*/
-	public function setUri($uri = null)
-	{
-		if ($uri)
-		{
-			$parts = parse_url($uri);
-
-			if ($parts)
-			{
-				$this->setParts($parts);
-			}
-		}
-	}
+    /**
+    * HTTP Secure
+    *
+    */
+    protected $secure = 'http';
 
 
-	/**
-	* ...
-	*
-	*
-	*/
-	public function setParts(array $parts)
-	{
-		if (!empty($parts['path']))
-		{
-			$this->path = $this->filterPath($parts['path']);
-		}
+    /**
+    * Set the current host
+    *
+    */
+    public function setHost($host)
+    {
+        $this->host = $host;
+    }
 
-		if (!empty($parts['query']))
-		{
-			$this->query = $parts['query'];
-		}
+
+    /**
+    * Set HTTP Secure Mode
+    *
+    */
+    public function setSecure($https = false)
+    {
+        $this->secure = (($https) ? 'https' : 'http');
+    }
+
+
+    /**
+    * Set the URI string,
+    * Then set up the rest of the parts
+    *
+    */
+    public function setUri($uri = null)
+    {
+        if ($uri)
+        {
+            $parts = parse_url($uri);
+
+            if ($parts)
+            {
+                $this->setParts($parts);
+            }
+        }
+    }
+
+
+    /**
+    * Set the Path, Query and RootURL
+    *
+    */
+    public function setParts(array $parts)
+    {
+        if (!empty($parts['path']))
+        {
+            $this->path = $this->filterPath($parts['path']);
+        }
+
+        if (!empty($parts['query']))
+        {
+            $this->query = $parts['query'];
+        }
 
         // set the actual URL without query params
         $this->rootUrl = $this->secure.'://'.$this->host;
-	}
-
-
-	/**
-	* Encodes any dangerous characters, and removes dot segments.
-	* While dot segments have valid uses according to the spec,
-	* this URI class does not allow them.
-	*
-	* @param $path
-	*
-	* @return mixed|string
-	*/
-	protected function filterPath(string $path = '')
-	{
-		$orig = $path;
-
-		// Decode/normalize percent-encoded chars so
-		// we can always have matching for Routes, etc.
-		$path = urldecode($path);
-
-		// Fix up some leading slash edge cases...
-		if (strpos($orig, './') === 0)
-		{
-			$path = '/' . $path;
-		}
-
-		if (strpos($orig, '../') === 0)
-		{
-			$path = '/' . $path;
-		}
-
-		$path = preg_replace_callback(
-			'/(?:[^' . self::CHAR_ALLOWED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches) {
-				return rawurlencode($matches[0]);
-			}, $path
-		);
-
-		return $path;
-	}
+    }
 
 
     /**
-	* ...
-	*
-	*
-	*/
-	public function getRootUrl()
-	{
-		return $this->rootUrl;
-	}
+    * Encodes any dangerous characters, and removes dot segments.
+    * While dot segments have valid uses according to the spec,
+    * this URI class does not allow them.
+    *
+    * @param $path
+    *
+    * @return mixed|string
+    */
+    protected function filterPath(string $path = '')
+    {
+        $orig = $path;
 
+        // Decode/normalize percent-encoded chars so
+        // we can always have matching for Routes, etc.
+        $path = urldecode($path);
 
-	/**
-	* ...
-	*
-	*
-	*/
-	public function getUrl()
-	{
-		return $this->rootUrl.$this->path;
-	}
+        // Fix up some leading slash edge cases...
+        if (strpos($orig, './') === 0)
+        {
+            $path = '/' . $path;
+        }
 
+        if (strpos($orig, '../') === 0)
+        {
+            $path = '/' . $path;
+        }
 
-    /**
-	* ...
-	*
-	*
-	*/
-	public function getSecure()
-	{
-		return $this->secure;
-	}
+        $path = preg_replace_callback(
+            '/(?:[^' . self::CHAR_ALLOWED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches) {
+                return rawurlencode($matches[0]);
+            }, $path
+        );
 
-
-	/**
-	* ...
-	*
-	*
-	*/
-	public function getPath()
-	{
-		return $this->path;
-	}
-
-
-	/**
-	* ...
-	*
-	*
-	*/
-	public function getQuery()
-	{
-		return $this->query;
-	}
+        return $path;
+    }
 
 
     /**
-	* ...
-	*
-	*
-	*/
-	public function getHost()
-	{
-		return $this->host;
-	}
+    * Get only the Root URL
+    *
+    *
+    */
+    public function getRootUrl()
+    {
+        return $this->rootUrl;
+    }
 
 
-	/**
-	* If this instance gets converted to a string,
-	* Return the full URL path
-	*
-	*
-	*/
-	public function __toString()
-	{
-		return $this->getUrl();
-	}
+    /**
+    * Get the full URL
+    *
+    *
+    */
+    public function getUrl()
+    {
+        return $this->rootUrl.$this->path;
+    }
+
+
+    /**
+    * Get HTTP or HTTPS
+    *
+    *
+    */
+    public function getSecure()
+    {
+        return $this->secure;
+    }
+
+
+    /**
+    * Get the URL Path
+    *
+    *
+    */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+
+    /**
+    * Get the URL Query String
+    *
+    *
+    */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+
+    /**
+    * Get the HTTP HOST
+    *
+    *
+    */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+
+    /**
+    * If this instance gets converted to a string,
+    * Return the FULL URL path
+    *
+    */
+    public function __toString()
+    {
+        return $this->getUrl();
+    }
 
 }
