@@ -107,8 +107,41 @@ class Application
         // register and load our service providers
         $this->registerServiceProviders();
 
+        // create the storage directories...
+        $this->storageDirectories();
+
         // run our application
         $this->run();
+    }
+
+
+    /**
+    * Check if storage/framework and storage/framework/sessions exist.
+    *
+    */
+    protected function storageDirectories()
+    {
+        if (Filesystem::isWritable(storage_path('')))
+        {
+            $framework = storage_path('framework');
+            $sessions  = storage_path('framework/sessions');
+
+            if (!Filesystem::isDirectory($framework))
+            {
+                Filesystem::makeDirectory($sessions, 0775, true);
+            }
+            else
+            {
+                if (!Filesystem::isDirectory($sessions))
+                {
+                    Filesystem::makeDirectory($sessions, 0775, true);
+                }
+            }
+        }
+        else
+        {
+            throw new \Exception('Storage Path: '.storage_path('').' is not writable.');
+        }
     }
 
 

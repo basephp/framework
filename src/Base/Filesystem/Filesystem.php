@@ -236,6 +236,18 @@ class Filesystem
 	}
 
 
+    /**
+    * Create a directory.
+    *
+    * @param  string  $path
+    * @return bool
+    */
+    public function makeDirectory($path, $chmod = 0775, $recursive = false)
+    {
+        return mkdir($path, $chmod, $recursive);
+    }
+
+
 	/**
 	* Determine if the given path is a directory.
 	*
