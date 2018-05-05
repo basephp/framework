@@ -383,7 +383,31 @@ class Response
 
         if ($this->output != '') echo $this->output;
 
-        echo $this->body;
+        if ($this->body != '') echo $this->body;
+    }
+
+
+    /**
+    * Redirect the browser offsite or locally.
+    * Set the HTTP status code automatically.
+    */
+    public function redirect($uri, $code = 302)
+    {
+        if ($uri != '')
+        {
+            $this->setStatusCode($code);
+
+            // are we redirecting to another domain?
+            if (preg_match('#https?://#i',$uri))
+            {
+                header('Location: '.$uri);
+                exit;
+            }
+
+            // redirecting locally.
+            header('Location: '.app()->request->url->getRootUrl().((substr($uri,0,1)==='/') ? '' : '/').$uri);
+            exit;
+        }
     }
 
 

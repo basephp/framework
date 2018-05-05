@@ -1,6 +1,6 @@
 <?php
 
-namespace Base\Routing;
+namespace Base\Http;
 
 /**
 * The URL Class
@@ -14,14 +14,21 @@ class Url
 	*
 	* @const string
 	*/
-	const CHAR_ALLOWED = 'a-zA-Z0-9_\-\.~';
+	const CHAR_ALLOWED = 'a-zA-Z0-9_\-\.';
 
 
 	/**
 	* ...
 	*
 	*/
-	protected $url;
+	protected $rootUrl;
+
+
+    /**
+	* ...
+	*
+	*/
+	protected $host;
 
 
 	/**
@@ -38,18 +45,45 @@ class Url
 	protected $query;
 
 
+    /**
+	* ...
+	*
+	*/
+	protected $secure = 'http';
+
+
+    /**
+	* ...
+	*
+	*
+	*/
+	public function setHost($host)
+	{
+		$this->host = $host;
+	}
+
+
+    /**
+	* ...
+	*
+	*
+	*/
+	public function setSecure($https = false)
+	{
+		$this->secure = (($https) ? 'https' : 'http');
+	}
+
+
 	/**
 	* ...
 	*
 	*
 	*/
-	public function setUrl($url = null)
+	public function setUri($uri = null)
 	{
-		if ($url)
+		if ($uri)
 		{
-			$this->url = $url;
-
-			$parts = parse_url($url);
+			$parts = parse_url($uri);
 
 			if ($parts)
 			{
@@ -75,6 +109,9 @@ class Url
 		{
 			$this->query = $parts['query'];
 		}
+
+        // set the actual URL without query params
+        $this->rootUrl = $this->secure.'://'.$this->host;
 	}
 
 
@@ -116,6 +153,17 @@ class Url
 	}
 
 
+    /**
+	* ...
+	*
+	*
+	*/
+	public function getRootUrl()
+	{
+		return $this->rootUrl;
+	}
+
+
 	/**
 	* ...
 	*
@@ -123,7 +171,18 @@ class Url
 	*/
 	public function getUrl()
 	{
-		return $this->url;
+		return $this->rootUrl.$this->path;
+	}
+
+
+    /**
+	* ...
+	*
+	*
+	*/
+	public function getSecure()
+	{
+		return $this->secure;
 	}
 
 
@@ -149,14 +208,14 @@ class Url
 	}
 
 
-	/**
-	* Return current instance of self.
+    /**
+	* ...
 	*
 	*
 	*/
-	public function self()
+	public function getHost()
 	{
-		return $this;
+		return $this->host;
 	}
 
 

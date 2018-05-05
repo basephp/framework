@@ -11,6 +11,7 @@ use Base\Support\Facades\Response;
 use Base\Support\Collection;
 
 
+
 /**
 * The Application Class
 *
@@ -107,8 +108,8 @@ class Application
         // register and load our service providers
         $this->registerServiceProviders();
 
-        // create the storage directories...
-        $this->storageDirectories();
+        // create the storage directory "framework"
+        $this->storageDirectory();
 
         // run our application
         $this->run();
@@ -119,7 +120,7 @@ class Application
     * Check if storage/framework and storage/framework/sessions exist.
     *
     */
-    protected function storageDirectories()
+    protected function storageDirectory()
     {
         if (Filesystem::isWritable(storage_path('')))
         {
@@ -154,7 +155,7 @@ class Application
         else
         {
             // match the URL path to a specific route
-            $this->router->match( $this->request->url()->getPath() );
+            $this->router->match( $this->request->url->getPath() );
         }
 
         // do all the magic...
@@ -276,7 +277,6 @@ class Application
         // set the application character encoding
         mb_internal_encoding($this->config->get('app.encoding','UTF-8'));
     }
-
 
 
     /**

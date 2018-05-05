@@ -2,7 +2,7 @@
 
 namespace Base\Http;
 
-use \Base\Support\Facades\URL;
+use \Base\Http\Url;
 
 /**
 * \Base\Http\Request
@@ -34,6 +34,14 @@ class Request extends Server
 {
 
     /**
+    * Inject the URL Class
+    *
+    * @see \Base\Routing\Url
+    */
+    protected $url;
+
+
+    /**
     * Once Request has been loaded up, be sure to set the URL
     *
     */
@@ -43,7 +51,10 @@ class Request extends Server
         parent::__construct($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
 
         // now let's set the URL
-        URL::setUrl($this->server->get('REQUEST_URI','/'));
+        $this->url = new Url();
+        $this->url->setHost($this->server->get('HTTP_HOST',''));
+        $this->url->setSecure($this->server->get('HTTPS',false));
+        $this->url->setUri($this->server->get('REQUEST_URI','/'));
     }
 
 
@@ -229,17 +240,6 @@ class Request extends Server
             }
         }
     }
-
-
-    /**
-    * Return current instance of url.
-    *
-    */
-    public function url()
-    {
-        return URL::self();
-    }
-
 
     /**
     * getConsolePath
