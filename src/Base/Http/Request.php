@@ -33,13 +33,6 @@ use \Base\Support\Facades\URL;
 class Request extends Server
 {
 
-    /*
-    * Any additional (non-essential requests)
-    *
-    */
-    protected $additional = [];
-
-
     /**
     * Once Request has been loaded up, be sure to set the URL
     *
@@ -274,28 +267,6 @@ class Request extends Server
     public function self()
     {
         return $this;
-    }
-
-
-    /**
-    * Set the custom variable
-    *
-    */
-    public function __set($name, $value)
-    {
-        $this->additional[$name] = $value;
-    }
-
-
-    /**
-    * Get a custom variable
-    *
-    * @param  string  $key
-    * @return mixed
-    */
-    public function __get($key)
-    {
-        return $this->additional[$key] ?? null;
     }
 
 }

@@ -17,31 +17,31 @@ class Server
     /**
     * Server Variable $_SERVER
     */
-    public $server;
+    protected $server;
 
 
     /**
     * Server Variable $_GET
     */
-    public $get;
+    protected $get;
 
 
     /**
     * Server Variable $_POST
     */
-    public $post;
+    protected $post;
 
 
     /**
     * Server Variable $_COOKIE
     */
-    public $cookie;
+    protected $cookie;
 
 
     /**
     * Server Variable $_FILES
     */
-    public $files;
+    protected $files;
 
 
     /**
@@ -55,6 +55,16 @@ class Server
         $this->post = new Collection($post);
         $this->cookie = new Collection($cookie);
         $this->files = new Collection($files);
+    }
+
+
+    /**
+    * Access inaccessible properties
+    * We use this beacuse we don't want direct property access
+    */
+    public function __get($name)
+    {
+        return $this->{$name};
     }
 
 }

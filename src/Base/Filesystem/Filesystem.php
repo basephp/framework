@@ -237,9 +237,11 @@ class Filesystem
 
 
     /**
-    * Create a directory.
+    * Create a new directory.
     *
     * @param  string  $path
+    * @param  string  $chmod
+    * @param  string  $recursive
     * @return bool
     */
     public function makeDirectory($path, $chmod = 0775, $recursive = false)
