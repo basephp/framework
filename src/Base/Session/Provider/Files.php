@@ -33,10 +33,17 @@ class Files Implements ProviderInterface
 
     /**
     * Set the session
+    * If the directory doesn't exist, create it.
     *
     */
     public function set($key = '', array $data = [])
     {
+        if (!Filesystem::isDirectory($this->location))
+        {
+            Filesystem::makeDirectory($this->location, 0775, true);
+        }
+
+        // save the session file
         Filesystem::put($this->location.$key, serialize($data));
     }
 
@@ -59,15 +66,18 @@ class Files Implements ProviderInterface
     {
 		$ts = time() - $maxlifetime;
 
-        $files = Filesystem::getFiles($this->location);
-
-        foreach($files as $file)
+        if (!Filesystem::isDirectory($this->location))
         {
-            $mtime = filemtime($this->location.'/'.$file);
+            $files = Filesystem::getFiles($this->location);
 
-            if ($mtime < $ts)
+            foreach($files as $file)
             {
-                unlink($this->location.'/'.$file);
+                $mtime = filemtime($this->location.'/'.$file);
+
+                if ($mtime < $ts)
+                {
+                    unlink($this->location.'/'.$file);
+                }
             }
         }
     }

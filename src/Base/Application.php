@@ -124,18 +124,10 @@ class Application
         if (Filesystem::isWritable(storage_path('')))
         {
             $framework = storage_path('framework');
-            $sessions  = storage_path('framework/sessions');
 
             if (!Filesystem::isDirectory($framework))
             {
-                Filesystem::makeDirectory($sessions, 0775, true);
-            }
-            else
-            {
-                if (!Filesystem::isDirectory($sessions))
-                {
-                    Filesystem::makeDirectory($sessions, 0775, true);
-                }
+                Filesystem::makeDirectory($framework, 0775, true);
             }
         }
         else
