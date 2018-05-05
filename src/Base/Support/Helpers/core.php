@@ -87,7 +87,7 @@ if (! function_exists('storage_path'))
      * @param  string  $path
      * @return string
      */
-    function storage_path($path)
+    function storage_path($path = '')
     {
         return config('path.storage').($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
@@ -113,3 +113,25 @@ if (! function_exists('view'))
 
 
 //--------------------------------------------------------------------
+
+
+if ( ! function_exists('redirect'))
+{
+
+	/**
+     * Redirect the website to another page...
+	 *
+	 * @param string $uri
+	 *
+	 */
+	function redirect(string $uri = '')
+	{
+		if ($uri)
+		{
+			return app()->response->redirect($uri);
+		}
+
+        return false;
+	}
+
+}

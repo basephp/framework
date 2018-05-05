@@ -218,25 +218,3 @@ if (! function_exists('data_get'))
 
 
 //--------------------------------------------------------------------
-
-
-if ( ! function_exists('redirect'))
-{
-
-	/**
-     * Redirect the website to another page...
-	 *
-	 * @param string $uri
-	 *
-	 */
-	function redirect(string $uri=null)
-	{
-		if (! empty($uri))
-		{
-			return app()->response->redirect($uri);
-		}
-
-        return false;
-	}
-
-}
