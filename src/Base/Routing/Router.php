@@ -538,9 +538,12 @@ class Router
                 'parameters' => [],
                 'action' => [
                     'method' => 'index',
-                    'controller' => 'Error'
+                    'controller' => config('router.errors', 'Error')
                 ]
             ];
+
+            // built in 404 status when route can not be found.
+            app()->response->setStatusCode(404);
         }
 	}
 

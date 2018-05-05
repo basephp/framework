@@ -77,7 +77,8 @@ class View
 		$this->data = $data;
 		$this->shared = $shared;
 
-		if ($shared === true) {
+		if ($shared === true)
+        {
 			$this->sharedData = array_merge($this->sharedData, $data);
 		}
 
@@ -99,10 +100,12 @@ class View
 
 		extract( (($this->shared === true) ? $this->sharedData : $this->data) , EXTR_SKIP);
 
-		try {
+		try
+        {
 			include($__path);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+        {
 			$this->handleViewException($e, $obLevel);
 		}
 
@@ -121,7 +124,8 @@ class View
 	*/
 	protected function handleViewException(Exception $e, $obLevel)
 	{
-		while (ob_get_level() > $obLevel) {
+		while (ob_get_level() > $obLevel) 
+        {
 			ob_end_clean();
 		}
 
