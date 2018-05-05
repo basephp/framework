@@ -8,7 +8,7 @@
     },
     "autoload": {
         "files": [
-			"src/Base/Support/Helpers/core.php",
+            "src/Base/Support/Helpers/core.php",
             "src/Base/Support/Helpers/common.php"
         ],
         "psr-4": {

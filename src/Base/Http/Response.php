@@ -258,20 +258,20 @@ class Response
     *
     */
     public function setStatusCode(int $code, string $reason = '')
-	{
-		$this->statusCode = $code;
+    {
+        $this->statusCode = $code;
 
-		if ( ! empty($reason))
-		{
-			$this->reason = $reason;
-		}
-		else
-		{
-			$this->reason = ($statusCodes[$code]) ?? '';
-		}
+        if ( ! empty($reason))
+        {
+            $this->reason = $reason;
+        }
+        else
+        {
+            $this->reason = ($statusCodes[$code]) ?? '';
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
 
     /**
@@ -350,7 +350,7 @@ class Response
         if (headers_sent()) return false;
 
         // HTTP Status
-		header(sprintf('HTTP/1.1 %s %s', $this->statusCode, $this->reason), true, $this->statusCode);
+        header(sprintf('HTTP/1.1 %s %s', $this->statusCode, $this->reason), true, $this->statusCode);
 
         foreach ($this->getHeaders() as $name => $values)
         {

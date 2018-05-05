@@ -9,31 +9,31 @@ namespace Base\Routing;
 class Middleware
 {
 
-	/**
-	* Request Object
-	*
-	* @var string
-	*/
-	protected $request;
+    /**
+    * Request Object
+    *
+    * @var string
+    */
+    protected $request;
 
 
-	/**
-	* Response Object
-	*
-	* @var string
-	*/
-	protected $response;
+    /**
+    * Response Object
+    *
+    * @var string
+    */
+    protected $response;
 
 
-	/**
-	* Once Request has been loaded up, be sure to set the URL
-	*
-	*/
-	public function __construct($request, $response)
-	{
-		$this->request = $request;
+    /**
+    * Once Request has been loaded up, be sure to set the URL
+    *
+    */
+    public function __construct($request, $response)
+    {
+        $this->request = $request;
 
-		$this->response = $response;
-	}
+        $this->response = $response;
+    }
 
 }
