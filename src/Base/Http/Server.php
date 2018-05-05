@@ -17,31 +17,31 @@ class Server
     /**
     * Server Variable $_SERVER
     */
-    protected $server;
+    public $server;
 
 
     /**
     * Server Variable $_GET
     */
-    protected $get;
+    public $get;
 
 
     /**
     * Server Variable $_POST
     */
-    protected $post;
+    public $post;
 
 
     /**
     * Server Variable $_COOKIE
     */
-    protected $cookie;
+    public $cookie;
 
 
     /**
     * Server Variable $_FILES
     */
-    protected $files;
+    public $files;
 
 
     /**
