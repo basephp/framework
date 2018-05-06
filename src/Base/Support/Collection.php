@@ -179,6 +179,30 @@ class Collection implements ArrayAccess, IteratorAggregate
 
 
     /**
+     * Slice the underlying collection array.
+     *
+     * @param  int  $offset
+     * @param  int  $length
+     * @return static
+     */
+    public function slice($offset, $length = null)
+    {
+        return new static(array_slice($this->items, $offset, $length, true));
+    }
+
+
+    /**
+     * Get and remove the first item from the collection.
+     *
+     * @return mixed
+     */
+    public function shift()
+    {
+        return array_shift($this->items);
+    }
+
+
+    /**
      * Reverse items order.
      *
      * @return static
@@ -208,6 +232,35 @@ class Collection implements ArrayAccess, IteratorAggregate
     public function count()
     {
         return count($this->items);
+    }
+
+
+    /**
+     * Take the first or last {$limit} items.
+     *
+     * @param  int  $limit
+     * @return static
+     */
+    public function take($limit)
+    {
+        if ($limit < 0) {
+            return $this->slice($limit, abs($limit));
+        }
+
+        return $this->slice(0, $limit);
+    }
+
+
+    /**
+     * Search the collection for a given value and return the corresponding key if successful.
+     *
+     * @param  mixed  $value
+     * @param  bool  $strict
+     * @return mixed
+     */
+    public function search($value, $strict = false)
+    {
+        return array_search($value, $this->items, $strict);
     }
 
 
