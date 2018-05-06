@@ -79,6 +79,9 @@ class Url
     */
     public function setUri($uri = null)
     {
+        // set the actual URL without query params
+        $this->rootUrl = $this->secure.'://'.$this->host;
+
         if ($uri)
         {
             $parts = parse_url($uri);
@@ -97,18 +100,11 @@ class Url
     */
     public function setParts(array $parts)
     {
-        if (!empty($parts['path']))
-        {
-            $this->path = $this->filterPath($parts['path']);
-        }
+        // set the page path
+        $this->path = $this->filterPath($parts['path'] ?? '');
 
-        if (!empty($parts['query']))
-        {
-            $this->query = $parts['query'];
-        }
-
-        // set the actual URL without query params
-        $this->rootUrl = $this->secure.'://'.$this->host;
+        // set the query string
+        $this->query = $parts['query'] ?? '';
     }
 
 
