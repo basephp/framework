@@ -55,7 +55,15 @@ class Collection implements ArrayAccess, IteratorAggregate
     */
     public function has($key)
     {
-        return array_key_exists($key, $this->items);
+        $keys = is_array($key) ? $key : func_get_args();
+
+        foreach ($keys as $value) {
+            if (! $this->offsetExists($value)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
@@ -204,6 +212,52 @@ class Collection implements ArrayAccess, IteratorAggregate
 
 
     /**
+     * Concatenate values of a given key as a string.
+     *
+     * @param  string  $value
+     * @param  string  $glue
+     * @return string
+     */
+    public function implode($value, $glue = null)
+    {
+        $first = $this->first();
+
+        if (is_array($first) || is_object($first)) {
+            return implode($glue, $this->pluck($value)->all());
+        }
+
+        return implode($value, $this->items);
+    }
+
+
+    /**
+     * Get the keys of the collection items.
+     *
+     * @return static
+     */
+    public function keys()
+    {
+        return new static(array_keys($this->items));
+    }
+
+
+    /**
+     * Run a map over each of the items.
+     *
+     * @param  callable  $callback
+     * @return static
+     */
+    public function map(callable $callback)
+    {
+        $keys = array_keys($this->items);
+
+        $items = array_map($callback, $this->items, $keys);
+
+        return new static(array_combine($keys, $items));
+    }
+
+
+    /**
      * Get the values of a given key.
      *
      * @param  string|array  $value
@@ -237,6 +291,7 @@ class Collection implements ArrayAccess, IteratorAggregate
     {
         return array_key_exists($key, $this->items);
     }
+
 
     /**
      * Get an item at a given offset.
@@ -278,13 +333,38 @@ class Collection implements ArrayAccess, IteratorAggregate
 
 
     /**
+     * Get the collection of items as a plain array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return array_map(function ($value) {
+            return $value;
+        }, $this->items);
+    }
+
+
+    /**
+     * Get the collection of items as JSON.
+     *
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->items, $options);
+    }
+
+
+    /**
     * If the collection is seen as a string, send it as json
     *
     * @return string JSON formatted
     */
     public function __toString()
     {
-        return json_encode($this->items,1);
+        return $this->toJson();
     }
 
 
