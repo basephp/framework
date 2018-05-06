@@ -1,4 +1,4 @@
-<?php namespace Base\Support;
+<?php namespace Base;
 
 class ServiceProvider
 {

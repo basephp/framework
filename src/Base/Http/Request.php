@@ -2,7 +2,7 @@
 
 namespace Base\Http;
 
-use \Base\Http\Url;
+use \Base\Support\Url;
 
 /**
 * \Base\Http\Request

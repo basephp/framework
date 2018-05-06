@@ -1,6 +1,6 @@
 <?php
 
-namespace Base\Http;
+namespace Base\Support;
 
 /**
 * The URL Class
