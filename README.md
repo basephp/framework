@@ -1,6 +1,7 @@
 # BasePHP
 
-*Note: This repository is for the code-base of BasePHP. If you would like to use the framework for your application or want to see an example, head over to [BasePHP - Application](https://github.com/basephp/basephp).*
+> **Note:** This repository contains the core code of the BasePHP framework. If you would like to use the framework for your application or want to see an example, visit [BasePHP - Application](https://github.com/basephp/basephp).
+
 
 ## Quick Links:
 * **BasePHP Framework**
