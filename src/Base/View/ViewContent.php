@@ -39,7 +39,20 @@ class ViewContent
     */
     public function minify()
     {
-        return $this->replace('\\s+', ' ');
+        $search = [
+            // strip whitespaces after tags, except space
+            '/\>[^\S ]+/s',
+            // strip whitespaces before tags, except space
+            '/[^\S ]+\</s',
+            // shorten multiple whitespace sequences
+            '/(\s)+/s',
+            // Remove HTML comments
+            '/<!--(.|\s)*?-->/',
+            // Remove any additional white space.
+            '/\\s+/'
+        ];
+
+        return $this->replace($search, ['>','<','\\1','',' ']);
     }
 
 
@@ -61,9 +74,9 @@ class ViewContent
     * @param string $replace
     * @return string
     */
-    public function replace($find = '', $replace = '')
+    public function replace($find, $replace = '')
     {
-        return preg_replace('/'.$find.'/', $replace, $this->content);
+        return preg_replace($find, $replace, $this->content);
     }
 
 
