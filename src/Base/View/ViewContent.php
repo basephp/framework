@@ -52,18 +52,9 @@ class ViewContent
             '/\\s+/'
         ];
 
-        return $this->replace($search, ['>','<','\\1','',' ']);
-    }
+        $this->replace($search, ['>','<','\\1','',' ']);
 
-
-    /**
-    * Get the string length of this view
-    *
-    * @return string
-    */
-    public function length()
-    {
-        return strlen($this->content);
+        return $this;
     }
 
 
@@ -76,7 +67,20 @@ class ViewContent
     */
     public function replace($find, $replace = '')
     {
-        return preg_replace($find, $replace, $this->content);
+        $this->content = preg_replace($find, $replace, $this->content);
+
+        return $this;
+    }
+
+
+    /**
+    * Get the string length of this view
+    *
+    * @return string
+    */
+    public function length()
+    {
+        return strlen($this->content);
     }
 
 
