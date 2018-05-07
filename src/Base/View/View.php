@@ -56,13 +56,13 @@ class View
     * Build the view files and create its content for output
     *
     * @param string  $view
-    * @return string $output
+    * @return mixed \Base\View\ViewContent
     */
     public function render(string $view)
     {
         $output = $this->load($this->viewPath . '/' . str_replace('.php','',$view) . '.php');
 
-        return $output;
+        return (new ViewContent($output));
     }
 
 
