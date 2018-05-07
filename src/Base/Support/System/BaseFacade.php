@@ -1,12 +1,12 @@
 <?php
 
-namespace Base\Support\Facades;
+namespace Base\Support\System;
 
 /**
- * The Facade Class.
+ * The BaseFacade Class.
  *
  */
-abstract class Facade
+abstract class BaseFacade
 {
 
     /**

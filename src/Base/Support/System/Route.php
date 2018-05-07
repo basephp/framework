@@ -1,8 +1,8 @@
 <?php
 
-namespace Base\Support\Facades;
+namespace Base\Support\System;
 
-class Route extends Facade
+class Route extends BaseFacade
 {
     protected static function getClass()
     {

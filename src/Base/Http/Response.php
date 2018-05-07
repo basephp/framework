@@ -2,7 +2,7 @@
 
 namespace Base\Http;
 
-use \Base\Support\Facades\View;
+use \Base\Support\System\View;
 
 /**
 * \Base\Http\Response

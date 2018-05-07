@@ -1,8 +1,8 @@
 <?php
 
-namespace Base\Support\Facades;
+namespace Base\Support\System;
 
-class Filesystem extends Facade
+class Filesystem extends BaseFacade
 {
     protected static function getClass()
     {

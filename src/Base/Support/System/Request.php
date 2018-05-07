@@ -1,8 +1,8 @@
 <?php
 
-namespace Base\Support\Facades;
+namespace Base\Support\System;
 
-class Request extends Facade
+class Request extends BaseFacade
 {
     protected static function getClass()
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Base\Support\Facades;
+namespace Base\Support\System;
 
-class Session extends Facade
+class Session extends BaseFacade
 {
     protected static function getClass()
     {

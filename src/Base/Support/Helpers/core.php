@@ -1,6 +1,6 @@
 <?php
 
-use \Base\Support\Facades\View;
+use \Base\Support\System\View;
 use \Base\Application;
 
 

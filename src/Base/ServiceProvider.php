@@ -14,7 +14,11 @@ class ServiceProvider
     //--------------------------------------------------------------------
 
 
-    public function __construct($app)
+    /**
+    * Inject the Application Instance
+    *
+    */
+    public function __construct(Application $app)
     {
         $this->app = $app;
     }
@@ -23,6 +27,10 @@ class ServiceProvider
     //--------------------------------------------------------------------
 
 
+    /**
+    * Boot up the service provider
+    *
+    */
     public function boot()
     {
         // we will boot the child method if exist.

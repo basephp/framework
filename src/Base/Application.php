@@ -1,15 +1,12 @@
-<?php
-
-namespace Base;
+<?php namespace Base;
 
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
-use Base\Support\Facades\Route;
-use Base\Support\Facades\Filesystem;
-use Base\Support\Facades\Request;
-use Base\Support\Facades\Response;
 use Base\Support\Collection;
-
+use Base\Support\System\Route;
+use Base\Support\System\Filesystem;
+use Base\Support\System\Request;
+use Base\Support\System\Response;
 
 
 /**
