@@ -2,6 +2,9 @@
 
 namespace Base\Routing;
 
+use Base\Http\Request;
+use Base\Http\Response;
+
 /**
 * Parent Class to all Middleware
 *
@@ -29,7 +32,7 @@ class Middleware
     * Once Request has been loaded up, be sure to set the URL
     *
     */
-    public function __construct($request, $response)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
 

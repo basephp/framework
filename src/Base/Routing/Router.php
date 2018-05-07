@@ -2,9 +2,9 @@
 
 namespace Base\Routing;
 
-use \Base\Application;
-use \Base\Http\Request;
-use \Base\Http\Middleware;
+use Base\Application;
+use Base\Http\Request;
+use Base\Http\Middleware;
 
 
 /**

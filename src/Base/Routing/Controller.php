@@ -2,8 +2,8 @@
 
 namespace Base\Routing;
 
-use \Base\Http\Request;
-use \Base\Http\Response;
+use Base\Http\Request;
+use Base\Http\Response;
 
 /**
 * The Controller Class
