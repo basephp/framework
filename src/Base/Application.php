@@ -1,5 +1,6 @@
 <?php namespace Base;
 
+use Exception;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
 use Base\Support\Collection;
@@ -16,7 +17,7 @@ use Base\Support\System\Response;
 class Application
 {
     /**
-    * The Version
+    * The Version of BasePHP
     *
     */
     const VERSION = '1.0.0-beta';
@@ -49,6 +50,7 @@ class Application
     /**
     * Instantiate the Application
     *
+    * @see public/index.php
     */
     public function __construct( $rootPath = '' )
     {
@@ -81,6 +83,7 @@ class Application
     /**
     * Begin our application
     *
+    * @see public/index.php
     */
     public function initialize()
     {
@@ -105,7 +108,7 @@ class Application
         // register and load our service providers
         $this->registerServiceProviders();
 
-        // create the storage directory "framework"
+        // create the storage directory "storage/framework"
         $this->storageDirectory();
 
         // run our application
@@ -114,12 +117,12 @@ class Application
 
 
     /**
-    * Check if storage/framework and storage/framework/sessions exist.
+    * Check if storage/framework exists.
     *
     */
     protected function storageDirectory()
     {
-        if (Filesystem::isWritable(storage_path('')))
+        if (Filesystem::isWritable(storage_path()))
         {
             $framework = storage_path('framework');
 
@@ -130,7 +133,7 @@ class Application
         }
         else
         {
-            throw new \Exception('Storage Path: '.storage_path('').' is not writable.');
+            throw new Exception('Storage Path: '.storage_path().' is not writable.');
         }
     }
 

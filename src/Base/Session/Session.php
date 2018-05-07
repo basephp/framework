@@ -2,8 +2,8 @@
 
 namespace Base\Session;
 
-use \Base\Session\ProviderInterface;
-use \Base\Support\Collection;
+use Base\Session\ProviderInterface;
+use Base\Support\Collection;
 
 
 /**

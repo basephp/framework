@@ -2,8 +2,8 @@
 
 namespace Base\Session\Provider;
 
-use \Base\Session\ProviderInterface;
-use \Base\Support\System\Filesystem;
+use Base\Session\ProviderInterface;
+use Base\Support\System\Filesystem;
 
 
 /**

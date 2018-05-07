@@ -2,8 +2,8 @@
 
 namespace Base\Session\Middleware;
 
-use \Base\Routing\Middleware;
-use \Base\Session\Session;
+use Base\Routing\Middleware;
+use Base\Session\Session;
 
 /**
  * Starts the session handlers
