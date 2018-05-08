@@ -115,6 +115,32 @@ if (! function_exists('view'))
 //--------------------------------------------------------------------
 
 
+if ( ! function_exists('session'))
+{
+
+	/**
+     * Quick way to get session details
+	 *
+	 * @param string $key
+     * @param string $default
+	 * @return mixed 
+	 */
+	function session($key, $default = '')
+	{
+		if ($key)
+		{
+			return app()->request->session->get($key, $default);
+		}
+
+        return false;
+	}
+
+}
+
+
+//--------------------------------------------------------------------
+
+
 if ( ! function_exists('redirect'))
 {
 
