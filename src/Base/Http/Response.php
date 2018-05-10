@@ -2,7 +2,7 @@
 
 namespace Base\Http;
 
-use \Base\Support\System\View;
+use \Base\View\View;
 
 /**
 * \Base\Http\Response
@@ -75,6 +75,14 @@ class Response
     * @var string
     */
     protected $reason;
+
+
+    /**
+    * Store the current view instance
+    *
+    * @var \Base\View\View
+    */
+    protected $view = null;
 
 
     /**
@@ -417,7 +425,12 @@ class Response
     */
     public function view()
     {
-        return View::self();
+        if (!$this->view)
+        {
+            return $this->view = new View();
+        }
+
+        return $this->view;
     }
 
 

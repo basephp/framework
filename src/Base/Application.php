@@ -3,11 +3,11 @@
 use Exception;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
+use Base\Http\Request;
+use Base\Http\Response;
 use Base\Support\Collection;
 use Base\Support\System\Route;
-use Base\Support\System\Filesystem;
-use Base\Support\System\Request;
-use Base\Support\System\Response;
+use Base\Support\Filesystem;
 
 
 /**
@@ -95,9 +95,9 @@ class Application
 
         $this->register('router',Route::self());
 
-        $this->register('request',Request::self());
+        $this->register('request',new Request());
 
-        $this->register('response',Response::self());
+        $this->register('response',new Response());
 
         // load-in our router configurations
         $this->router->register( $this->config->get('router', []) );

@@ -1,6 +1,5 @@
 <?php
 
-use \Base\Support\System\View;
 use \Base\Application;
 
 
@@ -107,7 +106,7 @@ if (! function_exists('view'))
     */
     function view($path, $data = [], $shared = true)
     {
-        return View::setData($data, $shared)->render($path);
+        return app()->response->view()->setData($data, $shared)->render($path);
     }
 }
 
@@ -123,7 +122,7 @@ if ( ! function_exists('session'))
 	 *
 	 * @param string $key
      * @param string $default
-	 * @return mixed 
+	 * @return mixed
 	 */
 	function session($key, $default = '')
 	{

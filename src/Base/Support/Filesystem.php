@@ -1,6 +1,6 @@
 <?php
 
-namespace Base\Filesystem;
+namespace Base\Support;
 
 
 class Filesystem
@@ -12,7 +12,7 @@ class Filesystem
     * @param  string  $path
     * @return bool
     */
-    public function exists($path)
+    public static function exists($path)
     {
         return file_exists($path);
     }
@@ -25,7 +25,7 @@ class Filesystem
 	* @param  int     $mode
 	* @return mixed
 	*/
-	public function chmod($path, $mode = null)
+	public static function chmod($path, $mode = null)
 	{
 		if ($mode) return chmod($path, $mode);
 
@@ -39,7 +39,7 @@ class Filesystem
 	* @param  string  $path
 	* @return bool
 	*/
-	public function delete($path)
+	public static function delete($path)
 	{
 		try
 		{
@@ -60,9 +60,9 @@ class Filesystem
 	* @param  string      $path
 	* @return string|bool
 	*/
-	public function get($path)
+	public static function get($path)
 	{
-		if ($this->isFile($path))
+		if (self::isFile($path))
 		{
 			return file_get_contents($path);
 		}
@@ -79,7 +79,7 @@ class Filesystem
 	* @param  bool    $lock
 	* @return int
 	*/
-	public function put($path, $contents, $lock = false)
+	public static function put($path, $contents, $lock = false)
 	{
 		return file_put_contents($path, $contents, $lock ? LOCK_EX : 0);
 	}
@@ -92,7 +92,7 @@ class Filesystem
 	* @param  string  $target
 	* @return bool
 	*/
-	public function move($path, $target)
+	public static function move($path, $target)
 	{
 		return rename($path, $target);
 	}
@@ -105,7 +105,7 @@ class Filesystem
 	* @param  string  $target
 	* @return bool
 	*/
-	public function copy($path, $target)
+	public static function copy($path, $target)
 	{
 		return copy($path, $target);
 	}
@@ -117,7 +117,7 @@ class Filesystem
 	* @param  string  $path
 	* @return string
 	*/
-	public function name($path)
+	public static function name($path)
 	{
 		return pathinfo($path, PATHINFO_FILENAME);
 	}
@@ -130,7 +130,7 @@ class Filesystem
 	* @param  string  $extension
 	* @return array
 	*/
-	public function getFiles($path, $extension = '')
+	public static function getFiles($path, $extension = '')
 	{
 		if ($files = array_diff(scandir($path), array('.', '..')))
 		{
@@ -138,7 +138,7 @@ class Filesystem
 			{
 				foreach($files as $index=>$file)
 				{
-					if ($this->extension($file) !== $extension)
+					if (self::extension($file) !== $extension)
 					{
 						unset($files[$index]);
 					}
@@ -158,7 +158,7 @@ class Filesystem
 	* @param  string  $path
 	* @return string
 	*/
-	public function basename($path)
+	public static function basename($path)
 	{
 		return pathinfo($path, PATHINFO_BASENAME);
 	}
@@ -170,7 +170,7 @@ class Filesystem
 	* @param  string  $path
 	* @return string
 	*/
-	public function dirname($path)
+	public static function dirname($path)
 	{
 		return pathinfo($path, PATHINFO_DIRNAME);
 	}
@@ -182,7 +182,7 @@ class Filesystem
 	* @param  string  $path
 	* @return string
 	*/
-	public function extension($path)
+	public static function extension($path)
 	{
 		return pathinfo($path, PATHINFO_EXTENSION);
 	}
@@ -194,7 +194,7 @@ class Filesystem
 	* @param  string  $path
 	* @return string
 	*/
-	public function type($path)
+	public static function type($path)
 	{
 		return filetype($path);
 	}
@@ -206,7 +206,7 @@ class Filesystem
 	* @param  string  $path
 	* @return string|false
 	*/
-	public function mimeType($path)
+	public static function mimeType($path)
 	{
 		return finfo_file(finfo_open(FILEINFO_MIME_TYPE), $path);
 	}
@@ -218,7 +218,7 @@ class Filesystem
 	* @param  string  $path
 	* @return int
 	*/
-	public function size($path)
+	public static function size($path)
 	{
 		return filesize($path);
 	}
@@ -230,7 +230,7 @@ class Filesystem
 	* @param  string  $path
 	* @return int
 	*/
-	public function lastModified($path)
+	public static function lastModified($path)
 	{
 		return filemtime($path);
 	}
@@ -244,7 +244,7 @@ class Filesystem
     * @param  string  $recursive
     * @return bool
     */
-    public function makeDirectory($path, $chmod = 0775, $recursive = false)
+    public static function makeDirectory($path, $chmod = 0775, $recursive = false)
     {
         return mkdir($path, $chmod, $recursive);
     }
@@ -256,7 +256,7 @@ class Filesystem
 	* @param  string  $directory
 	* @return bool
 	*/
-	public function isDirectory($directory)
+	public static function isDirectory($directory)
 	{
 		return is_dir($directory);
 	}
@@ -268,7 +268,7 @@ class Filesystem
 	* @param  string  $path
 	* @return bool
 	*/
-	public function isReadable($path)
+	public static function isReadable($path)
 	{
 		return is_readable($path);
 	}
@@ -280,7 +280,7 @@ class Filesystem
 	* @param  string  $path
 	* @return bool
 	*/
-	public function isWritable($path)
+	public static function isWritable($path)
 	{
 		return is_writable($path);
 	}
@@ -292,7 +292,7 @@ class Filesystem
 	* @param  string  $file
 	* @return bool
 	*/
-	public function isFile($file)
+	public static function isFile($file)
 	{
 		return is_file($file);
 	}
@@ -305,7 +305,7 @@ class Filesystem
 	* @param  int     $flags
 	* @return array
 	*/
-	public function glob($pattern, $flags = 0)
+	public static function glob($pattern, $flags = 0)
 	{
 		return glob($pattern, $flags);
 	}
