@@ -4,7 +4,8 @@ namespace Base\Routing;
 
 use Base\Application;
 use Base\Http\Request;
-use Base\Http\Middleware;
+use Base\Routing\Middleware;
+use Base\Routing\MiddlewareQueue;
 
 
 /**
@@ -102,13 +103,17 @@ class Router
 	*/
 	public function run(Application $app)
 	{
-		$this->loadMiddlewares($app);
+		$middlewareList = $this->loadMiddlewares($app);
 
-		ob_start();
+        ob_start();
 
-		if ($this->callRequestMiddleware($app) === true)
-		{
-			if (isset($this->matchedRoute['action']['closure']) && is_callable($this->matchedRoute['action']['closure']))
+        $middleware = new Middleware();
+        $response = $middleware->initialize((new MiddlewareQueue($middlewareList)), $app->request, $app->response);
+
+        // if the response makes it back to us, otherwise we need to go elsewhere...
+        if ($response)
+        {
+            if (isset($this->matchedRoute['action']['closure']) && is_callable($this->matchedRoute['action']['closure']))
 			{
 				$content = $this->callClosure();
 			}
@@ -123,11 +128,10 @@ class Router
 
 			$app->response->setOutput($output)->setBody($content);
 
-			$this->callResponseMiddleware($app);
-
-            // let's run this within the application class instead
-			// $app->response->send();
-		}
+            // now that we have built our output, run the terminate middleware methods.
+            // only if they even exist.
+            $middleware->terminate($app->request, $app->response);
+        }
 	}
 
 	/**
@@ -173,29 +177,27 @@ class Router
 	*/
 	protected function loadMiddlewares(Application $app)
 	{
+        $middlewareMatch = [];
 		$middlewares = $this->getMiddleware();
 
-        $autoloadedMiddleware = config('router.autoload');
-
-        $selectedMiddleware = [];
-        if (!empty($autoloadedMiddleware))
-        {
-            foreach($autoloadedMiddleware as $name)
-            {
-                if (!isset($middlewares[$name])) continue;
-
-                $selectedMiddleware[$name] = $middlewares[$name];
-            }
-        }
-
-        $selectedMiddleware = array_merge(($this->getMatchedRoute()['middleware'] ?? []), $selectedMiddleware);
-
-		foreach($selectedMiddleware as $name=>$middleware)
+        // setup the autoload middleware
+        foreach(config('router.autoload', []) as $name)
 		{
 			if (!isset($middlewares[$name])) continue;
 
-			$app->addMiddleware($name, new $middlewares[$name]($app->request, $app->response));
+            $middlewareMatch[] = $middlewares[$name];
 		}
+
+        // setup the route selected middleware
+		foreach(($this->getMatchedRoute()['middleware'] ?? []) as $name=>$middleware)
+		{
+			if (!isset($middlewares[$name])) continue;
+
+            $middlewareMatch[] = $middlewares[$name];
+		}
+
+        // return a list of ready middlewares
+        return $middlewareMatch;
 	}
 
 
@@ -205,7 +207,7 @@ class Router
 	*
 	* @return bool
 	*/
-	protected function callRequestMiddleware(Application $app)
+	/*protected function callRequestMiddleware(Application $app)
 	{
 		$middlewares = $app->getMiddlewares();
 		$current     = $this->getMatchedRoute()['middleware'] ?? [];
@@ -220,7 +222,7 @@ class Router
 		}
 
 		return true;
-	}
+	}*/
 
 
 	/**
@@ -229,7 +231,7 @@ class Router
 	*
 	* @return void
 	*/
-	protected function callResponseMiddleware(Application $app)
+	/*protected function callResponseMiddleware(Application $app)
 	{
 		$middlewares = $app->getMiddlewares();
 		$current     = $this->getMatchedRoute()['middleware'] ?? [];
@@ -242,7 +244,7 @@ class Router
 				$middleware->response(...$params);
 			}
 		}
-	}
+	}*/
 
 
 	/**

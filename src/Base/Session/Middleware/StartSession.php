@@ -2,14 +2,13 @@
 
 namespace Base\Session\Middleware;
 
-use Base\Routing\Middleware;
 use Base\Session\Session;
 
 /**
  * Starts the session handlers
  *
  */
-class StartSession extends Middleware
+class StartSession
 {
 
     /**
@@ -27,7 +26,7 @@ class StartSession extends Middleware
     /**
      * handle our request
      */
-    public function request()
+    public function handle($request, $next)
     {
         if ($provider = config('session.provider'))
         {
@@ -37,27 +36,29 @@ class StartSession extends Middleware
             ]);
 
             // get the session id (if exist)
-            $this->sessionId = $this->request->cookie(config('session.cookie')) ?? null;
+            $this->sessionId = $request->cookie(config('session.cookie')) ?? null;
 
             // start the session with the sessionId
             $this->session->start($this->sessionId);
 
             // set the session up on the request
             // gets the session \Collection() of data
-            $this->request->session = $this->session->get();
+            $request->session = $this->session->get();
         }
+
+        return $next($request);
     }
 
 
     /**
-     * handle our response
+     * run after the output
      */
-    public function response()
+    public function terminate($request, $response)
     {
         if (!is_null($this->session))
         {
             // save the users cookie to the response
-            $this->response->setCookie([
+            $response->setCookie([
                 'name' => config('session.cookie'),
                 'value' => $this->session->getId(),
                 'expire' => config('session.expiration')
