@@ -13,7 +13,7 @@ class Middleware
 
 
     /**
-     * The middleware queue being run.
+     * The middleware queue to run
      *
      * @var \Base\Routing\MiddlewareQueue
      */
@@ -22,21 +22,23 @@ class Middleware
 
     /**
      * Store all the Middleware Instances
-     *
+     * These instances have already run through @handle()
      */
     protected $middlewareInstances = [];
 
 
     /**
-     * The middleware queue being run.
+     * The response object (saved for reference)
      *
-     * @var \Base\Routing\MiddlewareQueue
+     * @var \Base\Http\Response
      */
     protected $response;
 
 
     /**
      * initialize and run the middleware queue
+     *
+     * @see \Base\Routing\Router->run()
      */
     public function initialize($middleware, $request, $response)
     {
@@ -50,6 +52,9 @@ class Middleware
 
     /**
      * Run the terminate methods (if exist)
+     * This runs "after" the controller actions
+     *
+     * @see \Base\Routing\Router->run()
      */
     public function terminate($request, $response)
     {
@@ -64,7 +69,8 @@ class Middleware
 
 
     /**
-     * Invoke a middleware object and run the "next" middleware
+     * Invoke a middleware object and run the "next()" middleware callable.
+     * These must "return" the response, otherwise we fail.
      */
     public function __invoke($request)
     {
@@ -96,16 +102,14 @@ class Middleware
 
 
     /**
-    * Calls to missing methods on the controller.
+    * Calls all methods on the response object
     *
     * @param  string  $method
     * @param  array   $parameters
     * @return mixed
-    *
-    * @throws \Exception
     */
     public function __call($method, $parameters)
     {
-        return call_user_func_array([$this->$response, $method], $parameters);
+        return call_user_func_array([$this->response, $method], $parameters);
     }
 }

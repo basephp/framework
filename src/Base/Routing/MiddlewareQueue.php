@@ -16,7 +16,9 @@ class MiddlewareQueue
     /**
      * Constructor
      *
-     * @param array $middleware The list of middleware to append.
+     * The middleware assigned here should NOT have custom array keys.
+     *
+     * @param array $middleware The list of middleware.
      */
     public function __construct(array $middleware = [])
     {
@@ -27,7 +29,7 @@ class MiddlewareQueue
     /**
      * Get the middleware at the provided index.
      *
-     * @param int $index The index to fetch.
+     * @param int $index The middleware index to fetch.
      * @return callable|null Either the callable middleware or null
      *   if the index is undefined.
      */
@@ -43,9 +45,9 @@ class MiddlewareQueue
 
 
     /**
-     * Append a middleware callable to the end of the queue.
+     * Add a new middleware to the end of the queue.
      *
-     * @param callable|string|array $middleware The middleware(s) to append.
+     * @param string|array $middleware The middleware(s) to append.
      * @return $this
      */
     public function add($middleware)
@@ -60,6 +62,27 @@ class MiddlewareQueue
         $this->queue[] = $middleware;
 
         return $this;
+    }
+
+
+    /**
+     * Get all the middleware in the queue
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->queue;
+    }
+
+
+    /**
+     * Clear the all middlewares in the queue
+     *
+     */
+    public function clear()
+    {
+        $this->queue = [];
     }
 
 }
