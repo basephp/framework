@@ -24,7 +24,7 @@ class Middleware
      * Store all the Middleware Instances
      *
      */
-    protected $middlewareInstances;
+    protected $middlewareInstances = [];
 
 
     /**
