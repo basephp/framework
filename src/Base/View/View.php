@@ -132,14 +132,4 @@ class View
         throw $e;
     }
 
-
-    /**
-    * Return current instance of self.
-    *
-    */
-    public function self()
-    {
-        return $this;
-    }
-
 }

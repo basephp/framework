@@ -259,14 +259,4 @@ class Request extends Server
         return $path;
     }
 
-
-    /**
-    * Return current instance of self.
-    *
-    */
-    public function self()
-    {
-        return $this;
-    }
-
 }
