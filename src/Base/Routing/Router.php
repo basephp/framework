@@ -339,7 +339,7 @@ class Router
 	*
 	*
 	*/
-	public function add($path, ...$params)
+	public function addRoute($httpVerb = ['GET'], $path, ...$params)
 	{
 		$prefix     = is_null($this->useGroup) ? '' : $this->useGroup . '/';
 
@@ -355,10 +355,42 @@ class Router
 		$officialPath = $this->cleanPath($prefix.$path);
 
 		$this->routes[$officialPath] = [
+            'http' => $httpVerb,
 			'parameters' => $patterns,
 			'middleware' => $middleware,
 			'action' => $this->setAction($action)
 		];
+	}
+
+
+    /**
+	* Add a "GET/POST" route
+	*
+	*
+	*/
+	public function add($path, ...$params)
+	{
+		$this->addRoute(['GET','POST'],$path,...$params);
+	}
+
+    /**
+	* Add a "GET" route
+	*
+	*
+	*/
+	public function get($path, ...$params)
+	{
+		$this->addRoute(['GET'],$path,...$params);
+	}
+
+    /**
+	* Add a "POST" route
+	*
+	*
+	*/
+	public function post($path, ...$params)
+	{
+		$this->addRoute(['POST'],$path,...$params);
 	}
 
 
@@ -484,7 +516,7 @@ class Router
 	* Match the path to a route
 	*
 	*/
-	public function match($path = '')
+	public function match($path = '', $httpVerb = 'GET')
 	{
 		if ($path == '') return false;
 
@@ -494,7 +526,10 @@ class Router
 			{
 				array_shift($matches);
 
+                $routeVerbs      = ($routeAction['http']) ?? ['GET'];
 				$routeParameters = ($routeAction['parameters']) ?? [];
+
+                if (!in_array($httpVerb, $routeVerbs)) continue;
 
 				$routeAction['parameters'] = [];
 

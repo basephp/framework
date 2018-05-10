@@ -155,7 +155,7 @@ class Application
         else
         {
             // match the URL path to a specific route
-            $this->router->match( $this->request->url->getPath() );
+            $this->router->match($this->request->url->getPath(), $this->request->method());
         }
 
         // do all the magic...
