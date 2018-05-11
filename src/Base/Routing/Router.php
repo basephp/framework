@@ -547,7 +547,7 @@ class Router
                 {
                     foreach($methodParams as $param)
                     {
-                        $p = ($tempParameters[str_replace('$','',$param)]) ?? '';
+                        $p = ($tempParameters[str_replace('$','',$param)]) ?? $param;
                         if ($p === '') continue;
 
                         $routeAction['parameters'][] = $p;
