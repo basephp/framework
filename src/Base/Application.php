@@ -149,12 +149,12 @@ class Application
             // keep the script running even when console goes away.
             ignore_user_abort(true);
 
-            // match the URL path to a specific route
+            // match the URL path to a specific route (from the console)
             $this->router->match( $this->request->getConsolePath() );
         }
         else
         {
-            // match the URL path to a specific route
+            // match the URL path to a specific route (from the browser)
             $this->router->match($this->request->url->getPath(), $this->request->method());
         }
 
@@ -163,7 +163,6 @@ class Application
 
         if ($body = $this->response->getBody())
         {
-            $systemMemory = memory_get_usage(true);
             $currentUsage = memory_get_usage();
 
             $time = (float) number_format(microtime(true) - APP_START, 4);
@@ -173,8 +172,10 @@ class Application
             $body = str_replace('{APP_MEMORY}', $memory, $body);
 
             $this->response->setBody($body);
-            $this->response->send();
         }
+
+        // send the response to the browser
+        $this->response->send();
     }
 
 

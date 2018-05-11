@@ -355,11 +355,14 @@ class Response
     */
     protected function sendHeaders()
     {
+        // check if we have already sent headers
+        // ignore if we have...
         if (headers_sent()) return false;
 
-        // HTTP Status
+        // send the HTTP Status header
         header(sprintf('HTTP/1.1 %s %s', $this->statusCode, $this->reason), true, $this->statusCode);
 
+        // send all the additional headers
         foreach ($this->getHeaders() as $name => $values)
         {
             header($name.': '.$values);
@@ -373,6 +376,8 @@ class Response
     */
     public function send()
     {
+        // if the body content is an array,
+        // then we should apply the JSON header automatically.
         if (is_array($this->body))
         {
             $this->setContentType('application/json');
@@ -420,8 +425,9 @@ class Response
 
 
     /**
-    * ..
+    * Create the View instance (or return an existing instance)
     *
+    * @return Base\View\View
     */
     public function view()
     {
