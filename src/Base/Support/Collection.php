@@ -6,6 +6,7 @@ use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 use Base\Support\Arr;
+use Base\Support\Traits\Extend;
 
 /**
 * The collection repository.
@@ -14,6 +15,7 @@ use Base\Support\Arr;
 */
 class Collection implements ArrayAccess, IteratorAggregate
 {
+    use Extend;
 
     /**
     * All of the items in collection
