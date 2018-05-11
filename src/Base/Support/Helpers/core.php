@@ -1,10 +1,11 @@
 <?php
 
-use \Base\Application;
+use Base\Application;
 
 
 if (! function_exists('env'))
 {
+
 	/**
 	* Gets the value of an environment variable.
 	*
@@ -37,6 +38,7 @@ if (! function_exists('env'))
 
 		return $value;
 	}
+
 }
 
 
@@ -45,6 +47,7 @@ if (! function_exists('env'))
 
 if (! function_exists('app'))
 {
+
 	/**
 	* Quick access to get the application instance
 	*
@@ -53,6 +56,7 @@ if (! function_exists('app'))
 	{
 		return Application::getInstance();
 	}
+
 }
 
 
@@ -61,6 +65,7 @@ if (! function_exists('app'))
 
 if (! function_exists('config'))
 {
+
     /**
      * Get a specific config variable from the config instance
      *
@@ -72,6 +77,7 @@ if (! function_exists('config'))
     {
         return app()->config->get($option, $default);
     }
+
 }
 
 
@@ -80,6 +86,7 @@ if (! function_exists('config'))
 
 if (! function_exists('storage_path'))
 {
+
     /**
      * Sets the path for a storage location
      *
@@ -90,6 +97,7 @@ if (! function_exists('storage_path'))
     {
         return config('path.storage').($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
+
 }
 
 
@@ -98,6 +106,7 @@ if (! function_exists('storage_path'))
 
 if (! function_exists('view'))
 {
+
     /**
     * Renders a view (this is a quick way to push a new view out)
     *
@@ -108,6 +117,7 @@ if (! function_exists('view'))
     {
         return app()->response->view()->setData($data, $shared)->render($path);
     }
+
 }
 
 
@@ -126,7 +136,7 @@ if ( ! function_exists('session'))
 	 */
 	function session($key, $default = '')
 	{
-		if ($key)
+		if ($key && isset(app()->request->session))
 		{
 			return app()->request->session->get($key, $default);
 		}
