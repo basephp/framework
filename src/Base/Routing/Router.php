@@ -107,10 +107,11 @@ class Router
 
         ob_start();
 
+        // this will run and begin the middleware loop
+        // if the response doesn't get returned, we will need to end route actions
         $middleware = new Middleware();
         $response = $middleware->initialize((new MiddlewareQueue($middlewareList)), $app->request, $app->response);
 
-        // if the response makes it back to us, otherwise we need to go elsewhere...
         if ($response)
         {
             if (isset($this->matchedRoute['action']['closure']) && is_callable($this->matchedRoute['action']['closure']))
@@ -126,6 +127,7 @@ class Router
 
 			@ob_end_clean();
 
+            // setting the output and the content from route actions
 			$app->response->setOutput($output)->setBody($content);
 
             // now that we have built our output, run the terminate middleware methods.
@@ -137,35 +139,29 @@ class Router
 	/**
 	* Run the closure function
 	*
-	*
 	* @return string
 	*/
 	protected function callClosure()
 	{
-		$content = $this->matchedRoute['action']['closure'](...$this->matchedRoute['parameters']);
-
-		return $content;
+		return $this->matchedRoute['action']['closure'](...$this->matchedRoute['parameters']);
 	}
 
 
 	/**
 	* Run the controller class
 	*
-	*
 	* @return string
 	*/
 	protected function callController(Application $app)
 	{
 		$controllerNamespace = ($this->namespace['controllers']) ?? '\\App\\Controllers';
-		$controllerName      = $controllerNamespace.'\\'.($this->matchedRoute['action']['controller']);
+		$controllerName = $controllerNamespace.'\\'.($this->matchedRoute['action']['controller']);
 
 		$controller = new $controllerName();
 		$controller->setRequest($app->request);
 		$controller->setResponse($app->response);
 
-		$content = $controller->callMethod($this->matchedRoute['action']['method'], $this->matchedRoute['parameters']);
-
-		return $content;
+		return $controller->callMethod($this->matchedRoute['action']['method'], $this->matchedRoute['parameters']);
 	}
 
 
@@ -199,52 +195,6 @@ class Router
         // return a list of ready middlewares
         return $middlewareMatch;
 	}
-
-
-	/**
-	* Call middleware "before" request
-	*
-	*
-	* @return bool
-	*/
-	/*protected function callRequestMiddleware(Application $app)
-	{
-		$middlewares = $app->getMiddlewares();
-		$current     = $this->getMatchedRoute()['middleware'] ?? [];
-
-		foreach($middlewares as $name=>$middleware)
-		{
-			if (method_exists($middleware, 'request'))
-			{
-				$params = ($current[$name]) ?? [];
-				if ($middleware->request(...$params) === false) return false;
-			}
-		}
-
-		return true;
-	}*/
-
-
-	/**
-	* Call middleware "after" response
-	*
-	*
-	* @return void
-	*/
-	/*protected function callResponseMiddleware(Application $app)
-	{
-		$middlewares = $app->getMiddlewares();
-		$current     = $this->getMatchedRoute()['middleware'] ?? [];
-
-		foreach($middlewares as $name=>$middleware)
-		{
-			if (method_exists($middleware, 'response'))
-			{
-				$params = ($current[$name]) ?? [];
-				$middleware->response(...$params);
-			}
-		}
-	}*/
 
 
 	/**
@@ -588,7 +538,7 @@ class Router
 	/**
 	* Get the patterns
 	*
-	*
+	* @return array
 	*/
 	public function getPatterns()
 	{
@@ -599,7 +549,7 @@ class Router
 	/**
 	* Get the middlewares
 	*
-	*
+	* @return array
 	*/
 	public function getMiddleware()
 	{
@@ -608,9 +558,9 @@ class Router
 
 
 	/**
-	* Get the middlewares
+	* Get the autoload middlewares
 	*
-	*
+	* @return array
 	*/
 	public function getAutoload()
 	{
@@ -621,7 +571,7 @@ class Router
 	/**
 	* Get the routes
 	*
-	*
+	* @return array
 	*/
 	public function getRoutes()
 	{
@@ -630,9 +580,9 @@ class Router
 
 
 	/**
-	* ...
+	* Get the select route we have matched by the URI path
 	*
-	*
+	* @return array
 	*/
 	public function getMatchedRoute()
 	{
@@ -641,8 +591,7 @@ class Router
 
 
 	/**
-	* ...
-	*
+	* Return the instance self.
 	*
 	*/
 	public function self()
