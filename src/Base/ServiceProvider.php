@@ -23,17 +23,4 @@ class ServiceProvider
         $this->app = $app;
     }
 
-
-    //--------------------------------------------------------------------
-
-
-    /**
-    * Boot up the service provider
-    *
-    */
-    public function boot()
-    {
-        // we will boot the child method if exist.
-    }
-
 }

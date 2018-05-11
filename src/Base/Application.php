@@ -244,7 +244,11 @@ class Application
 
                     // register this service provider, and Instantiate it.
                     $service = new $provider($this);
-                    $service->boot();
+
+                    // check if the service provider has a boot method.
+                    if (method_exists($service, 'boot')) {
+                        $service->boot();
+                    }
 
                     // register the service provider so we can call it later
                     $this->register($providerName, $service);
