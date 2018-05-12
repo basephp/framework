@@ -15,7 +15,7 @@ use Base\Application;
 *
 *
 */
-class RouterNew
+class Router
 {
 
     /**
