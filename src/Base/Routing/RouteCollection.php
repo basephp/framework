@@ -2,7 +2,7 @@
 
 namespace Base\Routing;
 
-use Base\Routing\route;
+use Base\Routing\Route;
 use Base\Support\Arr;
 
 
