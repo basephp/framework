@@ -251,7 +251,7 @@ class Request extends Server
 
         $path = '/';
 
-        if ($arg[1])
+        if (isset($arg[1]))
         {
             if ($arg[1][0]!='/') $path = '/'.$arg[1];
         }
