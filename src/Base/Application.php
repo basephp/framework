@@ -102,11 +102,11 @@ class Application
         // load-in our router configurations
         $this->router->register( $this->config->get('router', []) );
 
-        // now it's time to load our saved routes
-        $this->loadRoutes();
-
         // register and load our service providers
         $this->registerServiceProviders();
+
+        // now it's time to load our saved routes
+        $this->loadRoutes();
 
         // create the storage directory "storage/framework"
         $this->storageDirectory();

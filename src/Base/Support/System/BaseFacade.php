@@ -24,11 +24,13 @@ abstract class BaseFacade
      */
     protected static function getInstance($class)
     {
-        if (is_object($class)) {
+        if (is_object($class))
+        {
             return $class;
         }
 
-        if (isset(static::$instances[$class])) {
+        if (isset(static::$instances[$class]))
+        {
             return static::$instances[$class];
         }
 
@@ -45,7 +47,8 @@ abstract class BaseFacade
     {
         $instance = static::getInstance( static::getClass() );
 
-        if (! $instance) {
+        if (! $instance)
+        {
             throw new RuntimeException('A facade has not been set.');
         }
 
