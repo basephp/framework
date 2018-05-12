@@ -79,9 +79,9 @@ class Router
 
         if ($response)
         {
-            if (isset($app->request->route->getAction()['closure']) && is_callable($app->request->route->getAction()['closure']))
+            if (is_callable($app->request->route->getAction('closure')))
             {
-                $content = $this->callClosure();
+                $content = $this->callClosure($app->request->route);
             }
             else
             {
@@ -118,9 +118,9 @@ class Router
     *
     * @return string
     */
-    protected function callClosure()
+    protected function callClosure(Route $route)
     {
-        return $this->matchedRoute['action']['closure'](...$this->matchedRoute['parameters']);
+        return $route->getAction('closure')(...$route->getAction('parameters'));
     }
 
 
