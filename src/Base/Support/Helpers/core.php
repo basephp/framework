@@ -1,6 +1,7 @@
 <?php
 
 use Base\Application;
+use Base\Routing\RouteCollection;
 
 
 if (! function_exists('env'))
@@ -167,6 +168,31 @@ if ( ! function_exists('redirect'))
 		}
 
         return false;
+	}
+
+}
+
+
+//--------------------------------------------------------------------
+
+
+if ( ! function_exists('route'))
+{
+
+	/**
+     * Return the router or the router collection based on arguments passed
+	 *
+	 * @param mixed $args
+	 * @return \Base\Routing\Router
+	 */
+	function route(...$args)
+	{
+        if (!empty($args))
+        {
+            return app()->router->routes()->add(...$args);
+        }
+
+        return app()->router->routes();
 	}
 
 }

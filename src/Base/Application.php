@@ -3,6 +3,7 @@
 use Exception;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
+use Base\Routing\Router;
 use Base\Http\Request;
 use Base\Http\Response;
 use Base\Support\Collection;
@@ -93,7 +94,8 @@ class Application
         $this->setConfigurations();
         $this->setAppSettings();
 
-        $this->register('router',Route::self());
+        // $this->register('router',Route::self());
+        $this->register('router',new Router());
 
         $this->register('request',new Request());
 
@@ -107,6 +109,7 @@ class Application
 
         // now it's time to load our saved routes
         $this->loadRoutes();
+        $this->router->routes()->refreshRouteList();
 
         // create the storage directory "storage/framework"
         $this->storageDirectory();
@@ -148,19 +151,14 @@ class Application
         {
             // keep the script running even when console goes away.
             ignore_user_abort(true);
+        }
 
-            // match the URL path to a specific route (from the console)
-            $this->router->match( $this->request->getConsolePath() );
-        }
-        else
-        {
-            // match the URL path to a specific route (from the browser)
-            $this->router->match($this->request->url->getPath(), $this->request->method());
-        }
+        $this->router->match( $this->request );
 
         // do all the magic...
         $this->router->run( $this );
 
+        // let's make a few modifications before we send to the browser
         if ($body = $this->response->getBody())
         {
             $currentUsage = memory_get_usage();
