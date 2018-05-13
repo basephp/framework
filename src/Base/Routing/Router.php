@@ -53,8 +53,9 @@ class Router
 
 
     /**
+    * Access the route collection
     *
-    *
+    * @return Base\Routing\RouteCollection
     */
     public function routes()
     {

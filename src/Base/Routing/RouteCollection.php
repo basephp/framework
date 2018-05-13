@@ -333,4 +333,46 @@ class RouteCollection
         return $this;
     }
 
+
+    /**
+    * Get a named route
+    *
+    * @param string $name
+    */
+    public function getNamed($name)
+    {
+        return $this->nameList[$name] ?? false;
+    }
+
+
+    /**
+    * Redirect to a named route
+    *
+    * @param string $name
+    * @param array $parameters
+    */
+    public function path($name, $parameters)
+    {
+        $uri = $this->getNamed($name)->uri();
+
+        foreach((array)$parameters as $k => $v)
+        {
+            $uri = preg_replace('/\{'.$k.'\}/', $v, $uri);
+        }
+
+        return $uri;
+    }
+
+
+    /**
+    * Redirect to a named route
+    *
+    * @param string $name
+    * @param array $parameters
+    */
+    public function redirect($name, $parameters)
+    {
+        return redirect($this->path($name, $parameters));
+    }
+
 }
