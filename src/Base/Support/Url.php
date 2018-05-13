@@ -58,7 +58,7 @@ class Url
     */
     public function setHost($host)
     {
-        $this->host = $host;
+        $this->host = rtrim($host,'/');
     }
 
 
@@ -207,6 +207,17 @@ class Url
     *
     */
     public function getHost()
+    {
+        return $this->host;
+    }
+
+
+    /**
+    * Get the HTTP HOST
+    *
+    * Added this as a helper function.
+    */
+    public function getDomain()
     {
         return $this->host;
     }
