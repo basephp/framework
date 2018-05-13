@@ -184,8 +184,10 @@ class RouteCollection
                 $this->nameList[$route->getName()] = $route;
             }
 
+            $routePatterns = $route->getPatterns();
+
             $routeUrl = $route->getDomain().$route->uri();
-            $routeUrl = $this->setPathPatterns($routeUrl);
+            $routeUrl = $this->setPathPatterns($routeUrl, $routePatterns);
 
             foreach($route->getMethods() as $method)
             {
@@ -200,11 +202,13 @@ class RouteCollection
     *
     * @return array
     */
-    protected function setPathPatterns($path)
+    protected function setPathPatterns($path, $routePatterns)
     {
-        if (!empty($this->patterns))
+        $routePatterns = array_merge($routePatterns, $this->patterns);
+
+        if (!empty($routePatterns))
         {
-            foreach($this->patterns as $name=>$pattern)
+            foreach($routePatterns as $name=>$pattern)
             {
                 // double check we have our "(" group ")"
                 if (!preg_match('|^\(.*?\)$|',$pattern)) $pattern = '('.$pattern.')';

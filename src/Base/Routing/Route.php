@@ -61,6 +61,14 @@ class Route
 
 
     /**
+    * Custom parameters only for this route instance
+    *
+    * @var array
+    */
+    protected $patterns = [];
+
+
+    /**
     * Creating a new route requires Methods, URI and Action
     *
     */
@@ -97,6 +105,28 @@ class Route
         $this->action['parameters'] = $params;
 
         return $this;
+    }
+
+
+    /**
+    * Set the parameter patterns
+    *
+    */
+    public function where($patterns)
+    {
+        $this->patterns = (array) $patterns;
+
+        return $this;
+    }
+
+
+    /**
+    * Set the parameter patterns
+    *
+    */
+    public function getPatterns()
+    {
+        return $this->patterns;
     }
 
 
