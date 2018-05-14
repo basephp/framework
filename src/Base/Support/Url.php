@@ -147,6 +147,17 @@ class Url
 
 
     /**
+    * Get the URI segments from the path
+    *
+    * @return array
+    */
+    public function segments()
+    {
+        return explode('/',trim($this->path,'/'));
+    }
+
+
+    /**
     * Get only the Root URL
     *
     *
