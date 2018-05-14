@@ -49,6 +49,25 @@ class Application
 
 
     /**
+    * Core Service Poviders to be loaded.
+    *
+    * @var array
+    */
+    protected $providers = [
+        \Base\Routing\Providers\RouterServiceProvider::class,
+        \Base\Http\Providers\HttpServiceProvider::class
+    ];
+
+
+    /**
+    * Loaded service probiders
+    *
+    * @var array
+    */
+    protected $activeProviders = [];
+
+
+    /**
     * Instantiate the Application
     *
     * @see public/index.php
@@ -94,22 +113,11 @@ class Application
         $this->setConfigurations();
         $this->setAppSettings();
 
-        // $this->register('router',Route::self());
-        $this->register('router',new Router());
+        // build the service provider list
+        $this->buildServiceProviders();
 
-        $this->register('request',new Request());
-
-        $this->register('response',new Response());
-
-        // load-in our router configurations
-        $this->router->register( $this->config->get('router', []) );
-
-        // register and load our service providers
+        // register and boot the service providers
         $this->registerServiceProviders();
-
-        // now it's time to load our saved routes
-        $this->loadRoutes();
-        $this->router->routes()->refreshRouteList();
 
         // create the storage directory "storage/framework"
         $this->storageDirectory();
@@ -211,16 +219,16 @@ class Application
 
 
     /**
-    * Load the application routes
+    * Load Service Providers from the configs
     *
     */
-    protected function loadRoutes()
+    protected function buildServiceProviders()
     {
-        if ($files = $this->getConfigFiles('path.routes'))
+        foreach($this->config as $configName)
         {
-            foreach ($files as $key => $filename)
+            if (isset($configName['providers']) && is_array($configName['providers']))
             {
-                require $this->config->get('path.routes').'/'.($filename);
+                $this->providers = array_merge($this->providers, $configName['providers']);
             }
         }
     }
@@ -228,30 +236,25 @@ class Application
 
     /**
     * Register and Load Service Providers.
-    *
+    * Save all the "active" providers within $activeProviders
     */
     protected function registerServiceProviders()
     {
-        foreach($this->config as $configName)
+        foreach($this->providers as $provider)
         {
-            if (isset($configName['providers']) && is_array($configName['providers']))
+            // check if the provider class exists
+            if (class_exists($provider))
             {
-                foreach($configName['providers'] as $providerName=>$provider)
-                {
-                    // do not allow "core" service providers to be overridden
-                    if (in_array($providerName,['router','request','response'])) continue;
+                // register this service provider, and Instantiate it.
+                $service = new $provider($this);
 
-                    // register this service provider, and Instantiate it.
-                    $service = new $provider($this);
-
-                    // check if the service provider has a boot method.
-                    if (method_exists($service, 'boot')) {
-                        $service->boot();
-                    }
-
-                    // register the service provider so we can call it later
-                    $this->register($providerName, $service);
+                // check if the service provider has a boot method.
+                if (method_exists($service, 'boot')) {
+                    $service->boot();
                 }
+
+                // save the active provider so that we can call it later.
+                $this->activeProviders[] = $service;
             }
         }
     }
@@ -262,7 +265,7 @@ class Application
     *
     * @return array
     */
-    protected function getConfigFiles($path)
+    public function getConfigFiles($path)
     {
         return Filesystem::getFiles($this->config->get($path), 'php');
     }
