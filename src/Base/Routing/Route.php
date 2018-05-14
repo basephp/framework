@@ -12,50 +12,59 @@ class Route
 {
 
     /**
+    * The HTTP Verb
+    * Request Methods
     *
-    *
+    * @var array
     */
     protected $methods = ['GET'];
 
 
     /**
+    * The route URI path
     *
-    *
+    * @var string
     */
     protected $uri = '';
 
 
     /**
+    * THe route actions
+    * Controller or Closure
     *
-    *
+    * @var array
     */
     protected $action = [];
 
 
     /**
+    * The route domain specific
     *
-    *
+    * @var string
     */
     protected $domain;
 
 
     /**
+    * The route name
     *
-    *
+    * @var string
     */
     protected $name = '';
 
 
     /**
+    * The route middleware list
     *
-    *
+    * @var array
     */
     protected $middleware = [];
 
 
     /**
+    * The route prefix
     *
-    *
+    * @var string
     */
     protected $prefix = '';
 
@@ -82,7 +91,7 @@ class Route
 
 
     /**
-    * Set the middlewares
+    * Set the route HTTP Methods
     *
     */
     public function setMethods($methods)
@@ -97,7 +106,7 @@ class Route
 
 
     /**
-    * Set the middlewares
+    * Set the route parameters
     *
     */
     public function setParameters($params)
@@ -121,7 +130,7 @@ class Route
 
 
     /**
-    * Set the parameter patterns
+    * Get the parameter patterns
     *
     */
     public function getPatterns()
@@ -131,7 +140,7 @@ class Route
 
 
     /**
-    * Set the middlewares
+    * Set the parameters
     *
     */
     public function getParameters()
@@ -141,8 +150,10 @@ class Route
 
 
     /**
-    * Set the middlewares
+    * Get the action
     *
+    * @param string $key
+    * @return mixed $action
     */
     public function getAction($key = '')
     {
@@ -156,8 +167,10 @@ class Route
 
 
     /**
-    * Set the middlewares
+    * Set the route action
     *
+    * @param mixed $action
+    * @return $this
     */
     public function setAction($action)
     {
