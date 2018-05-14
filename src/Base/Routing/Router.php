@@ -165,9 +165,17 @@ class Router
         // setup the route selected middleware
         foreach(($app->request->route->getMiddleware() ?? []) as $middleware)
         {
-            if (!isset($middlewares[$middleware])) continue;
+            $middlewareExpose = explode(':',$middleware);
 
-            $middlewareMatch[] = $middlewares[$middleware];
+            $mName = (($middlewareExpose[0]) ?? '');
+            $mparams = (($middlewareExpose[1]) ?? '');
+
+            if (!isset($middlewares[$mName])) continue;
+
+            $middlewareMatch[] = [
+                'n' => $middlewares[$mName],
+                'p' => $mparams
+            ];
         }
 
         // return a list of ready middlewares

@@ -78,15 +78,25 @@ class Middleware
 
         if ($next)
         {
+            $name = ($next['n']) ?? '';
+            $mParams = explode(',',($next['p']) ?? '');
+
+            // check if the middleware class actually exist,
+            // otherwise we will need to close out this.
+            if (!class_exists($name)) return false;
+
+            // increment the middelware we instantiate
             $this->index++;
 
-            $middleware = new $next();
+            // begin our middleware instance
+            $middleware = new $name();
 
+            // load our middelware handle instance for the request
             if (method_exists($middleware, 'handle'))
             {
                 $this->middlewareInstances[] = $middleware;
 
-                return $middleware->handle($request, $this);
+                return $middleware->handle($request, $this, ...$mParams);
             }
             else
             {
