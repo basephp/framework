@@ -376,7 +376,14 @@ class RouteCollection
     */
     public function redirect($name, $parameters)
     {
-        return redirect($this->path($name, $parameters));
+        $uri = $this->path($name, $parameters);
+
+        if ($uri)
+        {
+            return redirect($uri);
+        }
+
+        return false;
     }
 
 }
