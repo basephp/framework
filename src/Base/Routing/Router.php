@@ -157,9 +157,17 @@ class Router
         // setup the autoload middleware
         foreach(config('router.autoload', []) as $name)
         {
-            if (!isset($middlewares[$name])) continue;
+            $middlewareExpose = explode(':',$name);
 
-            $middlewareMatch[] = $middlewares[$name];
+            $mName = (($middlewareExpose[0]) ?? '');
+            $mparams = (($middlewareExpose[1]) ?? '');
+
+            if (!isset($middlewares[$mName])) continue;
+
+            $middlewareMatch[] = [
+                'n' => $middlewares[$mName],
+                'p' => $mparams
+            ];
         }
 
         // setup the route selected middleware
