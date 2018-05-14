@@ -386,4 +386,16 @@ class RouteCollection
         return false;
     }
 
+
+    /**
+    * Redirect to a named route
+    *
+    * @param string $name
+    * @param array $parameters
+    */
+    public function to($name, $parameters)
+    {
+        return $this->redirect($name, $parameters);
+    }
+
 }
