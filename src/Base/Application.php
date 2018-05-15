@@ -7,7 +7,6 @@ use Base\Routing\Router;
 use Base\Http\Request;
 use Base\Http\Response;
 use Base\Support\Collection;
-use Base\Support\System\Route;
 use Base\Support\Filesystem;
 
 
