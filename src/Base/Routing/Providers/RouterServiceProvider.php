@@ -13,8 +13,36 @@ class RouterServiceProvider extends ServiceProvider
         $this->app->register('router', new Router());
 
         $this->configRouter();
+
+        $this->addVersionRoute();
+        $this->addInfoRoute();
+
         $this->loadRoutes();
         $this->refreshRouteList();
+    }
+
+
+    /**
+    * Get and display the BasePHP Version
+    *
+    */
+    protected function addVersionRoute()
+    {
+        $this->app->router->routes()->add('GET','_base',function(){
+            return $this->app->version();
+        });
+    }
+
+
+    /**
+    * Get and display the phpinfo()
+    *
+    */
+    protected function addInfoRoute()
+    {
+        $this->app->router->routes()->add('GET','_php',function(){
+            return phpinfo();
+        });
     }
 
 
