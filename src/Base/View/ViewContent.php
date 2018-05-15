@@ -37,7 +37,7 @@ class ViewContent
     *
     * @return string
     */
-    public function minify()
+    public function minify($whitespaceOnly = false)
     {
         $search = [
             // strip whitespaces after tags, except space
@@ -46,11 +46,17 @@ class ViewContent
             '/[^\S ]+\</s',
             // shorten multiple whitespace sequences
             '/(\s)+/s',
-            // Remove HTML comments
-            '/<!--(.|\s)*?-->/',
-            // Remove any additional white space.
-            '/\\s+/'
         ];
+
+        // add this for protection aganst accidental content removal.
+        if ($whitespaceOnly == false)
+        {
+            // Remove HTML comments
+            $search[] = '/<!--(.|\s)*?-->/';
+
+            // Remove any additional white space.
+            $search[] = '/\\s+/';
+        }
 
         $this->replace($search, ['>','<','\\1','',' ']);
 
