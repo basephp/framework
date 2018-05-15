@@ -359,6 +359,9 @@ class Response
         // ignore if we have...
         if (headers_sent()) return false;
 
+        // setting a basephp header.
+        $this->setHeader('X-Framework', 'BasePHP, basephp.org');
+
         // send the HTTP Status header
         header(sprintf('HTTP/1.1 %s %s', $this->statusCode, $this->reason), true, $this->statusCode);
 
