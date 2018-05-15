@@ -97,7 +97,7 @@ class ViewContent
     */
     public function __tostring()
     {
-        return $this->content;
+        return $this->content ?? '';
     }
 
 }
