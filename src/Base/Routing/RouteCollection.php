@@ -36,6 +36,15 @@ class RouteCollection
 
 
     /**
+    * The route collection storage
+    *
+    */
+    protected $requestMethods = [
+        'GET','POST','PUT','DELETE','OPTIONS','HEAD'
+    ];
+
+
+    /**
     * The router patterns
     *
     * @var array
@@ -232,22 +241,18 @@ class RouteCollection
     */
     public function add(...$args)
     {
-        if (count($args) > 2) {
-            $methods = $args[0];
-            $uri = $args[1];
-            $action = $args[2] ?? null;
+        if (count($args) > 1)
+        {
+            $methods = [];
+            if (!empty(array_intersect((array) $args[0], $this->requestMethods))) $methods = (array) $args[0];
+
+            $uri = $args[(!$methods) ? 0 : 1];
+            $action = $args[(!$methods) ? 1 : 2] ?? null;
         }
         else {
             $methods = '';
             $uri = $args[0];
-            $action = $args[1] ?? null;
-        }
-
-        // if the action is not found,
-        // we must end the creation of the route.
-        if (is_null($action) || !$action) {
-            $this->tempRoute = $uri;
-            return $this;
+            $action = null;
         }
 
         $route = new Route($methods, $uri, $action);
@@ -393,20 +398,6 @@ class RouteCollection
         }
 
         return false;
-    }
-
-
-    /**
-    * Add a route view
-    *
-    * @param string $path
-    * @param array $data
-    */
-    public function view($path, $data = [])
-    {
-        return $this->add('GET',$this->tempRoute,function() use ($path, $data){
-            return view($path, $data);
-        });
     }
 
 

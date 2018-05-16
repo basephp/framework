@@ -172,7 +172,7 @@ class Route
     * @param mixed $action
     * @return $this
     */
-    public function setAction($action)
+    public function setAction($action = null)
     {
         if (is_callable($action))
         {
@@ -180,15 +180,18 @@ class Route
         }
         else
         {
-            $action = explode('/',$action);
-            $controllerMethod = explode('::',$action[0]);
+            if (!is_null($action))
+            {
+                $action = explode('/',$action);
+                $controllerMethod = explode('::',$action[0]);
 
-            $this->action['controller'] = $controllerMethod[0];
-            $this->action['method'] = $controllerMethod[1] ?? 'index';
+                $this->action['controller'] = $controllerMethod[0];
+                $this->action['method'] = $controllerMethod[1] ?? 'index';
 
-            unset($action[0]);
+                unset($action[0]);
 
-            $this->action['method_parameters'] = $action;
+                $this->action['method_parameters'] = $action;
+            }
         }
 
         $this->action['parameters'] = $this->getPatternParameters($this->uri);
@@ -329,6 +332,24 @@ class Route
         $uri = trim($this->uri, '/');
 
         return '/'.(($prefix) ? $prefix.'/' : '').$uri;
+    }
+
+
+    /**
+    * Add a route view
+    *
+    * @param string $path
+    * @param array $data
+    */
+    public function view($path, $data = [])
+    {
+        /*return $this->add('GET',$this->tempRoute,function() use ($path, $data){
+            return view($path, $data);
+        });*/
+
+        $this->setAction(function() use ($path, $data){
+            return view($path, $data);
+        });
     }
 
 }
