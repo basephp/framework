@@ -114,9 +114,14 @@ if (! function_exists('view'))
     * @param  string  $content
     * @param  array   $data
     */
-    function view($path, $data = [], $shared = true)
+    function view($path = '', $data = [], $shared = true)
     {
-        return app()->response->view()->setData($data, $shared)->render($path);
+        if ($path != '')
+        {
+            return app()->response->view()->setData($data, $shared)->render($path);
+        }
+
+        return app()->response->view();
     }
 
 }

@@ -67,6 +67,23 @@ class View
 
 
     /**
+    * Check if the view exist
+    *
+    * @param string  $view
+    * @return mixed \Base\View\ViewContent
+    */
+    public function exists(string $view)
+    {
+        if (file_exists($this->viewPath . '/' . str_replace('.php','',$view) . '.php'))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
     * Sets the view data (one global array)
     *
     * @param array $data
