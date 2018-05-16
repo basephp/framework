@@ -132,14 +132,26 @@ class Router
     */
     protected function callController(Application $app, Route $route)
     {
-        $controllerNamespace = ($this->namespace['controllers']) ?? '\\App\\Controllers';
-        $controllerName = $controllerNamespace.'\\'.($route->getAction('controller'));
+        $controllerNamespace = (($this->namespace['controllers']) ?? '\\App\\Controllers');
+        $controllerName      = $this->controllerNamespace($controllerNamespace, $route->getAction('controller'));
 
         $controller = new $controllerName();
         $controller->setRequest($app->request);
         $controller->setResponse($app->response);
 
         return $controller->callMethod($route->getAction('method'), $route->getAction('parameters'));
+    }
+
+
+    /**
+     * Prepare the controller namespace
+     *
+     * @param  string  $class
+     * @return string
+     */
+    protected function controllerNamespace($namespace, $class)
+    {
+        return strpos($class, '\\') !== 0 ? $namespace.'\\'.$class : $class;
     }
 
 

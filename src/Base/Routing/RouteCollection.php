@@ -56,6 +56,8 @@ class RouteCollection
     protected $usePrefix = [];
     protected $useDomain = [];
 
+    protected $tempRoute;
+
 
     /**
     * Get all routes in collection
@@ -233,12 +235,19 @@ class RouteCollection
         if (count($args) > 2) {
             $methods = $args[0];
             $uri = $args[1];
-            $action = $args[2];
+            $action = $args[2] ?? null;
         }
         else {
             $methods = '';
             $uri = $args[0];
-            $action = $args[1];
+            $action = $args[1] ?? null;
+        }
+
+        // if the action is not found,
+        // we must end the creation of the route.
+        if (is_null($action) || !$action) {
+            $this->tempRoute = $uri;
+            return $this;
         }
 
         $route = new Route($methods, $uri, $action);
@@ -384,6 +393,20 @@ class RouteCollection
         }
 
         return false;
+    }
+
+
+    /**
+    * Add a route view
+    *
+    * @param string $path
+    * @param array $data
+    */
+    public function view($path, $data = [])
+    {
+        return $this->add('GET',$this->tempRoute,function() use ($path, $data){
+            return view($path, $data);
+        });
     }
 
 
