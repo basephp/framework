@@ -16,18 +16,6 @@ use \Base\Support\Url;
 *   $cookies
 *   $files
 *
-* Public Methods:
-* ------------------------------------------
-*   $request->input(name, default)
-*   $request->get(name, default)
-*   $request->post(name, default)
-*   $request->cookie(name, default)
-*   $request->method()
-*   $request->isMethod(method)
-*   $request->isAjax()
-*   $request->isConsole()
-*   $request->userAgent()
-*   $request->ipAddress()
 *
 */
 class Request extends Server
@@ -240,6 +228,7 @@ class Request extends Server
             }
         }
     }
+
 
     /**
     * getConsolePath

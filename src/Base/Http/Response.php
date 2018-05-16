@@ -8,22 +8,6 @@ use \Base\View\View;
 * \Base\Http\Response
 *
 *
-* Public Methods:
-* ------------------------------------------
-*   $response->getContentType()
-*   $response->getBody()
-*   $response->getOutput()
-*   $response->getHeaders()
-*   $response->getStatusCode()
-*   $response->getStatusReason()
-*
-*   $response->setContentType(mime, charset)
-*   $response->setStatusCode(number, reason)
-*   $response->setBody(content)
-*   $response->setOutput(content)
-*   $response->setHeader(name, value)
-*   $response->setCookie(options)
-*
 */
 class Response
 {
