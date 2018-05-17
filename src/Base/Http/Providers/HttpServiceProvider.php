@@ -8,7 +8,7 @@ use Base\ServiceProvider;
 
 class HttpServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function register()
     {
         $this->app->register('request', new Request());
 

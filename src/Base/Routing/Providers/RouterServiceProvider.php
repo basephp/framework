@@ -8,7 +8,7 @@ use Base\ServiceProvider;
 class RouterServiceProvider extends ServiceProvider
 {
 
-    public function boot()
+    public function register()
     {
         $this->app->register('router', new Router());
 

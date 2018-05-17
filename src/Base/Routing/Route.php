@@ -343,10 +343,6 @@ class Route
     */
     public function view($path, $data = [])
     {
-        /*return $this->add('GET',$this->tempRoute,function() use ($path, $data){
-            return view($path, $data);
-        });*/
-
         $this->setAction(function() use ($path, $data){
             return view($path, $data);
         });

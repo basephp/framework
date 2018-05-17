@@ -117,6 +117,7 @@ class Application
 
         // register and boot the service providers
         $this->registerServiceProviders();
+        $this->bootServiceProviders();
 
         // create the storage directory "storage/framework"
         $this->storageDirectory();
@@ -234,7 +235,7 @@ class Application
 
 
     /**
-    * Register and Load Service Providers.
+    * "register" and Load Service Providers.
     * Save all the "active" providers within $activeProviders
     */
     protected function registerServiceProviders()
@@ -248,12 +249,29 @@ class Application
                 $service = new $provider($this);
 
                 // check if the service provider has a boot method.
-                if (method_exists($service, 'boot')) {
-                    $service->boot();
+                if (method_exists($service, 'register')) {
+                    $service->register();
                 }
 
                 // save the active provider so that we can call it later.
                 $this->activeProviders[] = $service;
+            }
+        }
+    }
+
+
+    /**
+    * "boot" the Service Poviders
+    * After we have registered all the providers,
+    * We boot them up with any additional logic
+    */
+    protected function bootServiceProviders()
+    {
+        foreach($this->activeProviders as $provider)
+        {
+            // check if the service provider has a boot method.
+            if (method_exists($provider, 'boot')) {
+                $provider->boot();
             }
         }
     }

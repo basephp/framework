@@ -65,8 +65,6 @@ class RouteCollection
     protected $usePrefix = [];
     protected $useDomain = [];
 
-    protected $tempRoute;
-
 
     /**
     * Get all routes in collection
@@ -176,8 +174,6 @@ class RouteCollection
         app()->response->setStatusCode(404);
         return $this->add($uri, config('router.errors', 'Error').'::index');
     }
-
-
 
 
     /**
