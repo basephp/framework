@@ -408,4 +408,16 @@ class RouteCollection
         return $this->redirect($name, $parameters);
     }
 
+
+    /**
+    * Check if a specifc named route is selected
+    *
+    * @param string $name
+    * @return boolean
+    */
+    public function is($name)
+    {
+        return (app()->request->route->getName() == $name);
+    }
+
 }
