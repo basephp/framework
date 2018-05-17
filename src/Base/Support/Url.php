@@ -235,6 +235,18 @@ class Url
 
 
     /**
+    * Checks if the current path matches
+    *
+    * Added this as a helper function.
+    */
+    public function is($rule)
+    {
+        // $rule = str_replace(['/','*','.','-'],['\\','*?','\\.','\\-'],$rule);
+        return (bool) preg_match('/'.$rule.'/i',$this->getPath());
+    }
+
+
+    /**
     * If this instance gets converted to a string,
     * Return the FULL URL path
     *

@@ -201,3 +201,22 @@ if ( ! function_exists('route'))
 	}
 
 }
+
+
+//--------------------------------------------------------------------
+
+
+if ( ! function_exists('url'))
+{
+
+	/**
+     * Get the current URL instance
+	 *
+	 * @return \Base\Support\Url
+	 */
+	function url()
+	{
+        return app()->request->url;
+	}
+
+}
