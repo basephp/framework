@@ -1,4 +1,10 @@
 {
+    "repositories": [
+        {
+		   "type": "vcs",
+		   "url": "https://github.com/basephp/support"
+       }
+    ],
     "name": "basephp/framework",
     "description": "BasePHP",
     "license": "MIT",
@@ -15,6 +21,5 @@
         "psr-4": {
             "Base\\": "src/Base/"
         }
-    },
-    "optimize-autoloader": true
+    }
 }
