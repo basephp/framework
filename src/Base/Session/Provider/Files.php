@@ -68,7 +68,7 @@ class Files Implements ProviderInterface
 
         if (!Filesystem::isDirectory($this->location))
         {
-            $files = Filesystem::getFiles($this->location);
+            $files = Filesystem::getAll($this->location);
 
             foreach($files as $file)
             {

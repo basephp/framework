@@ -417,7 +417,7 @@ class RouteCollection
     */
     public function is($name)
     {
-        return (app()->request->route->getName() == $name);
+        return (bool) (app()->request->route->getName() == $name);
     }
 
 }

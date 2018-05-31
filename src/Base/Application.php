@@ -284,7 +284,7 @@ class Application
     */
     public function getConfigFiles($path)
     {
-        return Filesystem::getFiles($this->config->get($path), 'php');
+        return Filesystem::getAll($this->config->get($path), 'php');
     }
 
 
