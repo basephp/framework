@@ -66,7 +66,7 @@ class Files Implements ProviderInterface
     {
 		$ts = time() - $maxlifetime;
 
-        if (!Filesystem::isDirectory($this->location))
+        if (Filesystem::isDirectory($this->location))
         {
             $files = Filesystem::getAll($this->location);
 
