@@ -74,9 +74,14 @@ if (! function_exists('config'))
      * @param  mixed   $default
      * @return mixed
      */
-    function config($option, $default = null)
+    function config($option = '', $default = null)
     {
-        return app()->config->get($option, $default);
+		if ($option != '')
+		{
+        	return app()->config->get($option, $default);
+		}
+
+		return app()->config;
     }
 
 }
