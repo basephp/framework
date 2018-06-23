@@ -80,6 +80,17 @@ class Request extends Server
 
 
     /**
+    * get only FILE data
+    *
+    * @return mixed
+    */
+    public function file($name)
+    {
+        return ($this->fetch(['FILE'],$name)) ?? false;
+    }
+
+
+    /**
     * Get cookie data
     *
     * @return mixed
@@ -202,6 +213,12 @@ class Request extends Server
                 break;
                 case 'POST':
                     if ($data = $this->post->get($name, null))
+                    {
+                        return $data;
+                    }
+                break;
+                case 'FILE':
+                    if ($data = $this->files->get($name, null))
                     {
                         return $data;
                     }
