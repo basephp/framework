@@ -145,11 +145,18 @@ if ( ! function_exists('session'))
      * @param string $default
 	 * @return mixed
 	 */
-	function session($key, $default = '')
+	function session($key = '', $default = '')
 	{
-		if ($key && isset(app()->request->session))
+		if (isset(app()->request->session))
 		{
-			return app()->request->session->get($key, $default);
+			if ($key != '')
+			{
+				return app()->request->session->get($key, $default);
+			}
+			else
+			{
+				return app()->request->session;
+			}
 		}
 
         return false;
