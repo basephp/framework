@@ -5,7 +5,7 @@
     "require": {
         "php": ">=7.0",
         "vlucas/phpdotenv": "~2.2",
-        "basephp/support": "1.0.*"
+        "basephp/support": "1.*"
     },
     "autoload": {
         "files": [
