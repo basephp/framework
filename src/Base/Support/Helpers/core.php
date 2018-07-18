@@ -110,6 +110,42 @@ if (! function_exists('storage_path'))
 //--------------------------------------------------------------------
 
 
+if (! function_exists('ip_address'))
+{
+
+    /**
+    * Return the users ip address
+    *
+    */
+    function ip_address()
+    {
+        return app()->request->ipAddress();
+    }
+
+}
+
+
+//--------------------------------------------------------------------
+
+
+if (! function_exists('user_agent'))
+{
+
+    /**
+    * Return the users (user agent)
+    *
+    */
+    function user_agent()
+    {
+        return app()->request->userAgent();
+    }
+
+}
+
+
+//--------------------------------------------------------------------
+
+
 if (! function_exists('view'))
 {
 
