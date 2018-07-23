@@ -251,6 +251,9 @@ class Route
         $prefix = trim($prefix, '/');
         $this->prefix = trim($this->prefix, '/');
 
+        // remove the double slashes...
+        $prefix = str_replace('//','/',$prefix);
+
         $this->prefix = ($this->prefix) ? $this->prefix.'/'.$prefix : $prefix;
 
         return $this;
