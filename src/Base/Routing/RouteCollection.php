@@ -253,7 +253,7 @@ class RouteCollection
 
         $route = new Route($methods, $uri, $action);
         $route->domain(end($this->useDomain));
-        $route->middleware($this->useMiddleware);
+        $route->middleware(Arr::flatten($this->useMiddleware));
         $route->prefix($this->usePrefix);
 
         return $this->allRoutes[] = $route;
@@ -267,15 +267,12 @@ class RouteCollection
     *
     * @param closure $fn
     */
-    public function group($fn)
+    public function group($fn, $after)
     {
         if (is_callable($fn))
         {
             $fn();
-
-            array_pop($this->usePrefix);
-            array_pop($this->useMiddleware);
-            array_pop($this->useDomain);
+            $after();
         }
     }
 
@@ -302,9 +299,15 @@ class RouteCollection
         $middleware = (array) $args[0];
         $group = $args[1] ?? null;
 
-        $this->useMiddleware = array_merge($middleware, $this->useMiddleware);
+        // $this->useMiddleware = array_merge($middleware, $this->useMiddleware);
 
-        $this->group($group);
+        $this->useMiddleware[] = $middleware;
+        // array_push($this->useMiddleware, $middleware);
+        // $this->useMiddleware = Arr::flatten($this->useMiddleware);
+
+        $this->group($group, function(){
+            array_pop($this->useMiddleware);
+        });
 
         return $this;
     }
@@ -318,12 +321,20 @@ class RouteCollection
     */
     public function prefix(...$args)
     {
-        $prefix = (array) $args[0];
+        $prefix = $args[0];
         $group = $args[1] ?? null;
 
-        $this->usePrefix = array_merge($prefix, $this->usePrefix);
+        // $this->usePrefix = array_merge($prefix, $this->usePrefix);
 
-        $this->group($group);
+        // add the new prefix to the top of the array
+        array_unshift($this->usePrefix, $prefix);
+
+        // add the new prefix to the end of the array
+        // array_push($this->usePrefix, $prefix);
+
+        $this->group($group, function(){
+            array_shift($this->usePrefix);
+        });
 
         return $this;
     }
@@ -342,7 +353,9 @@ class RouteCollection
 
         $this->useDomain[] = $domain;
 
-        $this->group($group);
+        $this->group($group, function(){
+            array_pop($this->useDomain);
+        });
 
         return $this;
     }

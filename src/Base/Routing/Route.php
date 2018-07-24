@@ -232,7 +232,7 @@ class Route
     */
     public function middleware($middleware)
     {
-        $this->middleware = array_merge((array) $middleware,$this->middleware);
+        $this->middleware = array_merge((array) $middleware, $this->middleware);
 
         return $this;
     }
