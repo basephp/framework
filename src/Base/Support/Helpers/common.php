@@ -139,6 +139,51 @@ if (! function_exists('utf8ize'))
 //--------------------------------------------------------------------
 
 
+if (! function_exists('type_cast'))
+{
+	/**
+	* Converts a variable into its proper type
+	*
+	* @param  mixed  $value
+    * @return  mixed  $value
+	*/
+    function type_cast($value)
+    {
+		if (is_array($value)) return (array) $value;
+
+		if (is_object($value)) return (object) $value;
+
+		if (is_bool($value)) return (bool) $value;
+
+		if (is_numeric($value))
+		{
+			// for some reason this does not work correctly,
+			// we will have to force php to turn it into a true float
+			if (is_float($value+0)) return (float) $value;
+
+			return (int) $value;
+		}
+
+        switch($value)
+		{
+			case 'true' : case 'TRUE' :
+				return (bool) true;
+			break;
+
+			case 'false' : case 'FALSE' :
+				return (bool) false;
+			break;
+
+			default :
+				return (string) $value;
+		}
+    }
+}
+
+
+//--------------------------------------------------------------------
+
+
 if (! function_exists('safe_json_encode'))
 {
     /**

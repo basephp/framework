@@ -53,7 +53,7 @@ class Request extends Server
     */
     public function input($name, $default = '')
     {
-        return ($this->fetch(['GET','POST','ARGV'],$name)) ?? $default;
+        return type_cast(($this->fetch(['GET','POST','ARGV'],$name,$default)) ?? $default);
     }
 
 
@@ -64,7 +64,7 @@ class Request extends Server
     */
     public function get($name, $default = '')
     {
-        return ($this->fetch(['GET'],$name)) ?? $default;
+        return type_cast(($this->fetch(['GET'],$name,$default)) ?? $default);
     }
 
 
@@ -75,7 +75,7 @@ class Request extends Server
     */
     public function post($name, $default = '')
     {
-        return ($this->fetch(['POST'],$name)) ?? $default;
+        return type_cast(($this->fetch(['POST'],$name,$default)) ?? $default);
     }
 
 
@@ -86,7 +86,7 @@ class Request extends Server
     */
     public function file($name)
     {
-        return ($this->fetch(['FILE'],$name)) ?? false;
+        return ($this->fetch(['FILE'],$name,false)) ?? false;
     }
 
 
@@ -197,7 +197,7 @@ class Request extends Server
     *
     * @return string|null
     */
-    public function fetch(array $methods = ['GET','POST'], $name = '')
+    public function fetch(array $methods = ['GET','POST'], $name = '', $default = '')
     {
         if (!is_array($methods)) $methods = [$methods];
 
@@ -206,22 +206,13 @@ class Request extends Server
             switch($method)
             {
                 case 'GET' :
-                    if ($data = $this->get->get($name, null))
-                    {
-                        return $data;
-                    }
+                    return $this->get->get($name, $default);
                 break;
                 case 'POST':
-                    if ($data = $this->post->get($name, null))
-                    {
-                        return $data;
-                    }
+                    return $this->post->get($name, $default);
                 break;
                 case 'FILE':
-                    if ($data = $this->files->get($name, null))
-                    {
-                        return $data;
-                    }
+                    return $this->files->get($name);
                 break;
                 case 'ARGV':
                     if ($args = $this->server->get('argv', []))
