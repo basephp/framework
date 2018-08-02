@@ -51,7 +51,7 @@ class Request extends Server
     *
     * @return mixed
     */
-    public function input($name, $default = '')
+    public function input($name, $default = null)
     {
         return type_cast(($this->fetch(['GET','POST','ARGV'],$name,$default)) ?? $default);
     }
@@ -62,7 +62,7 @@ class Request extends Server
     *
     * @return mixed
     */
-    public function get($name, $default = '')
+    public function get($name, $default = null)
     {
         return type_cast(($this->fetch(['GET'],$name,$default)) ?? $default);
     }
@@ -73,7 +73,7 @@ class Request extends Server
     *
     * @return mixed
     */
-    public function post($name, $default = '')
+    public function post($name, $default = null)
     {
         return type_cast(($this->fetch(['POST'],$name,$default)) ?? $default);
     }
@@ -197,7 +197,7 @@ class Request extends Server
     *
     * @return string|null
     */
-    public function fetch(array $methods = ['GET','POST'], $name = '', $default = '')
+    public function fetch(array $methods = ['GET','POST'], $name = '', $default = null)
     {
         if (!is_array($methods)) $methods = [$methods];
 

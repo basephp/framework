@@ -155,6 +155,8 @@ if (! function_exists('type_cast'))
 
 		if (is_bool($value)) return (bool) $value;
 
+		if (is_null($value)) return NULL;
+
 		if (is_numeric($value))
 		{
 			// for some reason this does not work correctly,
@@ -172,6 +174,10 @@ if (! function_exists('type_cast'))
 
 			case 'false' : case 'FALSE' :
 				return (bool) false;
+			break;
+
+			case 'null' : case 'NULL' :
+				return NULL;
 			break;
 
 			default :
