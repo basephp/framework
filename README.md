@@ -6,7 +6,7 @@ BasePHP is a PHP framework for modern minimalist, who like **simplicity** and **
 
 A minimalist design is intended to keep your application lean and it's operations to only what you use; ultimately reducing the memory and load times for each request.
 
-To use BasePHP for your next application, check out the [Example Application](https://github.com/basephp/basephp).
+To use BasePHP for your next project, check out the [Example Application](https://github.com/basephp/basephp).
 
 
 ## Installation:
@@ -20,7 +20,7 @@ composer require basephp/framework
 
 
 ## BasePHP Packages:
-Extend your BasePHP Application by installing these packages:
+*Extend your BasePHP Application by installing these packages:*
 
 |Package				                             |Description		       |
 |---				                             |---		               |
@@ -30,7 +30,7 @@ Extend your BasePHP Application by installing these packages:
 
 
 ## Standalone Packages:
-Extend any application using these non-framework specific packages:
+*Extend any application using these non-framework specific packages:*
 
 |Package				                             |Description		       |
 |---				                             |---		               |
@@ -38,7 +38,7 @@ Extend any application using these non-framework specific packages:
 
 
 ## Examples:
-BasePHP use-case examples and framework showcase.
+*BasePHP use-case examples and framework showcase.*
 
 |Example				                             |Description		       |
 |---				                             |---		               |
