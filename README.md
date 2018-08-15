@@ -24,9 +24,9 @@ Extend your BasePHP Application by installing these packages:
 
 |Package				                             |Description		       |
 |---				                             |---		               |
-|[Database](https://github.com/basephp/database) |Connect your application to Databases. |
-|[Email](https://github.com/basephp/email)       |**currently unavailable** – Send emails and manage email api integrations |
-|[Accounts](https://github.com/basephp/accounts) |**currently unavailable** – User Accounts with Roles/Permissions  |
+|[Database](https://github.com/basephp/database) |Connect your application to a database |
+|[Email](https://github.com/basephp/email)       |**Currently Unavailable** – Send emails and manage email api integrations |
+|[Accounts](https://github.com/basephp/accounts) |**Currently Unavailable** – User Accounts with Roles/Permissions  |
 
 
 ## Standalone Packages:
@@ -42,8 +42,8 @@ BasePHP use-case examples and framework showcase.
 
 |Example				                             |Description		       |
 |---				                             |---		               |
-|[Example Application](https://github.com/basephp/basephp)   |The BasePHP Official Application Skeleton |
-|[BasePHP - Alerts API](https://github.com/timothymarois/basephp-alerts-api)   |An Alert Activity tracking API |
+|[Example Application](https://github.com/basephp/basephp)   |The BasePHP Official Example Application |
+|[BasePHP - Alerts API](https://github.com/timothymarois/basephp-alerts-api)   |A BasePHP API for tracking Alert Activity |
 
 
 ## Contributions
