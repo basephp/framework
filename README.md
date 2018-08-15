@@ -4,7 +4,7 @@
 
 BasePHP is a PHP framework for modern minimalist, who like **simplicity** and **speed**. BasePHP was built from the ground up, incorporating the best aspects from popular frameworks, and only including what is necessary and essential to building modern applications. You can extend BasePHP by developing or installing community packages.
 
-A minimalist design is intended to keep your package lean and it's operations to only what you use; ultimately reducing memory and load times.
+A minimalist design is intended to keep your application lean and it's operations to only what you use; ultimately reducing the memory and load times for each request.
 
 To use BasePHP for your next application, check out the [Example Application](https://github.com/basephp/basephp).
 
@@ -21,20 +21,31 @@ composer require basephp/framework
 
 ## BasePHP Packages:
 Extend your BasePHP Application by installing these packages:
-* [Database](https://github.com/basephp/database)
-* [Email](https://github.com/basephp/email) *currently unavailable*
-* [Accounts](https://github.com/basephp/accounts) *currently unavailable*
+
+|Package				                             |Description		       |
+|---				                             |---		               |
+|[Database](https://github.com/basephp/database) |Connect to SQL Databases |
+|[Email](https://github.com/basephp/email)       |*currently unavailable* Send emails and manage email api integrations |
+|[Accounts](https://github.com/basephp/accounts) |*currently unavailable* User Accounts with Roles/Permissions  |
 
 
 ## Standalone Packages:
 Extend any application using these non-framework specific packages:
-* [Support](https://github.com/basephp/support) (Already Included)
+
+|Package				                             |Description		       |
+|---				                             |---		               |
+|[Support](https://github.com/basephp/support)   |(Already Included) – Common PHP Functionality for any project |
 
 
 ## Examples:
 BasePHP use-case examples and framework showcase.
 * [Example Application](https://github.com/basephp/basephp)
 * [BasePHP - Alerts API](https://github.com/timothymarois/basephp-alerts-api)
+
+|Example				                             |Description		       |
+|---				                             |---		               |
+|[Example Application](https://github.com/basephp/basephp)   |The BasePHP Official Application Skeleton |
+|[BasePHP - Alerts API](https://github.com/timothymarois/basephp-alerts-api)   |An Alert tracking API |
 
 
 ## Contributions
