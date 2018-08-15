@@ -20,7 +20,7 @@ class Application
     * The Version of BasePHP
     *
     */
-    const VERSION = '1.0.0-beta';
+    const VERSION = '1.0.0';
 
 
     /**
@@ -162,6 +162,8 @@ class Application
         }
 
         $this->router->match( $this->request );
+
+        // echo '<pre>'.print_r($this->router->routes()->all(),1).'</pre>';
 
         // do all the magic...
         $this->router->run( $this );

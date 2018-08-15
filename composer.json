@@ -1,7 +1,13 @@
 {
     "name": "basephp/framework",
-    "description": "BasePHP",
+    "description": "BasePHP Framework",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Timothy Marois",
+            "email": "timothymarois@gmail.com"
+        }
+    ],
     "require": {
         "php": ">=7.0",
         "vlucas/phpdotenv": "~2.2",
