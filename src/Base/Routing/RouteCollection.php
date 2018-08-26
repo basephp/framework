@@ -72,7 +72,7 @@ class RouteCollection
     protected $useMiddleware = [];
     protected $usePrefix = [];
     protected $useDomain = [];
-    protected $useRequestTypes = false;
+    protected $useRequestTypes = [];
 
 
     /**
@@ -279,7 +279,7 @@ class RouteCollection
         $route->domain(end($this->useDomain));
         $route->middleware(Arr::flatten($this->useMiddleware));
         $route->prefix($this->usePrefix);
-        $route->setRequestTypes( (($this->useRequestTypes) ? $this->useRequestTypes : $this->requestTypes) );
+        $route->setRequestTypes( (($this->useRequestTypes) ? end($this->useRequestTypes) : $this->requestTypes) );
 
         return $this->allRoutes[] = $route;
     }
@@ -292,7 +292,7 @@ class RouteCollection
     */
     public function console($fn)
     {
-        return $this->setRequestTypes('console', $fn);
+        return $this->setRequestTypes(['console'], $fn);
     }
 
 
@@ -303,7 +303,7 @@ class RouteCollection
     */
     public function web($fn)
     {
-        return $this->setRequestTypes('web', $fn);
+        return $this->setRequestTypes(['web'], $fn);
     }
 
 
@@ -314,7 +314,7 @@ class RouteCollection
     */
     public function ajax($fn)
     {
-        return $this->setRequestTypes('ajax', $fn);
+        return $this->setRequestTypes(['ajax'], $fn);
     }
 
 
@@ -327,11 +327,11 @@ class RouteCollection
     */
     protected function setRequestTypes($type, $fn)
     {
-        $this->useRequestTypes = $type;
+        $this->useRequestTypes[] = $type;
 
-        $this->group($fn);
-
-        $this->useRequestTypes = $this->requestTypes;
+        $this->group($fn, function(){
+            array_pop($this->useRequestTypes);
+        });
 
         return $this;
     }
