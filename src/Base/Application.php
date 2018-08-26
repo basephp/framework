@@ -23,7 +23,7 @@ class Application
     * The Version of BasePHP
     *
     */
-    const VERSION = '1.1.2';
+    const VERSION = '1.1.3';
 
 
     /**
@@ -89,11 +89,11 @@ class Application
         $this->register('config', $config = new Collection([
             'path' => [
             	'root' => $rootPath,
-            	'app' => $rootPath.'/app',
-            	'config' => $rootPath.'/config',
-            	'views' => $rootPath.'/views',
-                'storage' => $rootPath.'/storage',
-            	'routes' => $rootPath.'/routes'
+            	'app' => $rootPath.DIRECTORY_SEPARATOR.'app',
+            	'config' => $rootPath.DIRECTORY_SEPARATOR.'config',
+            	'views' => $rootPath.DIRECTORY_SEPARATOR.'views',
+                'storage' => $rootPath.DIRECTORY_SEPARATOR.'storage',
+            	'routes' => $rootPath.DIRECTORY_SEPARATOR.'routes'
             ]
         ]));
     }
@@ -245,7 +245,7 @@ class Application
         {
             foreach ($files as $key => $filename)
             {
-                $this->config->set(basename($filename, '.php'), require $this->config->get('path.config').'/'.($filename));
+                $this->config->set(basename($filename, '.php'), require $this->config->get('path.config').DIRECTORY_SEPARATOR.($filename));
             }
         }
     }

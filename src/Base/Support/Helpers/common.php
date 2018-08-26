@@ -95,31 +95,31 @@ if (! function_exists('utf8ize'))
 	/**
 	* Converts an array/object/string into UTF-8
 	*
-	* @param  mixed  $mixed
-    * @return  mixed  $mixed
+	* @param  mixed  $m
+    * @return  mixed  $m
 	*/
-    function utf8ize($mixed)
+    function utf8ize($m)
     {
-        if (is_object($mixed))
+        if (is_object($m))
         {
-            foreach($mixed as $key => $value)
+            foreach($m as $k => $v)
             {
-                $mixed->$key = utf8ize($value);
+                $m->$k = utf8ize($v);
             }
         }
-        else if (is_array($mixed))
+        else if (is_array($m))
         {
-            foreach($mixed as $key => $value)
+            foreach($m as $k => $v)
             {
-                $mixed[$key] = utf8ize($value);
+                $m[$k] = utf8ize($v);
             }
         }
-        else if (is_string($mixed))
+        else if (is_string($m))
         {
-            return utf8_encode($mixed);
+            return utf8_encode($m);
         }
 
-        return $mixed;
+        return $m;
     }
 }
 
@@ -129,29 +129,29 @@ if (! function_exists('type_cast'))
 	/**
 	* Converts a variable into its proper type
 	*
-	* @param  mixed  $value
-    * @return  mixed  $value
+	* @param  mixed  $v
+    * @return  mixed  $v
 	*/
-    function type_cast($value)
+    function type_cast($v)
     {
-		if (is_array($value)) return (array) $value;
+		if (is_array($v)) return (array) $v;
 
-		if (is_object($value)) return (object) $value;
+		if (is_object($v)) return (object) $v;
 
-		if (is_bool($value)) return (bool) $value;
+		if (is_bool($v)) return (bool) $v;
 
-		if (is_null($value)) return NULL;
+		if (is_null($v)) return NULL;
 
-		if (is_numeric($value))
+		if (is_numeric($v))
 		{
 			// for some reason this does not work correctly,
 			// we will have to force php to turn it into a true float
-			if (is_float($value+0)) return (float) $value;
+			if (is_float($v+0)) return (float) $v;
 
-			return (int) $value;
+			return (int) $v;
 		}
 
-        switch($value)
+        switch($v)
 		{
 			case 'true' : case 'TRUE' :
 				return (bool) true;
@@ -166,7 +166,7 @@ if (! function_exists('type_cast'))
 			break;
 
 			default :
-				return (string) $value;
+				return (string) $v;
 		}
     }
 }
