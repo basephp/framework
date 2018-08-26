@@ -26,7 +26,7 @@ composer require basephp/framework
 |---				                             |---		               |
 |[Database](https://github.com/basephp/database) |Connect your application to a database |
 |[Email](https://github.com/basephp/email)       |**Currently Unavailable** – Send emails and manage email api integrations |
-|[Accounts](https://github.com/basephp/accounts) |**Currently Unavailable** – User Accounts with Roles/Permissions  |
+|[Users](https://github.com/basephp/accounts)    |**Currently Unavailable** – Authentication and User Accounts  |
 
 
 ## Standalone Packages:
