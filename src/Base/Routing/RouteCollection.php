@@ -45,6 +45,14 @@ class RouteCollection
 
 
     /**
+    * $useRequestTypes (web | console | ajax)
+    *
+    * @var array
+    */
+    protected $requestTypes = ['web', 'console', 'ajax'];
+
+
+    /**
     * The router patterns
     *
     * @var array
@@ -64,6 +72,7 @@ class RouteCollection
     protected $useMiddleware = [];
     protected $usePrefix = [];
     protected $useDomain = [];
+    protected $useRequestTypes = false;
 
 
     /**
@@ -152,6 +161,21 @@ class RouteCollection
         {
             $withDomain = $domain.'/'.$matchUri;
             $uriWithDomain = $domain.$uri;
+
+            // check the route is allowed to run on the console.
+            if (app()->request->isConsole()) {
+                if (!in_array('console',$route->getRequestTypes())) continue;
+            }
+
+            // check the route is allowed to run on the ajax request.
+            if (app()->request->isAjax()) {
+                if (!in_array('ajax',$route->getRequestTypes())) continue;
+            }
+
+            // check that we can run this request on the "web" http
+            if (!app()->request->isConsole() && !app()->request->isAjax()) {
+                if (!in_array('web',$route->getRequestTypes())) continue;
+            }
 
             // check if we are domain only routing
             if (preg_match('#^'. $matchUri .'$#i', $uriWithDomain, $params))
@@ -255,8 +279,61 @@ class RouteCollection
         $route->domain(end($this->useDomain));
         $route->middleware(Arr::flatten($this->useMiddleware));
         $route->prefix($this->usePrefix);
+        $route->setRequestTypes( (($this->useRequestTypes) ? $this->useRequestTypes : $this->requestTypes) );
 
         return $this->allRoutes[] = $route;
+    }
+
+
+    /**
+    * Set route to CONSOLE only
+    *
+    * @param closure $fn
+    */
+    public function console($fn)
+    {
+        return $this->setRequestTypes('console', $fn);
+    }
+
+
+    /**
+    * Set route to WEB only
+    *
+    * @param closure $fn
+    */
+    public function web($fn)
+    {
+        return $this->setRequestTypes('web', $fn);
+    }
+
+
+    /**
+    * Set route to AJAX only
+    *
+    * @param closure $fn
+    */
+    public function ajax($fn)
+    {
+        return $this->setRequestTypes('ajax', $fn);
+    }
+
+
+
+    /**
+    * Set the request types for thsi route
+    *
+    * @param mixed $type
+    * @param closure $fn
+    */
+    protected function setRequestTypes($type, $fn)
+    {
+        $this->useRequestTypes = $type;
+
+        $this->group($fn);
+
+        $this->useRequestTypes = $this->requestTypes;
+
+        return $this;
     }
 
 
@@ -267,12 +344,16 @@ class RouteCollection
     *
     * @param closure $fn
     */
-    public function group($fn, $after)
+    protected function group($fn, $after = null)
     {
         if (is_callable($fn))
         {
             $fn();
-            $after();
+
+            if (is_callable($after))
+            {
+                $after();
+            }
         }
     }
 
@@ -299,11 +380,7 @@ class RouteCollection
         $middleware = (array) $args[0];
         $group = $args[1] ?? null;
 
-        // $this->useMiddleware = array_merge($middleware, $this->useMiddleware);
-
         $this->useMiddleware[] = $middleware;
-        // array_push($this->useMiddleware, $middleware);
-        // $this->useMiddleware = Arr::flatten($this->useMiddleware);
 
         $this->group($group, function(){
             array_pop($this->useMiddleware);
@@ -324,13 +401,8 @@ class RouteCollection
         $prefix = $args[0];
         $group = $args[1] ?? null;
 
-        // $this->usePrefix = array_merge($prefix, $this->usePrefix);
-
         // add the new prefix to the top of the array
         array_unshift($this->usePrefix, $prefix);
-
-        // add the new prefix to the end of the array
-        // array_push($this->usePrefix, $prefix);
 
         $this->group($group, function(){
             array_shift($this->usePrefix);
@@ -373,16 +445,20 @@ class RouteCollection
 
 
     /**
-    * Redirect to a named route
+    * Get the uri path for a named route
     *
     * @param string $name
     * @param array $parameters
     */
-    public function path($name, $parameters)
+    protected function path($name, $parameters = [])
     {
-        $uri = $this->getNamed($name)->uri();
+        $named = $this->getNamed($name);
 
-        foreach((array)$parameters as $k => $v)
+        if (!$named) return false;
+
+        $uri = $named->uri();
+
+        foreach( (array) $parameters as $k => $v)
         {
             $uri = preg_replace('/\{'.$k.'\}/', $v, $uri);
         }
@@ -397,7 +473,7 @@ class RouteCollection
     * @param string $name
     * @param array $parameters
     */
-    public function redirect($name, $parameters)
+    public function redirect($name, $parameters = [])
     {
         $uri = $this->path($name, $parameters);
 
@@ -416,7 +492,7 @@ class RouteCollection
     * @param string $name
     * @param array $parameters
     */
-    public function to($name, $parameters)
+    public function to($name, $parameters = [])
     {
         return $this->redirect($name, $parameters);
     }

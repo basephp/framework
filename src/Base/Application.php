@@ -9,6 +9,9 @@ use Base\Http\Response;
 use Base\Support\Collection;
 use Base\Support\Filesystem;
 
+use Base\Routing\Providers\RouterServiceProvider;
+use Base\Http\Providers\HttpServiceProvider;
+
 
 /**
 * The Application Class
@@ -20,7 +23,7 @@ class Application
     * The Version of BasePHP
     *
     */
-    const VERSION = '1.0.0';
+    const VERSION = '1.0.1';
 
 
     /**
@@ -53,8 +56,8 @@ class Application
     * @var array
     */
     protected $providers = [
-        \Base\Routing\Providers\RouterServiceProvider::class,
-        \Base\Http\Providers\HttpServiceProvider::class
+        RouterServiceProvider::class,
+        HttpServiceProvider::class
     ];
 
 
@@ -163,10 +166,8 @@ class Application
 
         $this->router->match( $this->request );
 
-        // echo '<pre>'.print_r($this->router->routes()->all(),1).'</pre>';
-
         // do all the magic...
-        $this->router->run( $this );
+        $this->router->run();
 
         // let's make a few modifications before we send to the browser
         if ($body = $this->response->getBody())
@@ -256,7 +257,7 @@ class Application
                 }
 
                 // save the active provider so that we can call it later.
-                $this->activeProviders[] = $service;
+                $this->activeProviders[$provider] = $service;
             }
         }
     }
@@ -318,41 +319,24 @@ class Application
 
 
     /**
-    * Register new middleware into the application
+    * Get the service providers
     *
-    * @param  string  $name
-    * @param  mixed   $instance
-    * @return mixed
+    * @return array
     */
-    public function addMiddleware($name, $instance)
+    public function getServiceProviderList()
     {
-        return $this->middleware[$name] = $instance;
+        return $this->providers;
     }
 
 
     /**
-    * get middleware from the application
+    * Get active service provider list
     *
-    * @param  string  $name
-    * @param  mixed   $instance
-    * @return mixed
+    * @return array
     */
-    public function getMiddlewares()
+    public function getActiveServiceProviderList()
     {
-        return $this->middleware;
-    }
-
-
-    /**
-    * get middleware from the application
-    *
-    * @param  string  $name
-    * @param  mixed   $instance
-    * @return mixed
-    */
-    public function getMiddleware($name)
-    {
-        return ($this->middleware[$name]) ?? null;
+        return array_keys($this->activeProviders);
     }
 
 

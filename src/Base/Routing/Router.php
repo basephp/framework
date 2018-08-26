@@ -19,6 +19,14 @@ class Router
 {
 
     /**
+    * The Application Instance
+    *
+    * @var Base\Application
+    */
+    protected $app;
+
+
+    /**
     * The route collection class
     *
     * @var Base\Routing\RouteCollection
@@ -35,6 +43,14 @@ class Router
 
 
     /**
+    * The "active" middlewares
+    *
+    * @var array
+    */
+    protected $activeMiddleware = [];
+
+
+    /**
     * The registered middlewares
     *
     * @var array
@@ -46,8 +62,10 @@ class Router
     * Create a route collection on new instance
     *
     */
-    public function __construct()
+    public function __construct(Application $app)
     {
+        $this->app = $app;
+
         $this->routes = new RouteCollection();
     }
 
@@ -69,7 +87,7 @@ class Router
     *
     * @return string
     */
-    public function run(Application $app)
+    public function run()
     {
         ob_start();
 
@@ -80,13 +98,13 @@ class Router
 
         if ($response)
         {
-            if (is_callable($app->request->route->getAction('closure')))
+            if (is_callable($this->app->request->route->getAction('closure')))
             {
-                $content = $this->callClosure($app->request->route);
+                $content = $this->callClosure($this->app->request->route);
             }
             else
             {
-                $content = $this->callController($app, $app->request->route);
+                $content = $this->callController($this->app->request->route);
             }
 
             $output = ltrim(ob_get_clean());
@@ -94,11 +112,11 @@ class Router
             @ob_end_clean();
 
             // setting the output and the content from route actions
-            $app->response->setOutput($output)->setBody($content);
+            $this->app->response->setOutput($output)->setBody($content);
 
             // now that we have built our output, run the terminate middleware methods.
             // only if they even exist.
-            $middleware->terminate($app->request, $app->response);
+            $middleware->terminate($this->app->request, $this->app->response);
         }
     }
 
@@ -110,7 +128,7 @@ class Router
     */
     protected function callMiddleware($middleware)
     {
-        return $middleware->initialize((new MiddlewareQueue($this->loadMiddlewares(app()))), app()->request, app()->response);
+        return $middleware->initialize((new MiddlewareQueue($this->loadMiddlewares())), $this->app->request, $this->app->response);
     }
 
 
@@ -130,14 +148,14 @@ class Router
     *
     * @return string
     */
-    protected function callController(Application $app, Route $route)
+    protected function callController(Route $route)
     {
         $controllerNamespace = (($this->namespace['controllers']) ?? '\\App\\Controllers');
         $controllerName      = $this->controllerNamespace($controllerNamespace, $route->getAction('controller'));
 
         $controller = new $controllerName();
-        $controller->setRequest($app->request);
-        $controller->setResponse($app->response);
+        $controller->setRequest($this->app->request);
+        $controller->setResponse($this->app->response);
 
         return $controller->callMethod($route->getAction('method'), $route->getAction('parameters'));
     }
@@ -161,9 +179,9 @@ class Router
     *
     * @return bool
     */
-    protected function loadMiddlewares(Application $app)
+    protected function loadMiddlewares()
     {
-        $middlewareMatch = [];
+        $this->activeMiddleware = [];
         $middlewares = $this->getMiddleware();
 
         // setup the autoload middleware
@@ -174,32 +192,38 @@ class Router
             $mName = (($middlewareExpose[0]) ?? '');
             $mparams = (($middlewareExpose[1]) ?? '');
 
+            // if not in the middleware list, do not continue
             if (!isset($middlewares[$mName])) continue;
+            // if middleware already loaded, then do not continue
+            if (isset($this->activeMiddleware[$mName])) continue;
 
-            $middlewareMatch[] = [
+            $this->activeMiddleware[$mName] = [
                 'n' => $middlewares[$mName],
                 'p' => $mparams
             ];
         }
 
         // setup the route selected middleware
-        foreach(($app->request->route->getMiddleware() ?? []) as $middleware)
+        foreach(($this->app->request->route->getMiddleware() ?? []) as $middleware)
         {
             $middlewareExpose = explode(':',$middleware);
 
             $mName = (($middlewareExpose[0]) ?? '');
             $mparams = (($middlewareExpose[1]) ?? '');
 
+            // if not in the middleware list, do not continue
             if (!isset($middlewares[$mName])) continue;
+            // if middleware already loaded, then do not continue
+            if (isset($this->activeMiddleware[$mName])) continue;
 
-            $middlewareMatch[] = [
+            $this->activeMiddleware[$mName] = [
                 'n' => $middlewares[$mName],
                 'p' => $mparams
             ];
         }
 
         // return a list of ready middlewares
-        return $middlewareMatch;
+        return $this->activeMiddleware;
     }
 
 
@@ -256,6 +280,17 @@ class Router
     public function getMiddleware()
     {
         return $this->middleware;
+    }
+
+
+    /**
+    * Get the "active" middlewares
+    *
+    * @return array
+    */
+    public function getActiveMiddlewareList()
+    {
+        return $this->activeMiddleware;
     }
 
 

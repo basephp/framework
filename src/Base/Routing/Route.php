@@ -29,6 +29,14 @@ class Route
 
 
     /**
+    * $requestTypesAllowed (web | console | ajax)
+    *
+    * @var array
+    */
+    protected $requestTypesAllowed = ['web', 'console', 'ajax'];
+
+
+    /**
     * THe route actions
     * Controller or Closure
     *
@@ -91,6 +99,18 @@ class Route
 
 
     /**
+    * Set the request types
+    *
+    */
+    public function setRequestTypes($types = [])
+    {
+        $this->requestTypesAllowed = (array) $types;
+
+        return $this;
+    }
+
+
+    /**
     * Set the route HTTP Methods
     *
     */
@@ -136,6 +156,16 @@ class Route
     public function getPatterns()
     {
         return $this->patterns;
+    }
+
+
+    /**
+    * Get the request types allowed
+    *
+    */
+    public function getRequestTypes()
+    {
+        return $this->requestTypesAllowed;
     }
 
 
@@ -268,6 +298,42 @@ class Route
     {
         $this->domain = rtrim($domain, '/');
         $this->domain = str_replace(['http://', 'https://'], '', $this->domain);
+
+        return $this;
+    }
+
+
+    /**
+    * Set the route to console only
+    *
+    */
+    public function console()
+    {
+        $this->setRequestTypes('console');
+
+        return $this;
+    }
+
+
+    /**
+    * Set the route to web only
+    *
+    */
+    public function web()
+    {
+        $this->setRequestTypes('web');
+
+        return $this;
+    }
+
+
+    /**
+    * Set the route to ajax only 
+    *
+    */
+    public function ajax()
+    {
+        $this->setRequestTypes('ajax');
 
         return $this;
     }

@@ -10,16 +10,29 @@ class RouterServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->register('router', new Router());
+        $this->app->register('router', new Router($this->app));
 
         $this->configRouter();
-
-        $this->addVersionRoute();
-        $this->addInfoRoute();
+        $this->addDevRoutes();
 
         $this->loadRoutes();
         $this->refreshRouteList();
     }
+
+
+    /**
+    * Add these routes when in development mode
+    * include the phpinfo() and basephp version output when in dev mode.
+    */
+    protected function addDevRoutes()
+    {
+        if ($this->app->config->get('app.environment','development') !== 'production')
+        {
+            $this->addVersionRoute();
+            $this->addInfoRoute();
+        }
+    }
+
 
 
     /**
@@ -28,8 +41,10 @@ class RouterServiceProvider extends ServiceProvider
     */
     protected function addVersionRoute()
     {
-        $this->app->router->routes()->add('GET','_base',function(){
-            return $this->app->version();
+        $this->app->router->routes()->add('GET','_basephp',function(){
+            return [
+                'version' => $this->app->version()
+            ];
         });
     }
 
@@ -40,7 +55,7 @@ class RouterServiceProvider extends ServiceProvider
     */
     protected function addInfoRoute()
     {
-        $this->app->router->routes()->add('GET','_php',function(){
+        $this->app->router->routes()->add('GET','_phpinfo',function(){
             return phpinfo();
         });
     }

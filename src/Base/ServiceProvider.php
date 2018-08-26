@@ -11,9 +11,6 @@ class ServiceProvider
     protected $app;
 
 
-    //--------------------------------------------------------------------
-
-
     /**
     * Inject the Application Instance
     *

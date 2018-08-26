@@ -244,16 +244,16 @@ class Request extends Server
     */
     public function getConsolePath()
     {
-        $arg = $this->server->get('argv', []);
-
-        $path = '/';
-
-        if (isset($arg[1]))
+        if ($this->isConsole())
         {
-            if ($arg[1][0]!='/') $path = '/'.$arg[1];
+            $arg = $this->server->get('argv', []);
+
+            $path = $arg[1] ?? '/';
+
+            return '/'.trim($path,'/');
         }
 
-        return $path;
+        return false;
     }
 
 }

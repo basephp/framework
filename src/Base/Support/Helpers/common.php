@@ -21,9 +21,6 @@ if (! function_exists('format_bytes'))
 }
 
 
-//--------------------------------------------------------------------
-
-
 if (!function_exists('random_string'))
 {
 	/**
@@ -59,9 +56,6 @@ if (!function_exists('random_string'))
 }
 
 
-//--------------------------------------------------------------------
-
-
 if (! function_exists('value'))
 {
 	/**
@@ -75,9 +69,6 @@ if (! function_exists('value'))
 		return $value instanceof Closure ? $value() : $value;
 	}
 }
-
-
-//--------------------------------------------------------------------
 
 
 if (! function_exists('valid_ip'))
@@ -97,9 +88,6 @@ if (! function_exists('valid_ip'))
 		return true;
 	}
 }
-
-
-//--------------------------------------------------------------------
 
 
 if (! function_exists('utf8ize'))
@@ -134,9 +122,6 @@ if (! function_exists('utf8ize'))
         return $mixed;
     }
 }
-
-
-//--------------------------------------------------------------------
 
 
 if (! function_exists('type_cast'))
@@ -187,9 +172,6 @@ if (! function_exists('type_cast'))
 }
 
 
-//--------------------------------------------------------------------
-
-
 if (! function_exists('safe_json_encode'))
 {
     /**
@@ -220,7 +202,6 @@ if (! function_exists('safe_json_encode'))
         }
     }
 }
-
 
 
 if (! function_exists('data_get'))
@@ -268,4 +249,15 @@ if (! function_exists('data_get'))
 }
 
 
-//--------------------------------------------------------------------
+if (! function_exists('print_d'))
+{
+	/**
+	* Dump the current variable into a print with <pre> output
+	*
+	* @param  mixed  $data
+	*/
+	function print_d($data)
+	{
+		return '<pre>'.(print_r($data,1)).'</pre>';
+	}
+}
