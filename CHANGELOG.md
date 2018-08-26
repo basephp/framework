@@ -1,6 +1,12 @@
 # Release Notes
 
 
+## v1.1.2 (08/26/2018)
+
+### Added
+* Added `setBaseConsoleMode()` and `getBaseConsoleMode()` on `Application` Instance.
+
+
 ## v1.1.1 (08/26/2018)
 
 ### Changed

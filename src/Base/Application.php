@@ -23,7 +23,7 @@ class Application
     * The Version of BasePHP
     *
     */
-    const VERSION = '1.1.1';
+    const VERSION = '1.1.2';
 
 
     /**
@@ -48,6 +48,14 @@ class Application
     * @var array
     */
     protected $middleware = [];
+
+
+    /**
+    * console mode from "base"
+    *
+    * @var bool
+    */
+    protected $baseConsole = false;
 
 
     /**
@@ -99,6 +107,28 @@ class Application
     public function version()
     {
         return static::VERSION;
+    }
+
+
+    /**
+    * Set the Base Console Mode
+    *
+    * @return bool
+    */
+    public function setBaseConsoleMode($set = false)
+    {
+        $this->baseConsole = $set;
+    }
+
+
+    /**
+    * Get the Base Console Mode
+    *
+    * @return bool
+    */
+    public function getBaseConsoleMode()
+    {
+        return $this->baseConsole;
     }
 
 
