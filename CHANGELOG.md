@@ -1,6 +1,19 @@
 # Release Notes
 
 
+## v1.1.3 (08/26/2018)
+
+### Added
+* Added `path()` core function for retrieving real paths in the application. Similar to `storage_path()`, in-fact, it can be a replacement. Example: `path('storage','path/to/somewhere')`
+
+### Changed
+* Changed `config()` now accepts an array for easy access to set properties. Example: `config(['item'=>'value'])`.
+* Changed `getConfigFiles()` to `getFiles()` since it is being used more so than just config location.
+* Changed The use of `/` into `DIRECTORY_SEPARATOR` where needed.
+* Removed the `middleware` property from the `Application` instance.
+* Fixed – Issue with request type reset to default when nested, they now only look at the last level for `web`, `console` and `ajax` request modes.
+
+
 ## v1.1.2 (08/26/2018)
 
 ### Added

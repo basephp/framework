@@ -43,14 +43,6 @@ class Application
 
 
     /**
-    * The application middleware instances
-    *
-    * @var array
-    */
-    protected $middleware = [];
-
-
-    /**
     * console mode from "base"
     *
     * @var bool
