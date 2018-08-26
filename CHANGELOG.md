@@ -1,6 +1,12 @@
 # Release Notes
 
 
+## v1.1.1 (08/26/2018)
+
+### Changed
+* Fixed – Middleware failed to run due to array indexing from `1.1.0` release.
+
+
 ## v1.1.0 (08/26/2018)
 
 ### Added

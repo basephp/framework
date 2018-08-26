@@ -181,6 +181,7 @@ class Router
     */
     protected function loadMiddlewares()
     {
+        $doubleCheck = [];
         $this->activeMiddleware = [];
         $middlewares = $this->getMiddleware();
 
@@ -195,12 +196,15 @@ class Router
             // if not in the middleware list, do not continue
             if (!isset($middlewares[$mName])) continue;
             // if middleware already loaded, then do not continue
-            if (isset($this->activeMiddleware[$mName])) continue;
+            if (in_array($mName, $doubleCheck)) continue;
 
-            $this->activeMiddleware[$mName] = [
+            $this->activeMiddleware[] = [
+                't' => $mName,
                 'n' => $middlewares[$mName],
                 'p' => $mparams
             ];
+
+            $doubleCheck[] = $mName;
         }
 
         // setup the route selected middleware
@@ -214,12 +218,15 @@ class Router
             // if not in the middleware list, do not continue
             if (!isset($middlewares[$mName])) continue;
             // if middleware already loaded, then do not continue
-            if (isset($this->activeMiddleware[$mName])) continue;
+            if (in_array($mName, $doubleCheck)) continue;
 
-            $this->activeMiddleware[$mName] = [
+            $this->activeMiddleware[] = [
+                't' => $mName,
                 'n' => $middlewares[$mName],
                 'p' => $mparams
             ];
+
+            $doubleCheck[] = $mName;
         }
 
         // return a list of ready middlewares

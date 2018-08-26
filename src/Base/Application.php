@@ -23,7 +23,7 @@ class Application
     * The Version of BasePHP
     *
     */
-    const VERSION = '1.0.1';
+    const VERSION = '1.1.1';
 
 
     /**
