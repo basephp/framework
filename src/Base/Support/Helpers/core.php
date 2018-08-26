@@ -98,7 +98,7 @@ if (! function_exists('storage_path'))
      */
     function storage_path($path = '')
     {
-        return config('path.storage').($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return path('storage', $path);
     }
 
 }

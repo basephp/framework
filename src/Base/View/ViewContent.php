@@ -55,7 +55,7 @@ class ViewContent
             $search[] = '/<!--(.|\s)*?-->/';
 
             // Remove any additional white space.
-            $search[] = '/\\s+/';
+            $search[] = '/(\s)+/s';
         }
 
         $this->replace($search, ['>','<','\\1','',' ']);

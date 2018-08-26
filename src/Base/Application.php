@@ -226,7 +226,7 @@ class Application
     {
         try
         {
-            (new Dotenv($this->config->get('path.root'), '/.env'))->load();
+            (new Dotenv(path('root'),'.env'))->load();
         }
         catch (InvalidPathException $e)
         {
@@ -241,11 +241,11 @@ class Application
     */
     protected function setConfigurations()
     {
-        if ($files = $this->getConfigFiles('path.config'))
+        if ($files = $this->getFiles('config'))
         {
             foreach ($files as $key => $filename)
             {
-                $this->config->set(basename($filename, '.php'), require $this->config->get('path.config').DIRECTORY_SEPARATOR.($filename));
+                $this->config->set(basename($filename, '.php'), require path('config').DIRECTORY_SEPARATOR.($filename));
             }
         }
     }
@@ -315,9 +315,9 @@ class Application
     *
     * @return array
     */
-    public function getConfigFiles($path)
+    public function getFiles($dir)
     {
-        return Filesystem::getAll($this->config->get($path), 'php');
+        return Filesystem::getAll(path($dir), 'php');
     }
 
 

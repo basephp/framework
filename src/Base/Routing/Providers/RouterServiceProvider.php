@@ -77,11 +77,11 @@ class RouterServiceProvider extends ServiceProvider
     */
     protected function loadRoutes()
     {
-        if ($files = $this->app->getConfigFiles('path.routes'))
+        if ($files = $this->app->getFiles('routes'))
         {
             foreach ($files as $key => $filename)
             {
-                require $this->app->config->get('path.routes').'/'.($filename);
+                require path('routes').DIRECTORY_SEPARATOR.($filename);
             }
         }
     }
