@@ -1,6 +1,17 @@
 # Release Notes
 
 
+## v1.2.0 (08/27/2018)
+
+### Added
+* Added `referrer()` method on `Http\Request` class for getting the `HTTP_REFERER` from the header.
+* Added `APP_GLOBALS` env variable, for security of sensitive data, this gives you control to clear globals. By default, globals will not be enabled.
+* Added `basephp\database` component into the composer require.
+
+### Changed
+* Changed session `Files` provider to use `Filesystem` for all disk/file actions.
+
+
 ## v1.1.4 (08/26/2018)
 
 ### Added

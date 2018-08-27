@@ -21,7 +21,7 @@ The [BasePHP – Application](https://github.com/basephp/basephp) already includ
 ## BasePHP Packages:
 *Extend a BasePHP Application by installing these packages:*
 
-**Components** are foundation packages that most **add-ons** will utilize. Components are not included with the vanilla BasePHP since they are not required for all projects.
+**Components** are foundation packages that most **add-ons** will utilize. Components are automatically shipped in the install of BasePHP.
 
 |Package				                         |Type        |Description		             |
 |---				                             |---         |---		                     |

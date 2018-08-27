@@ -11,7 +11,8 @@
     "require": {
         "php": ">=7.0",
         "vlucas/phpdotenv": "~2.2",
-        "basephp/support": "1.*"
+        "basephp/support": "1.3.*",
+        "basephp/database": "1.0.*"
     },
     "autoload": {
         "files": [
