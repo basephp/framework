@@ -68,15 +68,16 @@ class Files Implements ProviderInterface
 
         if (Filesystem::isDirectory($this->location))
         {
-            $files = Filesystem::getAll($this->location);
+            $files = Filesystem::files($this->location);
 
             foreach($files as $file)
             {
-                $mtime = filemtime($this->location.'/'.$file);
+                $fpath = $this->location.DIRECTORY_SEPARATOR.$file;
+                $mtime = Filesystem::lastModified($fpath);
 
                 if ($mtime < $ts)
                 {
-                    unlink($this->location.'/'.$file);
+                    Filesystem::delete($fpath);
                 }
             }
         }

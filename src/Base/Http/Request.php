@@ -162,6 +162,17 @@ class Request extends Server
 
 
     /**
+    * Get the referrer url
+    *
+    * @return string
+    */
+    public function referrer()
+    {
+        return $this->server->get('HTTP_REFERER', '');
+    }
+
+
+    /**
     * Get valid IP address of user (if found)
     *
     * @source https://gist.github.com/cballou/2201933
