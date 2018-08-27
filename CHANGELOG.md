@@ -1,6 +1,15 @@
 # Release Notes
 
 
+## v1.1.4 (08/26/2018)
+
+### Added
+* Added `HttpFrameGuard` middleware built-in for adding `X-Frame-Options : SAMEORIGIN` to the response header.
+
+### Changed
+* Fixed – `Http\Server` class `__get()` method to check the property exist otherwise return `null` (prevents undefined property notice)
+
+
 ## v1.1.3 (08/26/2018)
 
 ### Added
