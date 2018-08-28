@@ -11,9 +11,9 @@ The BasePHP design is intended to keep your application lean and it's operations
 
 ## Why BasePHP?
 
-There are a lot of PHP frameworks to choose from and most are personal preference. We're not going to try and win you by stating BasePHP is the best choice for your project. But, If you like **fast responses** and a component driven back-end with unbias design patterns; then BasePHP might be the answer.
+There are a lot of PHP frameworks to choose from and most are personal preference. We're not going state that BasePHP is the best choice for your project. But, If you like **fast responses** and a component driven back-end with unbias design patterns; then BasePHP might be the answer.
 
-To use BasePHP for your next project, check out the [Example Application](https://github.com/basephp/basephp).
+To use BasePHP for your next project – download the [Example Application](https://github.com/basephp/basephp).
 
 
 ## Installation:
@@ -52,4 +52,9 @@ The [BasePHP – Application](https://github.com/basephp/basephp) already includ
 
 ## Contributions
 
-Accepting contributions and feedback. Send in any issues and pull requests.
+Anyone can contribute to the BasePHP project. Please do so by posting issues when you've found something that is unexpected or sending a pull request for improvements.
+
+
+## License
+
+BasePHP is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
