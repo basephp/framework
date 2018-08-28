@@ -13,8 +13,6 @@ The BasePHP design is intended to keep your application lean and it's operations
 
 There are a lot of PHP frameworks to choose from and most are personal preference. We're not going state that BasePHP is the best choice for your project. But, If you like **fast responses** and a component driven back-end with unbias design patterns; then BasePHP might be the answer.
 
-To use BasePHP for your next project – download the [Example Application](https://github.com/basephp/basephp).
-
 
 ## Installation:
 
