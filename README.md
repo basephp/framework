@@ -1,12 +1,15 @@
-# BasePHP Framework
+<p align="center"><img src="http://timothymarois.com/a/basephp2-logo-01.svg"></p>
+
+## About BasePHP
 
 > **Note:** This repository contains the core code of the BasePHP framework. If you would like to use the framework for your application or want to see an example, visit [BasePHP Application](https://github.com/basephp/basephp).
 
-BasePHP is a PHP framework for modern minimalist who like **simplicity** and **speed**. BasePHP was built from the ground up, incorporating the best aspects from popular frameworks, and only including what is necessary and essential to building modern applications. You can extend BasePHP by developing or installing community packages.
+BasePHP is a PHP framework for modern minimalist who like **simplicity** and **speed**. BasePHP incorporates the best aspects from popular frameworks, and only including what is necessary and essential to building modern applications. You can extend BasePHP by developing or installing community packages.
 
 The BasePHP design is intended to keep your application lean and it's operations to only what you use; ultimately reducing the memory and load times for each request.
 
-### Why BasePHP?
+
+## Why BasePHP?
 
 There are a lot of PHP frameworks to choose from and most are personal preference. We're not going to try and win you by stating BasePHP is the best choice for your project. But, If you like **fast responses** and a component driven back-end with unbias design patterns; then BasePHP might be the answer.
 
