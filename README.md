@@ -18,7 +18,7 @@ To use BasePHP for your next project – download the [Example Application](http
 
 ## Installation:
 
-The [BasePHP – Application](https://github.com/basephp/basephp) already includes the composer require.
+Download the [Example Application](https://github.com/basephp/basephp) in your project and install your dependencies with composer.
 
 
 ## BasePHP Packages:
