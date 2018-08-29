@@ -2,6 +2,8 @@
 
 ## About BasePHP
 
+[![Slack](http://timothymarois.com/a/slack-02.svg)](https://join.slack.com/t/basephp/shared_invite/enQtNDI0MzQyMDE0MDAwLWU3Nzg0Yjk4MjM0OWVmZDZjMjEyYWE2YjA1ODFhNjI2MzI3MjAyOTIyOTRkMmVlNWNhZWYzMTIwZDJlOWQ2ZTA)
+
 > **Note:** This repository contains the core code of the BasePHP framework. If you would like to use the framework for your application or want to see an example, visit the [BasePHP Application](https://github.com/basephp/basephp).
 
 BasePHP is a PHP framework for the minimalist who likes **simplicity** and **speed**. BasePHP incorporates the best aspects from popular frameworks and only including what is essential to building modern applications. You can extend BasePHP by developing or installing community packages.
